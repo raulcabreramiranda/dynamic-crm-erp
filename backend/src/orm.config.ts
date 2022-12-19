@@ -37,11 +37,11 @@ const ormconfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/domain/*.entity{.ts,.js}', __dirname + '/entities/**/*.entity{.ts,.js}'],
   migrations: ['./migrations/**/*{.ts,.js}'],
   subscribers: ['./subscriber/**/*.ts'],
-  cli: {
-    entitiesDir: 'src/entity',
-    migrationsDir: 'src/migration',
-    subscribersDir: 'src/subscriber',
-  },
+  // cli: {
+  //   entitiesDir: 'src/entity',
+  //   migrationsDir: 'src/migration',
+  //   subscribersDir: 'src/subscriber',
+  // },
 };
 
 export { ormconfig };

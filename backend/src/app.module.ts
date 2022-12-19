@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ViewModule } from './client/view.module';
 import { AuthModule } from './module/auth.module';
 import { ormconfig } from './orm.config';
 
@@ -22,7 +21,6 @@ import { JorneyDegreeModule } from './entities/jorney-degree/jorney-degree.modul
 import { JorneyGaleryModule } from './entities/jorney-galery/jorney-galery.module';
 import { JorneyGalerySectionModule } from './entities/jorney-galery-section/jorney-galery-section.module';
 import { ConfigureApplicationModule } from './entities/configure-application/configure-application.module';
-import { ReviewerModule } from './entities/reviewer/reviewer.module';
 import { ConfigureCorrectionModule } from './entities/configure-correction/configure-correction.module';
 import { ConfigureCorrectionReviewerModule } from './entities/configure-correction-reviewer/configure-correction-reviewer.module';
 import { JorneyGalerySectionSubjectModule } from './entities/jorney-galery-section-subject/jorney-galery-section-subject.module';
@@ -83,9 +81,6 @@ const basicModules = [
   // TypeOrmModule.forRoot(ormconfigCenter),
 ] as any[];
 basicModules.push(AuthModule);
-if (process.env.NODE_ONLY_SERVER !== '1') {
-  basicModules.push(ViewModule);
-}
 @Module({
   imports: [
     ...basicModules,
@@ -108,7 +103,6 @@ if (process.env.NODE_ONLY_SERVER !== '1') {
     JorneyGalerySectionModule,
     EssayModule,
     EssayResultModule,
-    ReviewerModule,
     ConfigureCorrectionModule,
     ConfigureCorrectionReviewerModule,
     MatrixModule,
