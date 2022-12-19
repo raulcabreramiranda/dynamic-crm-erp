@@ -1,0 +1,26 @@
+{
+  "name": "dynamic-crm-erp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "cd entities && rimraf dist && tsc &&  cd ../ && node ./generator/ejs.js entitiesDir=./entities/dist",
+    "generate1": "node ./generator/ejs.js entitiesDir=./entities/dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raulcabreramiranda/dynamic-crm-erp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raulcabreramiranda/dynamic-crm-erp/issues"
+  },
+  "homepage": "https://github.com/raulcabreramiranda/dynamic-crm-erp#readme",
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.16"
+  }
+}

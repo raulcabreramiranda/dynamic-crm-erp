@@ -1,8 +1,41 @@
+require('dotenv').config({ path: '.env' });
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Request, Response } from 'express';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+const logger: Logger = new Logger('NestApplication');
+const port = process.env.NODE_SERVER_PORT || 8081;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const appOptions = { cors: true };
+  const app = await NestFactory.create(AppModule, appOptions);
+  app.enableCors();
+  app.use((req: Request, res: Response, next: Function) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
+  app.use('/arquivos', express.static('arquivos'));
+  app.use('/assets', express.static('client/public/assets'));
+  app.use('/css', express.static('client/public/css'));
+  app.use('/fonts', express.static('client/public/fonts'));
+  app.use('/js', express.static('srclient/public/js'));
+  app.use('/locales', express.static('client/public/locales'));
+
+  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+  const config = new DocumentBuilder().addBearerAuth().setTitle('Evo - API').build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
+
+  await app.listen(port);
+  process.env.TZ = 'America/Sao_Paulo';
+  logger.log(`Application listening on port http://localhost:${port} (${process.env.TZ})`);
 }
 bootstrap();
