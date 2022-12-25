@@ -1,0 +1,110 @@
+{
+    "jorneyGalery": {
+        "home": {
+            "title": "Galeria Jornadas",
+            "btn_filter": "Filtrar",
+            "btn_filter_clean": "Limpar Filtros",
+            "btn_filter_open": "Filtros",
+            "createLabel": "Criar novo Galeria Jornada",
+            "editLabel": "Editar Galeria Jornada",
+            "createOrEditLabel": "Criar ou editar Galeria Jornada",
+            "notFound": "Nenhum Galeria Jornada encontrado"
+        },
+        "listSelectedButtons": {
+            "clearSelect": "Limpar Seleção",
+            "selectAll": "Selecionar os {{totalItems}} Galeria Jornadas",
+            "allItensAreSelected": "Os {{totalItems}} Galeria Jornadas nesta página estão selecionados.",
+            "allItensAreSelectedThisPage": "Todos os {{itemsPerPage}} Galeria Jornadas nesta página estão selecionados.",
+            "allItensAreSelectedAllPages": "Todas os {{totalItems}} Galeria Jornadas estão selecionados."
+        },
+        "listTopButtons": {},
+        "listButtons": {
+            "view": "view",
+            "delete": "delete"
+        },
+        "viewButtons": {},
+
+        "dropdown_btn": "Actions",
+
+        "created": "Um novo Galeria Jornada foi criado com o identificador {{ param }}",
+        "updated": "Um Galeria Jornada foi atualizado com o identificador {{ param }}",
+        "deleted": "Um Galeria Jornada foi excluído com o identificador {{ param }}",
+        "delete": {
+            "question": "Tem certeza de que deseja excluir?"
+        },
+        "field_id": "ID",
+        "btnNewItem": "Criar novo Galeria Jornada",
+        "btnFilter": "Filtrar",
+        "btnOpenFilter": "Filtrar",
+        "btnCleanFilter": "Limpar Filtro",
+        "btnEditItem": "Editar",
+        "btnActions": "Ações",
+        "btnSave": "Salvar",
+        "btnBack": "Ir na listagem",
+        "btnCancel": "Cancelar",
+        "btnDelete": "Apagar",
+        "btnOpen": "Abrir",
+        "createdDate": "Data criação",
+        "lastModifiedDate": "Data modificação",
+        "createdBy": "Criado por",
+        "lastModifiedBy": "Modificado por",
+
+        "canEdit_filter_all": "Indiferente",
+        "canEdit_filter_with": "Ativo",
+        "canEdit_filter_without": "Inativo",
+
+        "isInsideSubject_filter_all": "Indiferente",
+        "isInsideSubject_filter_with": "Ativo",
+        "isInsideSubject_filter_without": "Inativo",
+
+        "JorneyGaleryType.VIDEO": "VIDEO",
+        "JorneyGaleryType.TEXTO": "TEXTO",
+        "JorneyGaleryType.IMAGEM": "IMAGEM",
+        "JorneyGaleryType.INSIDE_SUBJECT": "INSIDE_SUBJECT",
+
+        "detail": {
+            "title": "Galeria Jornada"
+        },
+        "id_start": "ID (Inicio)",
+        "id_end": "ID (Fim)",
+
+        "name_start": "Nome (Inicio)",
+        "name_end": "Nome (Fim)",
+
+        "canEdit_start": "Editavel (Inicio)",
+        "canEdit_end": "Editavel (Fim)",
+
+        "isInsideSubject_start": "Dentro do assunto (Inicio)",
+        "isInsideSubject_end": "Dentro do assunto (Fim)",
+
+        "jorneyDegrees_jorney_name_start": "jorneyDegrees.jorney.name (Inicio)",
+        "jorneyDegrees_jorney_name_end": "jorneyDegrees.jorney.name (Fim)",
+
+        "orneyDegrees_theme_name_start": "orneyDegrees.theme.name (Inicio)",
+        "orneyDegrees_theme_name_end": "orneyDegrees.theme.name (Fim)",
+
+        "orneyDegrees_cerneDegree_name_start": "orneyDegrees.cerneDegree.name (Inicio)",
+        "orneyDegrees_cerneDegree_name_end": "orneyDegrees.cerneDegree.name (Fim)",
+
+        "jorneyGaleryType_start": "Tipo de seção da galeria de jornada (Inicio)",
+        "jorneyGaleryType_end": "Tipo de seção da galeria de jornada (Fim)",
+        "id": "ID",
+        "name": "Nome",
+        "canEdit": "Editavel",
+        "isInsideSubject": "Dentro do assunto",
+        "jorneyDegrees_jorney_name": "jorneyDegrees.jorney.name",
+        "orneyDegrees_theme_name": "orneyDegrees.theme.name",
+        "orneyDegrees_cerneDegree_name": "orneyDegrees.cerneDegree.name",
+        "jorneyGaleryType": "Tipo de seção da galeria de jornada",
+        "jorneyDegrees_empty": "Sem Jorney Degrees",
+        "jorneyDegrees-modal-super-select-title": "Selecione...",
+        "jorneyDegrees-filter-placeholder": "Selecione...",
+        "jorneyDegrees-input-placeholder": "Selecione...",
+        "jorneyDegrees": "Jorney Degrees",
+        "jorneyGalerySections_empty": "Sem Jorney Galery Sections",
+        "jorneyGalerySections-modal-super-select-title": "Selecione...",
+        "jorneyGalerySections-filter-placeholder": "Selecione...",
+        "jorneyGalerySections-input-placeholder": "Selecione...",
+        "jorneyGalerySections": "Jorney Galery Sections"
+    }
+}

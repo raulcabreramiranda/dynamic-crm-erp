@@ -1,0 +1,99 @@
+{
+    "jorney": {
+        "home": {
+            "title": "Jornadas",
+            "btn_filter": "Filtrar",
+            "btn_filter_clean": "Limpar Filtros",
+            "btn_filter_open": "Filtros",
+            "createLabel": "Criar novo Jornada",
+            "editLabel": "Editar Jornada",
+            "createOrEditLabel": "Criar ou editar Jornada",
+            "notFound": "Nenhum Jornada encontrado"
+        },
+        "listSelectedButtons": {
+            "clearSelect": "Limpar Seleção",
+            "selectAll": "Selecionar os {{totalItems}} Jornadas",
+            "allItensAreSelected": "Os {{totalItems}} Jornadas nesta página estão selecionados.",
+            "allItensAreSelectedThisPage": "Todos os {{itemsPerPage}} Jornadas nesta página estão selecionados.",
+            "allItensAreSelectedAllPages": "Todas os {{totalItems}} Jornadas estão selecionados."
+        },
+        "listTopButtons": {},
+        "listButtons": {
+            "view": "view",
+            "delete": "delete"
+        },
+        "viewButtons": {},
+
+        "dropdown_btn": "Actions",
+
+        "created": "Um novo Jornada foi criado com o identificador {{ param }}",
+        "updated": "Um Jornada foi atualizado com o identificador {{ param }}",
+        "deleted": "Um Jornada foi excluído com o identificador {{ param }}",
+        "delete": {
+            "question": "Tem certeza de que deseja excluir?"
+        },
+        "field_id": "ID",
+        "btnNewItem": "Criar novo Jornada",
+        "btnFilter": "Filtrar",
+        "btnOpenFilter": "Filtrar",
+        "btnCleanFilter": "Limpar Filtro",
+        "btnEditItem": "Editar",
+        "btnActions": "Ações",
+        "btnSave": "Salvar",
+        "btnBack": "Ir na listagem",
+        "btnCancel": "Cancelar",
+        "btnDelete": "Apagar",
+        "btnOpen": "Abrir",
+        "createdDate": "Data criação",
+        "lastModifiedDate": "Data modificação",
+        "createdBy": "Criado por",
+        "lastModifiedBy": "Modificado por",
+
+        "JorneyType.JORNEY": "JORNEY",
+        "JorneyType.FREE_PRODUCTION": "FREE_PRODUCTION",
+        "JorneyType.SIMULATE": "SIMULATE",
+
+        "upload_imageBanner": "Subir Jornada",
+
+        "detail": {
+            "title": "Jornada"
+        },
+        "id_start": "ID (Inicio)",
+        "id_end": "ID (Fim)",
+
+        "year_start": "Ano (Inicio)",
+        "year_end": "Ano (Fim)",
+
+        "name_start": "Nome (Inicio)",
+        "name_end": "Nome (Fim)",
+
+        "jorneyType_start": "Tipo Jornada (Inicio)",
+        "jorneyType_end": "Tipo Jornada (Fim)",
+
+        "jorneyDegrees_cerneDegree_name_start": "jorneyDegrees.cerneDegree.name (Inicio)",
+        "jorneyDegrees_cerneDegree_name_end": "jorneyDegrees.cerneDegree.name (Fim)",
+
+        "imageBanner_start": "Imagem (Inicio)",
+        "imageBanner_end": "Imagem (Fim)",
+
+        "clientId_start": "Client Id (Inicio)",
+        "clientId_end": "Client Id (Fim)",
+        "id": "ID",
+        "year": "Ano",
+        "name": "Nome",
+        "jorneyType": "Tipo Jornada",
+        "jorneyDegrees_cerneDegree_name": "jorneyDegrees.cerneDegree.name",
+        "imageBanner": "Imagem",
+        "clientId": "Client Id",
+        "jorneyDegrees_empty": "Sem Jorney Degrees",
+        "jorneyDegrees-modal-super-select-title": "Selecione...",
+        "jorneyDegrees-filter-placeholder": "Selecione...",
+        "jorneyDegrees-input-placeholder": "Selecione...",
+        "jorneyDegrees": "Jorney Degrees",
+        "themes_empty": "Sem Themes",
+        "themes-modal-super-select-title": "Selecione...",
+        "themes-filter-placeholder": "Selecione...",
+        "themes-input-placeholder": "Selecione...",
+        "themes": "Themes"
+    }
+}

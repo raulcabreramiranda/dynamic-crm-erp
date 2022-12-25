@@ -1,0 +1,8 @@
+{
+    "AnswerOptionsType": {
+        "null": "",
+        "UPPERCASE": "UPPERCASE",
+        "LOWERCASE": "LOWERCASE",
+        "NUMBER": "NUMBER"
+    }
+}
