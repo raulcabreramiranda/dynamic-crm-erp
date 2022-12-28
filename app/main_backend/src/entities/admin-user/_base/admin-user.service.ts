@@ -8,20 +8,9 @@ import { AdminUserRepository } from '../admin-user.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
 
 const relationshipNames = [];
-relationshipNames.push('studentQuestion');
-relationshipNames.push('studentExam');
-relationshipNames.push('examCardRead');
-relationshipNames.push('masterTeacher');
-relationshipNames.push('cernePlataformUser');
 relationshipNames.push('adminProfile');
-relationshipNames.push('adminUserSuperPro');
 relationshipNames.push('adminPermissionUsers');
 relationshipNames.push('adminWhiteLabel');
-relationshipNames.push('cerneClass');
-relationshipNames.push('essays');
-relationshipNames.push('essayResults');
-relationshipNames.push('configureCorrectionReviewers');
-relationshipNames.push('reviewEssays');
 
 @Injectable({ scope: Scope.REQUEST })
 export class AdminUserService {

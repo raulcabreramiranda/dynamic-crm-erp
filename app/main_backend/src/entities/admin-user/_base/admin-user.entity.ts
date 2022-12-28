@@ -4,7 +4,6 @@ import { BaseEntity } from '../../../domain/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { AdminProfile } from '../../admin-profile/_base/admin-profile.entity';
-import { AdminUserSuperPro } from '../../admin-user-super-pro/_base/admin-user-super-pro.entity';
 import { AdminPermissionUser } from '../../admin-permission-user/_base/admin-permission-user.entity';
 import { AdminWhiteLabel } from '../../admin-white-label/_base/admin-white-label.entity';
 import { UserType } from './user-type.enum';
@@ -32,7 +31,6 @@ export class AdminUser extends BaseEntity {
             userType: UserType,
             clientId: Number,
             adminProfile: AdminProfile,
-            adminUserSuperPro: AdminUserSuperPro,
             adminPermissionUsers: AdminPermissionUser,
             adminWhiteLabel: AdminWhiteLabel,
             createdBy: Number,
@@ -109,14 +107,13 @@ export class AdminUser extends BaseEntity {
     @ManyToOne(() => AdminProfile, (other) => other.adminUsers)
     adminProfile: AdminProfile;
 
-    @OneToOne(() => AdminUserSuperPro)
-    adminUserSuperPro: AdminUserSuperPro;
-
     @OneToMany(() => AdminPermissionUser, (other) => other.adminUser)
     adminPermissionUsers: AdminPermissionUser[];
 
     @ManyToOne(() => AdminWhiteLabel, (other) => other.adminUsers)
     adminWhiteLabel: AdminWhiteLabel;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
     @Column({ name: 'createdBy', nullable: true })
     @ApiProperty({ required: false })

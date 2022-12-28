@@ -4,7 +4,6 @@ import { IsNotEmpty, MinLength, MaxLength, Length, Min, Max, Matches } from 'cla
 import { BaseDTO } from '../../../service/dto/base.dto';
 
 import { AdminProfileDTO } from '../../admin-profile/_base/admin-profile.dto';
-import { AdminUserSuperProDTO } from '../../admin-user-super-pro/_base/admin-user-super-pro.dto';
 import { AdminPermissionUserDTO } from '../../admin-permission-user/_base/admin-permission-user.dto';
 import { AdminWhiteLabelDTO } from '../../admin-white-label/_base/admin-white-label.dto';
 import { UserType } from '../../../entities/admin-user/_base/user-type.enum';
@@ -54,11 +53,9 @@ export class AdminUserDTO extends BaseDTO {
 
     @ApiProperty({ description: 'clientId field', required: false })
     clientId: number;
+
     @ApiProperty({ type: AdminProfileDTO, description: 'adminProfile relationship' })
     adminProfile: AdminProfileDTO;
-
-    @ApiProperty({ type: AdminUserSuperProDTO, description: 'adminUserSuperPro relationship' })
-    adminUserSuperPro: AdminUserSuperProDTO;
 
     @ApiProperty({ type: AdminPermissionUserDTO, isArray: true, description: 'adminPermissionUsers relationship' })
     adminPermissionUsers: AdminPermissionUserDTO[];
