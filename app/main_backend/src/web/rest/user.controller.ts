@@ -17,69 +17,7 @@ import { UserService } from '../../service/user.service';
 export class UserController {
   logger = new Logger('UserController');
 
-  constructor(private readonly userService: UserService, protected readonly userRepository: UserRepository) {}
-
-  @Get('/')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async getAllUsers(@Req() req: Request): Promise<User[]> {
-    const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
-    const userLogged = await this.userRepository.findOne({
-      where: { id: req['user']['id'] },
-      relations: ['authorities', 'adminWhiteLabel'],
-    });
-    const where: any = (userLogged.login !== 'admin' ? { adminWhiteLabel: userLogged.adminWhiteLabel } : {})
-    const [results, count] = await this.userService.findAndCount({
-      where: where,
-      skip: +pageRequest.page * pageRequest.size,
-      take: +pageRequest.size,
-      order: pageRequest.sort.asOrder(),
-    });
-    HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
-    return results;
-  }
-
-  @Post('/')
-  @Roles(RoleType.USER)
-  @ApiOperation({ description: 'Create user' })
-  @ApiExcludeEndpoint()
-  async createUser(@Req() req: Request, @Body() user: User): Promise<User> {
-    user.createdDate = new Date();
-    user.lastModifiedDate = new Date();
-    user.createdBy = req['user']['id'];
-    user.lastModifiedBy = req['user']['id'];
-
-    const userLogged = await this.userRepository.findOne({
-      where: { id: req['user']['id'] },
-      relations: ['authorities', 'adminWhiteLabel'],
-    });
-    user.adminWhiteLabel = userLogged.adminWhiteLabel;
-
-    const created = await this.userService.save(user);
-    HeaderUtil.addEntityCreatedHeaders(req.res, 'User', created.id);
-    return created;
-  }
-
-  @Put('/')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async updateUser(@Req() req: Request, @Body() user: User): Promise<User> {
-    user.lastModifiedDate = new Date();
-    user.lastModifiedBy = req['user']['id'];
-    const userLogged = await this.userRepository.findOne({
-      where: { id: req['user']['id'] },
-      relations: ['authorities', 'adminWhiteLabel'],
-    });
-    if (userLogged.adminWhiteLabel) {
-      user.adminWhiteLabel = userLogged.adminWhiteLabel;
-    }
-    try {
-      HeaderUtil.addEntityCreatedHeaders(req.res, 'User', user.id);
-      return await this.userService.update(user);
-    } catch (error) {
-      return error;
-    }
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Get('/:login')
   @ApiExcludeEndpoint()

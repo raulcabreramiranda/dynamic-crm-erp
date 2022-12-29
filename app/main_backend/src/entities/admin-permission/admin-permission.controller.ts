@@ -19,8 +19,8 @@ import { AuthService } from '../../service/auth.service';
 export class AdminPermissionController extends AdminPermissionControllerBase {
     logger = new Logger('AdminPermissionController');
 
-    constructor(protected readonly authService: AuthService, protected readonly adminPermissionService: AdminPermissionService, protected readonly userRepository: UserRepository) {
-        super(authService, adminPermissionService, userRepository);
+    constructor(protected readonly authService: AuthService, protected readonly adminPermissionService: AdminPermissionService) {
+        super(authService, adminPermissionService);
     }
 
     @Get('/dummy')

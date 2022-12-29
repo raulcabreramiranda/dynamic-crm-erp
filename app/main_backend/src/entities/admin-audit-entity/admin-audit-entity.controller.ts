@@ -19,8 +19,10 @@ import { AuthService } from '../../service/auth.service';
 export class AdminAuditEntityController extends AdminAuditEntityControllerBase {
     logger = new Logger('AdminAuditEntityController');
 
-    constructor(protected readonly authService: AuthService, protected readonly adminAuditEntityService: AdminAuditEntityService, protected readonly userRepository: UserRepository) {
-        super(authService, adminAuditEntityService, userRepository);
+    constructor(protected readonly authService: AuthService, 
+        protected readonly adminAuditEntityService: AdminAuditEntityService
+    ) {
+        super(authService, adminAuditEntityService);
     }
 
     @Get('/dummy')

@@ -6,6 +6,7 @@ import { AdminUserController as AdminUserControllerBase } from './_base/admin-us
 
 import { AdminUserService } from './admin-user.service';
 import { AuthGuard, Roles, RolesGuard, RoleType } from '../../security';
+import { HeaderUtil } from '../../client/header-util';
 import { LoggingInterceptor } from '../../client/interceptors/logging.interceptor';
 import { UserRepository } from '../../repository/user.repository';
 import { AuthService } from '../../service/auth.service';
@@ -18,8 +19,8 @@ import { AuthService } from '../../service/auth.service';
 export class AdminUserController extends AdminUserControllerBase {
     logger = new Logger('AdminUserController');
 
-    constructor(protected readonly authService: AuthService, protected readonly adminUserService: AdminUserService, protected readonly userRepository: UserRepository) {
-        super(authService, adminUserService, userRepository);
+    constructor(protected readonly authService: AuthService, protected readonly adminUserService: AdminUserService) {
+        super(authService, adminUserService);
     }
 
     @Get('/dummy')

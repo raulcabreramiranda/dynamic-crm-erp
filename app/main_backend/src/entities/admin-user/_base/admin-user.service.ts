@@ -1,8 +1,7 @@
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
+import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminUser from './admin-user.entity';
 import { AdminUserRepository } from '../admin-user.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
@@ -16,7 +15,7 @@ relationshipNames.push('adminWhiteLabel');
 export class AdminUserService {
     logger = new Logger('AdminUserService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @InjectRepository(AdminUserRepository) protected adminUserRepository: AdminUserRepository) {}
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINUSER_REPOSITORY') protected adminUserRepository: Repository<AdminUser>) {}
 
     async findById(id: string, selectFields?: string[], selectColumns?: string): Promise<AdminUser | undefined> {
         const options: any = {};

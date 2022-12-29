@@ -1,18 +1,16 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { UserLoginDTO } from './dto/user-login.dto';
 import { Payload } from '../security/payload.interface';
-import { AdminAuthority as Authority } from '../entities/admin-authority/_base/admin-authority.entity';
+import AdminAuthority, { AdminAuthority as Authority } from '../entities/admin-authority/_base/admin-authority.entity';
 import { AdminUser as User } from '../entities/admin-user/_base/admin-user.entity';
-import { AdminAuthorityRepository as AuthorityRepository } from '../entities/admin-authority/admin-authority.repository';
-import { AdminPermissionProfileRepository as PermissionProfileRepository } from '../entities/admin-permission-profile/admin-permission-profile.repository';
-import { AdminPermissionUserRepository as PermissionUserRepository } from '../entities/admin-permission-user/admin-permission-user.repository';
 import { UserService } from './user.service';
 
-import { getManager } from 'typeorm';
+import { getManager, Repository } from 'typeorm';
 import * as moment from 'moment';
 import { UserType } from 'src/entities/admin-user/_base/user-type.enum';
+import AdminPermissionUser from 'src/entities/admin-permission-user/_base/admin-permission-user.entity';
 
 type PlataformUserData = {
   classId: number;
@@ -27,12 +25,9 @@ export class AuthService {
   logger = new Logger('AuthService');
   constructor(
     private readonly jwtService: JwtService,
-    @InjectRepository(AuthorityRepository)
-    private authorityRepository: AuthorityRepository,
-    @InjectRepository(PermissionUserRepository)
-    private permissionUserRepository: PermissionUserRepository,
-    @InjectRepository(PermissionProfileRepository)
-    private permissionProfileRepository: PermissionProfileRepository,
+    @Inject('ADMINAUTHORITY_REPOSITORY') protected authorityRepository: Repository<AdminAuthority>,
+    @Inject('ADMINPERMISSIONUSER_REPOSITORY') protected permissionUserRepository: Repository<AdminPermissionUser>,
+  
     private userService: UserService
   ) {}
 

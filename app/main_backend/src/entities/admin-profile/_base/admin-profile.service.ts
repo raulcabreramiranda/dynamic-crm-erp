@@ -1,12 +1,10 @@
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
+import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminProfile from './admin-profile.entity';
 import { AdminProfileRepository } from '../admin-profile.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
-import { AdminPermissionProfileRepository } from '../../admin-permission-profile/admin-permission-profile.repository';
 
 const relationshipNames = [];
 relationshipNames.push('adminPermissionProfiles');
@@ -16,11 +14,7 @@ relationshipNames.push('adminUsers');
 export class AdminProfileService {
     logger = new Logger('AdminProfileService');
 
-    constructor(
-        @Inject(REQUEST) protected readonly request: Request,
-        @InjectRepository(AdminProfileRepository) protected adminProfileRepository: AdminProfileRepository,
-        @InjectRepository(AdminPermissionProfileRepository) protected adminPermissionProfileRepository: AdminPermissionProfileRepository,
-    ) {}
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINPROFILE_REPOSITORY') protected adminProfileRepository: Repository<AdminProfile>) {}
 
     async findById(id: string, selectFields?: string[], selectColumns?: string): Promise<AdminProfile | undefined> {
         const options: any = {};
@@ -142,43 +136,11 @@ export class AdminProfileService {
 
     async save(adminProfile: AdminProfile): Promise<AdminProfile | undefined> {
         const element = await this.adminProfileRepository.save(adminProfile);
-        adminProfile.adminPermissionProfiles.forEach((v) => {
-            if (!v['deletedAt']) {
-                this.adminPermissionProfileRepository.save({
-                    ...v,
-                    createdDate: v.id && v.createdDate ? v.createdDate : new Date(),
-                    createdBy: v.id && v.createdBy ? v.createdBy : 1,
-                    lastModifiedDate: new Date(),
-                    lastModifiedBy: 1,
-                    adminProfile: {
-                        id: adminProfile.id,
-                    },
-                });
-            }
-        });
         return element;
     }
 
     async update(adminProfile: AdminProfile): Promise<AdminProfile | undefined> {
         const element = await this.adminProfileRepository.save(adminProfile);
-        adminProfile.adminPermissionProfiles.forEach((v) => {
-            if (!v['deletedAt']) {
-                this.adminPermissionProfileRepository.save({
-                    ...v,
-                    createdDate: v.id && v.createdDate ? v.createdDate : new Date(),
-                    createdBy: v.id && v.createdBy ? v.createdBy : 1,
-                    lastModifiedDate: new Date(),
-                    lastModifiedBy: 1,
-                    adminProfile: {
-                        id: adminProfile.id,
-                    },
-                });
-            } else {
-                if (v['id']) {
-                    this.adminPermissionProfileRepository.remove(v);
-                }
-            }
-        });
         return element;
     }
 

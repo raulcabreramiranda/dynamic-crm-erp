@@ -1,15 +1,25 @@
 import { Module } from '@nestjs/common';
 
 import { UserController } from '../web/rest/user.controller';
-import { UserRepository } from '../repository/user.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from '../service/user.service';
-import { AdminAuditEntityRepository as AuditEntityRepository } from '../entities/admin-audit-entity/admin-audit-entity.repository';
+import { adminAuditEntityProviders } from 'src/entities/admin-audit-entity/admin-audit-entity.providers';
+import { DatabaseModule } from 'src/database/database.module';
+import { adminUserProviders } from 'src/entities/admin-user/admin-user.providers';
+import { adminPermissionProfileProviders } from 'src/entities/admin-permission-profile/admin-permission-profile.providers';
+import { adminProfileProviders } from 'src/entities/admin-profile/admin-profile.providers';
+import { adminPermissionUserProviders } from 'src/entities/admin-permission-user/admin-permission-user.providers';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRepository, AuditEntityRepository])],
+  imports: [DatabaseModule],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [
+    ...adminAuditEntityProviders,
+    ...adminUserProviders,
+    ...adminPermissionProfileProviders,
+    ...adminProfileProviders,
+    ...adminPermissionUserProviders, 
+    UserService
+  ],
   exports: [UserService],
 })
 export class UserModule {}

@@ -5,13 +5,16 @@ import { AdminAuthorityRepository } from './admin-authority.repository';
 
 import { AdminAuthorityController } from './admin-authority.controller';
 
+import { adminAuthorityProviders } from './admin-authority.providers';
+
 import { AdminAuthorityService } from './admin-authority.service';
 import { UserRepository } from '../../repository/user.repository';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-    imports: [AuthModule, TypeOrmModule.forFeature([AdminAuthorityRepository, UserRepository])],
+    imports: [DatabaseModule, AuthModule],
     controllers: [AdminAuthorityController],
-    providers: [AdminAuthorityService],
+    providers: [...adminAuthorityProviders, AdminAuthorityService],
     exports: [AdminAuthorityService],
 })
 export class AdminAuthorityModule {}

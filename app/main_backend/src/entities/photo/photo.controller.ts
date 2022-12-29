@@ -1,16 +1,37 @@
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
-import { Photo } from './photo.entity';
+import { Body, Controller, Delete, Get, Logger, Param, Post as PostMethod, Put, UseGuards, Req, UseInterceptors } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiResponse, ApiOperation, ApiExcludeEndpoint } from '@nestjs/swagger';
+import { Request } from 'express';
+import Photo from './_base/photo.entity';
+import { PhotoController as PhotoControllerBase } from './_base/photo.controller';
+
 import { PhotoService } from './photo.service';
+import { AuthGuard, Roles, RolesGuard, RoleType } from '../../security';
+import { HeaderUtil } from '../../client/header-util';
 import { LoggingInterceptor } from '../../client/interceptors/logging.interceptor';
+import { UserRepository } from '../../repository/user.repository';
+import { AuthService } from '../../service/auth.service';
 
-
-@Controller()
+@Controller('api/photos')
+@UseGuards(AuthGuard, RolesGuard)
 @UseInterceptors(LoggingInterceptor)
-export class PhotoController {
-  constructor(private readonly photoService: PhotoService) {}
+@ApiBearerAuth()
+@ApiTags('photos')
+export class PhotoController extends PhotoControllerBase {
+    logger = new Logger('PhotoController');
 
-  @Get()
-  getHello(): Promise<Photo[]> {
-    return this.photoService.findAll();
-  }
+    constructor(protected readonly authService: AuthService, protected readonly photoService: PhotoService) {
+        super(authService, photoService);
+    }
+
+    @Get('/dummy')
+    @Roles(RoleType.USER)
+    @ApiResponse({
+        status: 200,
+        description: 'Dummy extended endpoint',
+        type: Photo,
+    })
+    @ApiExcludeEndpoint()
+    async getDummy() {
+        return await this.photoService.findById('1');
+    }
 }

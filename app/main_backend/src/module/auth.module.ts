@@ -5,23 +5,31 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../security/passport.jwt.strategy';
 import { UserJWTController } from '../web/rest/user.jwt.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from '../web/rest/auth.controller';
 import { AccountController } from '../web/rest/account.controller';
-
+import { DatabaseModule } from 'src/database/database.module';
+import { adminPermissionUserProviders } from 'src/entities/admin-permission-user/admin-permission-user.providers';
+import { adminAuthorityProviders } from 'src/entities/admin-authority/admin-authority.providers';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([]),
+    DatabaseModule,
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.NODE_SERVER_JWT_SECRET || 'security.authentication.jwt.base64-secret',
+      secret:
+        process.env.NODE_SERVER_JWT_SECRET ||
+        'security.authentication.jwt.base64-secret',
       signOptions: { expiresIn: '300s' },
     }),
   ],
   controllers: [UserJWTController, AuthController, AccountController],
-  providers: [AuthService, JwtStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    ...adminAuthorityProviders,
+    ...adminPermissionUserProviders,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

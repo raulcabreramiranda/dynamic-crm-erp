@@ -1,28 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AdminUser as User } from '../entities/admin-user/_base/admin-user.entity';
+import AdminUser, { AdminUser as User } from '../entities/admin-user/_base/admin-user.entity';
 import { UserRepository } from '../repository/user.repository';
-import { FindManyOptions, FindOneOptions, getManager } from 'typeorm';
+import { FindManyOptions, FindOneOptions, getManager, Repository } from 'typeorm';
 
-import { AdminAuditEntityRepository as AuditEntityRepository } from '../entities/admin-audit-entity/admin-audit-entity.repository';
-import { AdminPermissionProfileRepository as PermissionProfileRepository } from '../entities/admin-permission-profile/admin-permission-profile.repository';
-import { AdminProfileRepository as ProfileRepository } from '../entities/admin-profile/admin-profile.repository';
-import { AdminPermissionUserRepository as PermissionUserRepository } from '../entities/admin-permission-user/admin-permission-user.repository';
 import { getMany } from 'src/utilsFunctions';
+import AdminAuditEntity from 'src/entities/admin-audit-entity/_base/admin-audit-entity.entity';
+import AdminPermissionProfile from 'src/entities/admin-permission-profile/_base/admin-permission-profile.entity';
+import AdminProfile from 'src/entities/admin-profile/_base/admin-profile.entity';
+import AdminPermissionUser from 'src/entities/admin-permission-user/_base/admin-permission-user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-    @InjectRepository(AuditEntityRepository)
-    private auditEntityRepository: AuditEntityRepository,
-    @InjectRepository(PermissionProfileRepository)
-    private permissionProfileRepository: PermissionProfileRepository,
-    @InjectRepository(ProfileRepository)
-    private profileRepository: ProfileRepository,
-    @InjectRepository(PermissionUserRepository)
-    private permissionUserRepository: PermissionUserRepository
+    @Inject('ADMINUSER_REPOSITORY') protected userRepository: Repository<AdminUser>,
+    @Inject('ADMINAUDITENTITY_REPOSITORY') protected auditEntityRepository: Repository<AdminAuditEntity>,
+    @Inject('ADMINPERMISSIONPROFILE_REPOSITORY') protected permissionProfileRepository: Repository<AdminPermissionProfile>,
+    @Inject('ADMINPROFILE_REPOSITORY') protected profileRepository: Repository<AdminProfile>,
+    @Inject('ADMINPERMISSIONUSER_REPOSITORY') protected permissionUserRepository: Repository<AdminPermissionUser>,
   ) {}
 
   async findById(id: string): Promise<User | undefined> {

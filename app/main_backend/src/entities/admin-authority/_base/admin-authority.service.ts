@@ -1,8 +1,7 @@
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
+import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminAuthority from './admin-authority.entity';
 import { AdminAuthorityRepository } from '../admin-authority.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
@@ -13,7 +12,7 @@ const relationshipNames = [];
 export class AdminAuthorityService {
     logger = new Logger('AdminAuthorityService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @InjectRepository(AdminAuthorityRepository) protected adminAuthorityRepository: AdminAuthorityRepository) {}
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINAUTHORITY_REPOSITORY') protected adminAuthorityRepository: Repository<AdminAuthority>) {}
 
     async findById(id: string, selectFields?: string[], selectColumns?: string): Promise<AdminAuthority | undefined> {
         const options: any = {};

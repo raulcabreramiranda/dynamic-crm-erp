@@ -5,13 +5,16 @@ import { AdminPermissionUserRepository } from './admin-permission-user.repositor
 
 import { AdminPermissionUserController } from './admin-permission-user.controller';
 
+import { adminPermissionUserProviders } from './admin-permission-user.providers';
+
 import { AdminPermissionUserService } from './admin-permission-user.service';
 import { UserRepository } from '../../repository/user.repository';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-    imports: [AuthModule, TypeOrmModule.forFeature([AdminPermissionUserRepository, UserRepository])],
+    imports: [DatabaseModule, AuthModule],
     controllers: [AdminPermissionUserController],
-    providers: [AdminPermissionUserService],
+    providers: [...adminPermissionUserProviders, AdminPermissionUserService],
     exports: [AdminPermissionUserService],
 })
 export class AdminPermissionUserModule {}

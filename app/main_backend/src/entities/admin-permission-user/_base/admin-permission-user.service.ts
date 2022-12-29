@@ -1,8 +1,7 @@
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
+import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminPermissionUser from './admin-permission-user.entity';
 import { AdminPermissionUserRepository } from '../admin-permission-user.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
@@ -15,7 +14,7 @@ relationshipNames.push('adminUser');
 export class AdminPermissionUserService {
     logger = new Logger('AdminPermissionUserService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @InjectRepository(AdminPermissionUserRepository) protected adminPermissionUserRepository: AdminPermissionUserRepository) {}
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINPERMISSIONUSER_REPOSITORY') protected adminPermissionUserRepository: Repository<AdminPermissionUser>) {}
 
     async findById(id: string, selectFields?: string[], selectColumns?: string): Promise<AdminPermissionUser | undefined> {
         const options: any = {};

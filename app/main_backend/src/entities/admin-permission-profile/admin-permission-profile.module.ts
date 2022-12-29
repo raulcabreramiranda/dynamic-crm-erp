@@ -5,13 +5,16 @@ import { AdminPermissionProfileRepository } from './admin-permission-profile.rep
 
 import { AdminPermissionProfileController } from './admin-permission-profile.controller';
 
+import { adminPermissionProfileProviders } from './admin-permission-profile.providers';
+
 import { AdminPermissionProfileService } from './admin-permission-profile.service';
 import { UserRepository } from '../../repository/user.repository';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-    imports: [AuthModule, TypeOrmModule.forFeature([AdminPermissionProfileRepository, UserRepository])],
+    imports: [DatabaseModule, AuthModule],
     controllers: [AdminPermissionProfileController],
-    providers: [AdminPermissionProfileService],
+    providers: [...adminPermissionProfileProviders, AdminPermissionProfileService],
     exports: [AdminPermissionProfileService],
 })
 export class AdminPermissionProfileModule {}

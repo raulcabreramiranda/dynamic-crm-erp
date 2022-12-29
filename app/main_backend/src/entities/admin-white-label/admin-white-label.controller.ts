@@ -19,8 +19,8 @@ import { AuthService } from '../../service/auth.service';
 export class AdminWhiteLabelController extends AdminWhiteLabelControllerBase {
     logger = new Logger('AdminWhiteLabelController');
 
-    constructor(protected readonly authService: AuthService, protected readonly adminWhiteLabelService: AdminWhiteLabelService, protected readonly userRepository: UserRepository) {
-        super(authService, adminWhiteLabelService, userRepository);
+    constructor(protected readonly authService: AuthService, protected readonly adminWhiteLabelService: AdminWhiteLabelService) {
+        super(authService, adminWhiteLabelService);
     }
 
     @Get('/dummy')
