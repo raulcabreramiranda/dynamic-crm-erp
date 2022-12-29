@@ -3,7 +3,6 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminProfile from './_base/admin-profile.entity';
-import { AdminProfileRepository } from './admin-profile.repository';
 import { AdminProfileService as AdminProfileServiceBase } from './_base/admin-profile.service';
 
 const relationshipNames = [];

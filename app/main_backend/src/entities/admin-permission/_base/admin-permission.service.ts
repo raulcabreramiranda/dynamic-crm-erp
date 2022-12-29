@@ -3,7 +3,6 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminPermission from './admin-permission.entity';
-import { AdminPermissionRepository } from '../admin-permission.repository';
 import { getManyAndCount } from '../../../utilsFunctions';
 
 const relationshipNames = [];

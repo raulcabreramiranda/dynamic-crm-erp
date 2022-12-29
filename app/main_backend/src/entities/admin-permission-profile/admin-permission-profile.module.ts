@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../../module/auth.module';
-import { AdminPermissionProfileRepository } from './admin-permission-profile.repository';
 
 import { AdminPermissionProfileController } from './admin-permission-profile.controller';
 

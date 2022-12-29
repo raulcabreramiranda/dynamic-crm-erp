@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../../module/auth.module';
-import { AdminUserRepository } from './admin-user.repository';
 
 import { AdminUserController } from './admin-user.controller';
 

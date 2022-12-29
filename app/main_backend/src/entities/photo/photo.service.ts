@@ -3,7 +3,6 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import Photo from './_base/photo.entity';
-import { PhotoRepository } from './photo.repository';
 import { PhotoService as PhotoServiceBase } from './_base/photo.service';
 
 const relationshipNames = [];

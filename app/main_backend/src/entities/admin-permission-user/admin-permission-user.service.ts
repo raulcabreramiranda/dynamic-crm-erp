@@ -3,7 +3,6 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminPermissionUser from './_base/admin-permission-user.entity';
-import { AdminPermissionUserRepository } from './admin-permission-user.repository';
 import { AdminPermissionUserService as AdminPermissionUserServiceBase } from './_base/admin-permission-user.service';
 
 const relationshipNames = [];
