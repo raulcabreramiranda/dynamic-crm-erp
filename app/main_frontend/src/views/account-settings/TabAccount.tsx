@@ -21,7 +21,7 @@ import ReactSelect from 'react-select'
 import Close from 'mdi-material-ui/Close'
 import InputText from 'src/layouts/components/inputs/InputText'
 import InputSelect from 'src/layouts/components/inputs/InputSelect'
-import InputUploadImage from 'src/layouts/components/inputs/InputUploadImage'
+import InputUploadImage from 'src/layouts/components/inputs/InputImage'
 
 
 const TabAccount = () => {

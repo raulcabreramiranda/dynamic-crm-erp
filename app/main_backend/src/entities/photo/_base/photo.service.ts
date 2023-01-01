@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import Photo from './photo.entity';
-import { getManyAndCount } from '../../../utilsFunctions';
+import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
 
@@ -36,7 +36,16 @@ export class PhotoService {
         }
 
         options.where = { id: Equal(Number.parseInt(id)) };
-        const result = await getManyAndCount(options, [], Photo, { id: this.request['user']?.['id'] }, selectColumns);
+        const result = await getManyAndCount2({
+            options,
+            selectColumns,
+            filters: [],
+            repository: this.photoRepository,
+            Entity: Photo,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
         return result[1] > 0 ? result[0][0] : null;
     }
 
@@ -128,7 +137,17 @@ export class PhotoService {
             });
         options.join = { alias: 'filterJoin', leftJoin: { ...optionJoins }, leftJoinAndSelect: { ...optionJoinAndSelect } };
         options.where = where;
-        return await getManyAndCount(options, filters, Photo, { id: this.request['user']?.['id'] }, selectColumns);
+
+        return await getManyAndCount2({
+            options,
+            filters,
+            selectColumns,
+            Entity: Photo,
+            repository: this.photoRepository,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
     }
 
     async save(photo: Photo): Promise<Photo | undefined> {

@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminProfile from './admin-profile.entity';
-import { getManyAndCount } from '../../../utilsFunctions';
+import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
 relationshipNames.push('adminPermissionProfiles');
@@ -38,7 +38,16 @@ export class AdminProfileService {
         }
 
         options.where = { id: Equal(Number.parseInt(id)) };
-        const result = await getManyAndCount(options, [], AdminProfile, { id: this.request['user']?.['id'] }, selectColumns);
+        const result = await getManyAndCount2({
+            options,
+            selectColumns,
+            filters: [],
+            repository: this.adminProfileRepository,
+            Entity: AdminProfile,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
         return result[1] > 0 ? result[0][0] : null;
     }
 
@@ -130,7 +139,17 @@ export class AdminProfileService {
             });
         options.join = { alias: 'filterJoin', leftJoin: { ...optionJoins }, leftJoinAndSelect: { ...optionJoinAndSelect } };
         options.where = where;
-        return await getManyAndCount(options, filters, AdminProfile, { id: this.request['user']?.['id'] }, selectColumns);
+
+        return await getManyAndCount2({
+            options,
+            filters,
+            selectColumns,
+            Entity: AdminProfile,
+            repository: this.adminProfileRepository,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
     }
 
     async save(adminProfile: AdminProfile): Promise<AdminProfile | undefined> {

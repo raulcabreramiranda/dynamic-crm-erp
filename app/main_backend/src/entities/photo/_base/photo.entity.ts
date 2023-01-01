@@ -15,11 +15,12 @@ export class Photo extends BaseEntity {
             title: String,
             hour: String,
             link: String,
+            linkContentType: String,
             typeContent: TypeContent,
         };
     }
 
-    @Column({ name: 'description', nullable: true })
+    @Column({ type: 'text', name: 'description', nullable: true })
     @ApiProperty({ required: false })
     description: string;
 
@@ -31,9 +32,13 @@ export class Photo extends BaseEntity {
     @ApiProperty({ required: false })
     hour: string;
 
-    @Column({ name: 'link', nullable: true })
+    @Column({ type: 'text', name: 'link', nullable: true })
     @ApiProperty({ required: false })
     link: string;
+
+    @Column({ name: 'linkContentType', nullable: true })
+    @ApiProperty({ required: false })
+    linkContentType: string;
 
     @Column({ type: 'simple-enum', name: 'typeContent', enum: TypeContent, nullable: true })
     @ApiProperty({ required: false })

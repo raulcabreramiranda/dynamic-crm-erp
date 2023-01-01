@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminPermissionProfile from './admin-permission-profile.entity';
-import { getManyAndCount } from '../../../utilsFunctions';
+import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
 relationshipNames.push('adminPermission');
@@ -38,7 +38,16 @@ export class AdminPermissionProfileService {
         }
 
         options.where = { id: Equal(Number.parseInt(id)) };
-        const result = await getManyAndCount(options, [], AdminPermissionProfile, { id: this.request['user']?.['id'] }, selectColumns);
+        const result = await getManyAndCount2({
+            options,
+            selectColumns,
+            filters: [],
+            repository: this.adminPermissionProfileRepository,
+            Entity: AdminPermissionProfile,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
         return result[1] > 0 ? result[0][0] : null;
     }
 
@@ -130,7 +139,17 @@ export class AdminPermissionProfileService {
             });
         options.join = { alias: 'filterJoin', leftJoin: { ...optionJoins }, leftJoinAndSelect: { ...optionJoinAndSelect } };
         options.where = where;
-        return await getManyAndCount(options, filters, AdminPermissionProfile, { id: this.request['user']?.['id'] }, selectColumns);
+
+        return await getManyAndCount2({
+            options,
+            filters,
+            selectColumns,
+            Entity: AdminPermissionProfile,
+            repository: this.adminPermissionProfileRepository,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
     }
 
     async save(adminPermissionProfile: AdminPermissionProfile): Promise<AdminPermissionProfile | undefined> {

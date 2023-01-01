@@ -56,9 +56,21 @@ export const insertQuery = async (table, body) => {
   };
 };
 
-export const getManyAndCount: any = async (options, filters, Entity, userRequest, selectColumns) => {
+export const getManyAndCount: any = async (options, filters, Entity, userRequest, selectColumns, repository = null) => {
   const _selectColumns = typeof selectColumns === 'string' ? JSON.parse(selectColumns) : selectColumns;
-  const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns);
+  const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns, repository);
+
+  const result = await builder.getManyAndCount();
+  //  const query = highlight(builder.getSql(), { language: 'sql', ignoreIllegals: true });
+  //  const parameters = highlight(
+  //    JSON.stringify({ TIME: Date.now() - now, ...builder.getParameters() }),
+  //    { language: 'json', ignoreIllegals: true }
+  //  );
+  return result;
+};
+export const getManyAndCount2: any = async ({options, filters, Entity, userRequest, selectColumns, repository}: any) => {
+  const _selectColumns = typeof selectColumns === 'string' ? JSON.parse(selectColumns) : selectColumns;
+  const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns, repository);
 
   const result = await builder.getManyAndCount();
   //  const query = highlight(builder.getSql(), { language: 'sql', ignoreIllegals: true });
@@ -85,7 +97,7 @@ export const getMany: any = async (options, filters, Entity, userRequest, select
   return result;
 };
 
-const executeSQL: any = (options, filters, Entity, userRequest, selectColumns) => {
+const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, repository) => {
   // const instance = new Entity()
   // console.log(instance)
 
@@ -115,7 +127,9 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns) =
         options.relations.push(v.split('.').slice(0, -1).join('.'));
       }
     });
-  const builder = createQueryBuilder(Entity, 'A0').where(options.where || {});
+
+
+  const builder = repository.createQueryBuilder('A0').where(options.where || {});
   const myJoin = {};
   const filterJoinWhiteLabel = (i, element) => {
     let EleArray = Entity;

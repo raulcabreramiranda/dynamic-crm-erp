@@ -16,7 +16,15 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     { title: 'Dashboard', icon: HomeOutline, path: '/' },
-    { title: 'Jorney', icon: AccountCogOutline, path: '/backend/jorney' },
+    { title: 'Photos', icon: AccountCogOutline, path: '/photos' },
+    // { title: 'Audits', icon: AccountCogOutline, path: '/admin/audit-entities' },
+    // { title: 'Authorities', icon: AccountCogOutline, path: '/admin/authorities' },
+    //{ title: 'Permission Profiles', icon: AccountCogOutline, path: '/admin/permission-profiles' },
+    // { title: 'Permission Users', icon: AccountCogOutline, path: '/admin/permission-users' },
+    { title: 'Permissions', icon: AccountCogOutline, path: '/admin/permissions' },
+    { title: 'Profiles', icon: AccountCogOutline, path: '/admin/profiles' },
+    { title: 'Users', icon: AccountCogOutline, path: '/admin/users' },
+    { title: 'WhiteLabels', icon: AccountCogOutline, path: '/admin/white-labels' },
     
     { sectionTitle: 'Pages' },
     

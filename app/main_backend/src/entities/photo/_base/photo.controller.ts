@@ -110,6 +110,24 @@ export class PhotoController {
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     async post(@Req() req: Request, @Body() photo: Photo): Promise<Photo> {
         try {
+            const fs = require('fs');
+            const re = /(?:\.([^.]+))?$/;
+
+            const linkBase64 = req.body.linkBase64;
+            if (linkBase64) {
+                const linkFileName = req.body.linkFileName;
+                const linkBDName = 'arquivos/photos/' + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + '.' + re.exec(linkFileName)[1];
+                photo.link = '/' + linkBDName;
+                await fs.mkdir('arquivos/photos/', { recursive: true }, (err) => {
+                    if (err) console.log(err);
+                    else {
+                        require('fs').writeFile(linkBDName, linkBase64.substring(linkBase64.indexOf(',') + 1), 'base64', function (err) {
+                            console.log(err);
+                        });
+                    }
+                });
+            }
+
             const created = await this.photoService.save(photo);
             HeaderUtil.addEntityCreatedHeaders(req.res, 'Photo', created.id);
             return created;
@@ -133,6 +151,37 @@ export class PhotoController {
     async put(@Req() req: Request, @Body() photo: Photo): Promise<Photo> {
         try {
             HeaderUtil.addEntityCreatedHeaders(req.res, 'Photo', photo.id);
+
+            const fs = require('fs');
+            const re = /(?:\.([^.]+))?$/;
+
+            const linkOldName = photo.link;
+            const linkBase64 = req.body.linkBase64;
+            if (linkBase64) {
+                const linkFileName = req.body.linkFileName;
+                const linkBDName = 'arquivos/photos/' + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + '.' + re.exec(linkFileName)[1];
+                photo.link = '/' + linkBDName;
+                await fs.mkdir('arquivos/photos/', { recursive: true }, (err) => {
+                    try {
+                        if (err) console.log(err);
+                        else if (linkOldName) {
+                            fs.stat(linkOldName.replace(/^\/+|\/+$/g, ''), function (err, stats) {
+                                console.log(stats); //here we got all information of file in stats variable
+                                if (err) return console.log(err);
+                                fs.unlink(linkOldName.replace(/^\/+|\/+$/g, ''), function (err) {
+                                    if (err) return console.error(err);
+                                    console.log('file deleted successfully');
+                                });
+                            });
+                        }
+                        require('fs').writeFile(linkBDName, linkBase64.substring(linkBase64.indexOf(',') + 1), 'base64', function (err) {
+                            console.log(err);
+                        });
+                    } catch (error) {
+                        console.info(error);
+                    }
+                });
+            }
 
             return await this.photoService.update(photo);
         } catch (error) {

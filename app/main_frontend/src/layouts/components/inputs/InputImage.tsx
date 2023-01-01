@@ -6,13 +6,9 @@ import Typography from '@mui/material/Typography'
 import Button, { ButtonProps } from '@mui/material/Button'
 import { ReactElement } from 'react'
 import { Context, useContext } from 'react'
+import { assestBasePath } from 'src/util/entity-utils'
 
-const ImgStyled = styled('img')(({ theme }) => ({
-  width: 120,
-  height: 120,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius
-}))
+
 
 const ButtonStyled = styled(Button)<ButtonProps & { component?: ElementType; htmlFor?: string }>(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -34,35 +30,54 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
 interface Props {
   entityContext: Context<any>
   id?: string
-  name?: string
-  label?: string | ReactElement
+  name: string
+  label: string | ReactElement
+  widthPreview: string
+  heightPreview: string
 }
 
-const InputUploadImage = ({ name, entityContext: EntityContext }: Props) => {
+const InputImage = ({ name,  widthPreview, heightPreview, entityContext: EntityContext }: Props) => {
   const { entityEdit, setEntityEdit } = useContext(EntityContext)
   const fieldName = typeof name !== 'undefined' ? name : ''
 
-  const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
+  const ImgStyled = styled('img')(({ theme }) => ({
+    width: widthPreview,
+    height: heightPreview,
+    marginRight: theme.spacing(6.25),
+    borderRadius: theme.shape.borderRadius
+  }))
 
+  const baseImage = entityEdit[fieldName] ? assestBasePath(entityEdit[fieldName]) : "/images/avatars/1.png";
+  const [imgSrc, setImgSrc] = useState<string>(baseImage)
+  
   const onChange = (file: ChangeEvent) => {
     const reader = new FileReader()
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {
-      reader.onload = () => setImgSrc(reader.result as string)
+      reader.onload = () => handleChange(reader.result as string, files[0].name)
 
       reader.readAsDataURL(files[0])
     }
   }
+  
+  
+  const handleChange = (base64: string, fileName: string) => {
+    const _entityEdit = { ...entityEdit }
+    _entityEdit[`${fieldName}Base64`] = base64
+    _entityEdit[`${fieldName}FileName`] = fileName
+    setEntityEdit(_entityEdit)
+    setImgSrc(base64)
+  }
 
   return (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <ImgStyled src={imgSrc} alt='Profile Pic' />
+        <ImgStyled src={imgSrc} alt='Profile Pic' width={"300px"} height={"500px"}/>
         <Box>
           <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
             Upload New Photo
             <input hidden type='file' onChange={onChange} accept='image/png, image/jpeg' id='account-settings-upload-image' />
           </ButtonStyled>
-          <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc('/images/avatars/1.png')}>
+          <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc(baseImage)}>
             Reset
           </ResetButtonStyled>
           <Typography variant='body2' sx={{ marginTop: 5 }}>
@@ -73,4 +88,4 @@ const InputUploadImage = ({ name, entityContext: EntityContext }: Props) => {
   )
 }
 
-export default InputUploadImage
+export default InputImage

@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminWhiteLabel from './admin-white-label.entity';
-import { getManyAndCount } from '../../../utilsFunctions';
+import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
 relationshipNames.push('adminUsers');
@@ -37,7 +37,16 @@ export class AdminWhiteLabelService {
         }
 
         options.where = { id: Equal(Number.parseInt(id)) };
-        const result = await getManyAndCount(options, [], AdminWhiteLabel, { id: this.request['user']?.['id'] }, selectColumns);
+        const result = await getManyAndCount2({
+            options,
+            selectColumns,
+            filters: [],
+            repository: this.adminWhiteLabelRepository,
+            Entity: AdminWhiteLabel,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
         return result[1] > 0 ? result[0][0] : null;
     }
 
@@ -129,7 +138,17 @@ export class AdminWhiteLabelService {
             });
         options.join = { alias: 'filterJoin', leftJoin: { ...optionJoins }, leftJoinAndSelect: { ...optionJoinAndSelect } };
         options.where = where;
-        return await getManyAndCount(options, filters, AdminWhiteLabel, { id: this.request['user']?.['id'] }, selectColumns);
+
+        return await getManyAndCount2({
+            options,
+            filters,
+            selectColumns,
+            Entity: AdminWhiteLabel,
+            repository: this.adminWhiteLabelRepository,
+            userRequest: {
+                id: this.request['user']?.['id'],
+            },
+        });
     }
 
     async save(adminWhiteLabel: AdminWhiteLabel): Promise<AdminWhiteLabel | undefined> {

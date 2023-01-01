@@ -490,6 +490,10 @@ export function apiGetPath() {
   return BASE_API_VERSION_PATH;
 }
 
+export function assestBasePath(imgLink: string) {  
+  return trim(BASE_API_VERSION_PATH, '/') + '/' + trim(imgLink, '/');
+}
+
 export async function apiGet(endpint: string, options: IApiRequestProps = {}) {
   const sort = options['sort'] ? options['sort'] : { id: 'asc' };
   const size = options['size'] ? options['size'] : 100;

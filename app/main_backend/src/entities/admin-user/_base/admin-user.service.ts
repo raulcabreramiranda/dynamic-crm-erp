@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminUser from './admin-user.entity';
-import { getManyAndCount } from '../../../utilsFunctions';
+import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
 relationshipNames.push('adminProfile');
@@ -39,7 +39,17 @@ export class AdminUserService {
         }
 
         options.where = { id: Equal(Number.parseInt(id)) };
-        const result = await getManyAndCount(options, [], AdminUser, { id: this.request['user']?.['id'], whiteLabel: this.request['user']?.['whiteLabel'] }, selectColumns);
+        const result = await getManyAndCount2({
+            options,
+            selectColumns,
+            filters: [],
+            repository: this.adminUserRepository,
+            Entity: AdminUser,
+            userRequest: {
+                id: this.request['user']?.['id'],
+                whiteLabel: this.request['user']?.['whiteLabel'],
+            },
+        });
         return result[1] > 0 ? result[0][0] : null;
     }
 
@@ -131,7 +141,18 @@ export class AdminUserService {
             });
         options.join = { alias: 'filterJoin', leftJoin: { ...optionJoins }, leftJoinAndSelect: { ...optionJoinAndSelect } };
         options.where = where;
-        return await getManyAndCount(options, filters, AdminUser, { id: this.request['user']?.['id'], whiteLabel: this.request['user']?.['whiteLabel'] }, selectColumns);
+
+        return await getManyAndCount2({
+            options,
+            filters,
+            selectColumns,
+            Entity: AdminUser,
+            repository: this.adminUserRepository,
+            userRequest: {
+                id: this.request['user']?.['id'],
+                whiteLabel: this.request['user']?.['whiteLabel'],
+            },
+        });
     }
 
     async save(adminUser: AdminUser): Promise<AdminUser | undefined> {
