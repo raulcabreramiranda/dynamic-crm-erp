@@ -1,9 +1,0 @@
-{
-    "AnswerOptionsSeparator": {
-        "null": "",
-        "PARENTHESES": "PARENTHESES",
-        "MINUS": "MINUS",
-        "DOT": "DOT",
-        "COLON": "COLON"
-    }
-}
