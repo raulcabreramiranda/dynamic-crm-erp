@@ -1,5 +1,12 @@
 # compiled output
+./**/dist/
+./**/.dist/
+./**/.next/
 /generator
 /entities
 /entities-evo
 /node_modules
+/**/dist/
+/**/node_modules/
+
+
