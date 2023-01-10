@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate": "cd entities && rimraf dist && tsc &&  cd ../ && node ./generator/ejs.js entitiesDir=./entities/dist",
-    "generate1": "node ./generator/ejs.js entitiesDir=./entities/dist"
+    "main:start": "cd app/main_frontend && npm run dev & cd app/main_backend && npm run start:dev",        
+    "main:generate": "cd entities && rimraf dist && tsc &&  cd ../ && node ./generator/ejs.js entitiesDir=./entities/dist",
+    "main:generate1": "node ./generator/ejs.js entitiesDir=./entities/dist",
+    "builder:start": "cd app/builder_frontend && npm run dev & cd app/builder_backend && npm run start:dev",        
+    "builder:generate": "cd entities-builder && rimraf dist && tsc && cd ../ && node ./generator/ejs.js entitiesDir=./entities-builder/dist",
+    "builder:generate1": "node ./generator/ejs.js entitiesDir=./entities-builder/dist"
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,7 @@
   },
   "homepage": "https://github.com/raulcabreramiranda/dynamic-crm-erp#readme",
   "dependencies": {
+    "dayjs": "^1.11.7",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {

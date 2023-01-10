@@ -1,0 +1,115 @@
+{
+    "adminWhiteLabel": {
+        "home": {
+            "title": "WhiteLabels",
+            "btn_filter": "Filtrar",
+            "btn_filter_clean": "Limpar Filtros",
+            "btn_filter_open": "Filtros",
+            "createLabel": "Criar novo WhiteLabel",
+            "editLabel": "Editar WhiteLabel",
+            "createOrEditLabel": "Criar ou editar WhiteLabel",
+            "notFound": "Nenhum WhiteLabel encontrado"
+        },
+        "listSelectedButtons": {
+            "clearSelect": "Limpar Seleção",
+            "selectAll": "Selecionar os {{totalItems}} WhiteLabels",
+            "allItensAreSelected": "Os {{totalItems}} WhiteLabels nesta página estão selecionados.",
+            "allItensAreSelectedThisPage": "Todos os {{itemsPerPage}} WhiteLabels nesta página estão selecionados.",
+            "allItensAreSelectedAllPages": "Todas os {{totalItems}} WhiteLabels estão selecionados."
+        },
+        "listTopButtons": {},
+        "listButtons": {
+            "view": "view",
+            "edit": "edit",
+            "delete": "delete"
+        },
+        "viewButtons": {},
+
+        "dropdown_btn": "Actions",
+
+        "created": "Um novo WhiteLabel foi criado com o identificador {{ param }}",
+        "updated": "Um WhiteLabel foi atualizado com o identificador {{ param }}",
+        "deleted": "Um WhiteLabel foi excluído com o identificador {{ param }}",
+        "delete": {
+            "question": "Tem certeza de que deseja excluir?"
+        },
+        "field_id": "ID",
+        "btnNewItem": "Criar novo WhiteLabel",
+        "btnFilter": "Filtrar",
+        "btnOpenFilter": "Filtrar",
+        "btnCleanFilter": "Limpar Filtro",
+        "btnEditItem": "Editar",
+        "btnActions": "Ações",
+        "btnSave": "Salvar",
+        "btnBack": "Ir na listagem",
+        "btnCancel": "Cancelar",
+        "btnDelete": "Apagar",
+        "btnOpen": "Abrir",
+        "createdDate": "Data criação",
+        "lastModifiedDate": "Data modificação",
+        "createdBy": "Criado por",
+        "lastModifiedBy": "Modificado por",
+
+        "upload_logo": "Subir WhiteLabel",
+
+        "detail": {
+            "title": "WhiteLabel"
+        },
+        "id_start": "ID (Inicio)",
+        "id_end": "ID (Fim)",
+
+        "name_start": "Nome (Inicio)",
+        "name_end": "Nome (Fim)",
+
+        "logo_start": "Logo (Inicio)",
+        "logo_end": "Logo (Fim)",
+
+        "socialReason_start": "Razão Social (Inicio)",
+        "socialReason_end": "Razão Social (Fim)",
+
+        "fantasyName_start": "Nome Fantasia (Inicio)",
+        "fantasyName_end": "Nome Fantasia (Fim)",
+
+        "cnpj_start": "CNPJ (Inicio)",
+        "cnpj_end": "CNPJ (Fim)",
+
+        "zipCode_start": "zipCode (Inicio)",
+        "zipCode_end": "zipCode (Fim)",
+
+        "street_start": "street (Inicio)",
+        "street_end": "street (Fim)",
+
+        "complement_start": "complement (Inicio)",
+        "complement_end": "complement (Fim)",
+
+        "number_start": "number (Inicio)",
+        "number_end": "number (Fim)",
+
+        "neighborhood_start": "neighborhood (Inicio)",
+        "neighborhood_end": "neighborhood (Fim)",
+
+        "city_start": "city (Inicio)",
+        "city_end": "city (Fim)",
+
+        "uf_start": "uf (Inicio)",
+        "uf_end": "uf (Fim)",
+        "id": "ID",
+        "name": "Nome",
+        "logo": "Logo",
+        "socialReason": "Razão Social",
+        "fantasyName": "Nome Fantasia",
+        "cnpj": "CNPJ",
+        "zipCode": "zipCode",
+        "street": "street",
+        "complement": "complement",
+        "number": "number",
+        "neighborhood": "neighborhood",
+        "city": "city",
+        "uf": "uf",
+        "adminUsers_empty": "Sem Admin Users",
+        "adminUsers-modal-super-select-title": "Selecione...",
+        "adminUsers-filter-placeholder": "Selecione...",
+        "adminUsers-input-placeholder": "Selecione...",
+        "adminUsers": "Admin Users"
+    }
+}
