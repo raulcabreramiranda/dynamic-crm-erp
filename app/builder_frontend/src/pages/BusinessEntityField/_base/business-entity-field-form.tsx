@@ -9,7 +9,6 @@ import InputSelect from 'src/layouts/components/inputs/InputSelect';
 import InputSelectMany from 'src/layouts/components/inputs/InputSelectMany';
 import InputImage from 'src/layouts/components/inputs/InputImage';
 import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSuperSelect';
-
 import { EntityContext } from './business-entity-field';
 
 const FormUpdate = ({ isNew }: any) => {
@@ -74,6 +73,26 @@ const FormUpdate = ({ isNew }: any) => {
                                     }
                                 />
                             </Grid>
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <div>
+                            <InputSelectMany
+                                id="business-entity-field-businessEntity-form"
+                                options={[]}
+                                entityContext={EntityContext}
+                                relationshipType={'many-to-one'}
+                                optionsLink={'business-entities'}
+                                optionsSort={{ entityName: 'asc' }}
+                                optionsShowFields={['entityName', 'entityNameHumanized']}
+                                name="businessEntity"
+                                label={
+                                    <>
+                                        <Translate contentKey="businessEntityField.Entity" />
+                                    </>
+                                }
+                            />
                         </div>
                     </Grid>
                 </Grid>

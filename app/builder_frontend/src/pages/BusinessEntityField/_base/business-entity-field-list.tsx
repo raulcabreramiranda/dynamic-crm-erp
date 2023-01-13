@@ -171,6 +171,9 @@ const ListTable = ({}: any) => {
                                         <Translate contentKey="businessEntityField.fieldType" />
                                         <i className={sort === 'fieldType' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+                                    <TableHeadCell align={'left'} id="businessEntity-cell-header">
+                                        <Translate contentKey="businessEntityField.businessEntity" />
+                                    </TableHeadCell>
 
                                     <TableHeadCell align={'left'} />
                                 </TableHeadRow>
@@ -190,6 +193,24 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell id="fieldType-cell" align={'left'}>
                                                 <TableDate name={'fieldType'} entityView={businessEntityField} format={APP_LOCAL_DATE_FORMAT} />
+                                            </TableBodyCell>
+
+                                            <TableBodyCell id="businessEntity-cell" align={'left'} role="many-to-one">
+                                                <TableSelectMany
+                                                    id="business-entity-field-businessEntity-form"
+                                                    options={[]}
+                                                    entityView={businessEntityField}
+                                                    relationshipType={'many-to-one'}
+                                                    optionsLink={'business-entities'}
+                                                    optionsSort={{ entityName: 'asc' }}
+                                                    optionsShowFields={['entityName', 'entityNameHumanized']}
+                                                    name="businessEntity"
+                                                    label={
+                                                        <>
+                                                            <Translate contentKey="businessEntityField.Entity" />
+                                                        </>
+                                                    }
+                                                />
                                             </TableBodyCell>
 
                                             <TableBodyCell align={'right'}>

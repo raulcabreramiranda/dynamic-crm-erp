@@ -171,6 +171,26 @@ const ViewForm = () => {
                                 </Grid>
                             </div>
                         </Grid>
+
+                        <Grid item xs={12}>
+                            <div>
+                                <ViewSelectMany
+                                    id="business-entity-businessEntityField-form"
+                                    options={[]}
+                                    entityContext={EntityContext}
+                                    relationshipType={'one-to-many'}
+                                    optionsLink={'business-entity-fields'}
+                                    optionsSort={{ fieldName: 'asc' }}
+                                    optionsShowFields={['fieldName', 'fieldNameHumanized']}
+                                    name="businessEntityField"
+                                    label={
+                                        <>
+                                            <Translate contentKey="businessEntity.Fields" />
+                                        </>
+                                    }
+                                />
+                            </div>
+                        </Grid>
                     </Grid>
                 </form>
             </CardContent>

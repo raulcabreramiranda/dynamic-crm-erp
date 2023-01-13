@@ -87,6 +87,11 @@
         "entityNameHumanizedPlural": "entityNameHumanizedPlural",
         "frontPath": "frontPath",
         "hasWhiteLabel": "hasWhiteLabel",
-        "hasDateAudit": "hasDateAudit"
+        "hasDateAudit": "hasDateAudit",
+        "businessEntityField_empty": "Sem Business Entity Field",
+        "businessEntityField-modal-super-select-title": "Selecione...",
+        "businessEntityField-filter-placeholder": "Selecione...",
+        "businessEntityField-input-placeholder": "Selecione...",
+        "businessEntityField": "Business Entity Field"
     }
 }

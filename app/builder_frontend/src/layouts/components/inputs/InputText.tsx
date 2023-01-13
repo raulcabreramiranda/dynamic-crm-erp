@@ -6,10 +6,11 @@ import { InputTextarea } from 'primereact/inputtextarea';
 interface Props {
     entityContext: Context<any>;
     precision?: number;
+    id?: string;
     type: string;
     label: string | ReactElement;
     labelPos?: 'top' | 'left';
-    placeholder: string;
+    placeholder?: string;
     name: string;
 }
 

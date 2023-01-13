@@ -1,4 +1,4 @@
-import { Chip } from 'primereact/chip';
+import { Tag } from 'primereact/tag';
 import { ReactElement } from 'react'
 
 import { showFieldsSelectAsync } from 'src/util/entity-utils'
@@ -31,18 +31,19 @@ const MenuProps = {
 const TableSelectMany = ({ name, entityView, optionsShowFields }: Props) => {
   const fieldName = typeof name !== 'undefined' ? name : ''
 
-  const processValue = (value: any): ReactElement | ReactElement[] => {
+  const processValue = (value: any): ReactElement | ReactElement[] | string => {
     if (Array.isArray(value)) {
-      return value.map(v=> <Chip label={`${processValue(v)}`} />);
+      console.info(value)
+        return value.map(v=> <Tag value={`${processValue(v)}`} />);
     }
     if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
         if (optionsShowFields.length > 0) { 
-          return <>{ optionsShowFields.map((v: string) => showFieldsSelectAsync(value,v)).join(' | ') }</>
+          return optionsShowFields.map((v: string) => showFieldsSelectAsync(value,v)).join(' | ')
         }
-        return <>{value['id']}</>
+        return value['id']
     }
-    return <>{value}</>;
-};
+    return value
+  };
 
   return (
     <>

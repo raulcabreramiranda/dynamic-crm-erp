@@ -47,7 +47,7 @@ const entity: DataBaseEntityType = {
         fieldName: 'businessEntityField',
         otherEntityTableName: 'BusinessEntityField',
         otherEntityRelationshipName: 'businessEntity',
-        fieldType: 'OneToMany_reverso',
+        fieldType: 'OneToMany',
     },
   ],
   views: {
@@ -58,6 +58,7 @@ const entity: DataBaseEntityType = {
       hasWhiteLabel: { size: 3, label: "hasWhiteLabel" },
       hasDateAudit: { size: 3, label: "hasDateAudit" },
       frontPath: { size: 6, label: "frontPath" },
+      businessEntityField: { size: 12, label: "Fields",showFields:["fieldName", "fieldNameHumanized"]  },
     },
     tableLayout: {
       entityName: { label: "Name" },
@@ -66,6 +67,7 @@ const entity: DataBaseEntityType = {
       hasWhiteLabel: { label: "hasWhiteLabel" },
       hasDateAudit: { label: "hasDateAudit" },
       frontPath: { label: "frontPath" },
+      businessEntityField: { label: "Fields",showFields:["fieldName", "fieldNameHumanized"]},
     },
     formLayout: {
       entityName: { size: 3, label: "Name" },
@@ -74,6 +76,17 @@ const entity: DataBaseEntityType = {
       hasWhiteLabel: { size: 3, label: "hasWhiteLabel" },
       hasDateAudit: { size: 3, label: "hasDateAudit" },
       frontPath: { size: 6, label: "frontPath" },
+      businessEntityField: { 
+        size: 12, 
+        label: "Fields", 
+        embebedFields: {
+          formLayout: {
+            fieldName: { size: 3, label: "Name" },
+            fieldNameHumanized: { size: 3, label: "Humanized" },
+            fieldType: { size: 3, label: "Type" }, 
+          }         
+        }
+      },
     },
     viewLayout: {
       entityName: { size: 3, label: "Name" },
@@ -82,6 +95,7 @@ const entity: DataBaseEntityType = {
       hasWhiteLabel: { size: 3, label: "hasWhiteLabel" },
       hasDateAudit: { size: 3, label: "hasDateAudit" },
       frontPath: { size: 6, label: "frontPath" },
+      businessEntityField: { size: 12, label: "Fields",showFields:["fieldName", "fieldNameHumanized"]  },
     },
   },
 };

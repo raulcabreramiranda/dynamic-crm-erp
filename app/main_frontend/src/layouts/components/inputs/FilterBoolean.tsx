@@ -46,10 +46,11 @@ const FilterSelect = ({ options, label, entityContext: EntityContext, filterKey,
             <MultiSelect
                 id="tags-outlined"
                 value={entityFilter[fieldName] || []}
+                onShow={() => console.info("asdasd")}
                 onChange={(e) => handleChange(e.value)}
                 options={!!options && options.length > 0 ? options : []}
                 optionLabel="label"
-                placeholder="Select Countries"
+                placeholder="Select"
                 filter
                 display="chip"
                 itemTemplate={itemTemplate}

@@ -1,3 +1,4 @@
+import { IBusinessEntityField } from '../../BusinessEntityField/_base/business-entity-field-model';
 import { Dayjs } from 'dayjs';
 
 export interface IBusinessEntity {
@@ -8,6 +9,7 @@ export interface IBusinessEntity {
     frontPath?: string;
     hasWhiteLabel?: boolean;
     hasDateAudit?: boolean;
+    businessEntityField?: IBusinessEntityField[];
 
     whiteLabel?: number;
     createdBy?: number;

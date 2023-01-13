@@ -96,7 +96,7 @@ const FilterSelectMany = ({ name, relationshipType, label, entityContext: Entity
                 onChange={(e) => handleChange(e.value)}
                 options={!!options && options.length > 0 ? options : []}
                 optionLabel="label"
-                placeholder="Select Countries"
+                placeholder="Select"
                 filter
                 display="chip"
                 itemTemplate={itemTemplate}

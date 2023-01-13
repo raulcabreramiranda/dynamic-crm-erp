@@ -1,3 +1,4 @@
+import { IBusinessEntity } from '../../BusinessEntity/_base/business-entity-model';
 import { BusinessEntityFieldFieldType } from '../../../components/enumerations/business-entity-field-field-type.model';
 import { Dayjs } from 'dayjs';
 
@@ -6,6 +7,7 @@ export interface IBusinessEntityField {
     fieldName?: string;
     fieldNameHumanized?: string;
     fieldType?: BusinessEntityFieldFieldType;
+    businessEntity?: IBusinessEntity;
 
     whiteLabel?: number;
     createdBy?: number;

@@ -70,6 +70,11 @@
         "id": "ID",
         "fieldName": "fieldName",
         "fieldNameHumanized": "fieldNameHumanized",
-        "fieldType": "fieldType"
+        "fieldType": "fieldType",
+        "businessEntity_empty": "Sem Business Entity",
+        "businessEntity-modal-super-select-title": "Selecione...",
+        "businessEntity-filter-placeholder": "Selecione...",
+        "businessEntity-input-placeholder": "Selecione...",
+        "businessEntity": "Business Entity"
     }
 }

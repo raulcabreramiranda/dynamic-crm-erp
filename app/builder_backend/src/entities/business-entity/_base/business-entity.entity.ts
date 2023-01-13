@@ -3,6 +3,8 @@ import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany,
 import { BaseEntity } from '../../../domain/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
+import { BusinessEntityField } from '../../business-entity-field/_base/business-entity-field.entity';
+
 import tablesName from '../../tablesName';
 
 @Entity(tablesName['BusinessEntity'] ?? 'BusinessEntity')
@@ -16,6 +18,7 @@ export class BusinessEntity extends BaseEntity {
             frontPath: String,
             hasWhiteLabel: Boolean,
             hasDateAudit: Boolean,
+            businessEntityField: BusinessEntityField,
             createdBy: Number,
             createdDate: Date,
             lastModifiedBy: Number,
@@ -50,6 +53,9 @@ export class BusinessEntity extends BaseEntity {
     @Column({ name: 'hasDateAudit', nullable: true })
     @ApiProperty({ required: false })
     hasDateAudit: boolean;
+
+    @OneToMany(() => BusinessEntityField, (other) => other.businessEntity)
+    businessEntityField: BusinessEntityField[];
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 

@@ -165,6 +165,7 @@ const MUITable = () => {
             (entityFilter.fieldName ? 'fieldName=' + entityFilter.fieldName + '&' : '') +
             (entityFilter.fieldNameHumanized ? 'fieldNameHumanized=' + entityFilter.fieldNameHumanized + '&' : '') +
             (entityFilter.fieldType ? 'fieldType=' + entityFilter.fieldType + '&' : '') +
+            (entityFilter.businessEntity ? 'businessEntity=' + entityFilter.businessEntity.map((v: any) => v.id + '<->' + v.label).join(',') + '&' : '') +
             (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
             (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
             'page=' +

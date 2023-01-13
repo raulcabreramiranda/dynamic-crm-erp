@@ -139,7 +139,7 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
 
     const hasWhiteLabel = typeof EleArray.columnsMetaData()['whiteLabel'] !== 'undefined';
     if (userRequest && userRequest['whiteLabel'] && hasWhiteLabel) {
-      return `(("A${i + 1}"."whiteLabel" is null OR "A${i + 1}"."whiteLabel" = :A0_whiteLabel ))`;
+      return `((A${i + 1}.whiteLabel is null OR A${i + 1}.whiteLabel = :A0_whiteLabel ))`;
     }
     return ``;
   };

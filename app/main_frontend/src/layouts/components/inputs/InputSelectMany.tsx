@@ -87,10 +87,12 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
                 <MultiSelect
                     id={`input-multiselect-${fieldName}`}
                     value={entityEdit[fieldName] || []}
+                    onFilter={() => console.info("onFilter")}
+                    onShow={() => console.info("onShow")}
                     onChange={(e) => handleChange(e.value)}
                     options={!!options && options.length > 0 ? options : []}
                     optionLabel="label"
-                    placeholder="Select Countries"
+                    placeholder="Select"
                     filter
                     display="chip"
                     itemTemplate={itemTemplate}
@@ -170,10 +172,12 @@ const InputSelectOne = ({ name, label, labelPos, entityContext: EntityContext, o
                     id={`input-multiselect-${fieldName}`}
                     multiple={false}
                     value={entityEdit[fieldName] || []}
+                    onFilter={() => console.info("onFilter1")}
+                    onShow={() => console.info("onShow1")}
                     onChange={(e) => handleChange(e.value)}
                     options={!!options && options.length > 0 ? options : []}
                     optionLabel="label"
-                    placeholder="Select Countries"
+                    placeholder="Select"
                     filter
                     display="chip"
                     itemTemplate={itemTemplate}

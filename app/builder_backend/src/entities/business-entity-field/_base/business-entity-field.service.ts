@@ -6,6 +6,7 @@ import BusinessEntityField from './business-entity-field.entity';
 import { getManyAndCount2 } from '../../../utilsFunctions';
 
 const relationshipNames = [];
+relationshipNames.push('businessEntity');
 
 @Injectable({ scope: Scope.REQUEST })
 export class BusinessEntityFieldService {

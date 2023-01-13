@@ -7,7 +7,7 @@ export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (resp
         sort,
         page,
         size,
-        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType'],
+        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType', 'businessEntity.id', 'businessEntity.entityName', 'businessEntity.entityNameHumanized'],
         onSuccess,
     });
 };
@@ -16,7 +16,7 @@ export const apiGetEntityForm = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`business-entity-fields`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType'],
+        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType', 'businessEntity.id', 'businessEntity.entityName', 'businessEntity.entityNameHumanized'],
         onSuccess,
     });
 };
@@ -25,7 +25,7 @@ export const apiGetEntityView = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`business-entity-fields`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType'],
+        selectColumns: ['fieldName', 'fieldNameHumanized', 'fieldType', 'businessEntity.id', 'businessEntity.entityName', 'businessEntity.entityNameHumanized'],
         onSuccess,
     });
 };

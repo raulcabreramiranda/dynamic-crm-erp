@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, MinLength, MaxLength, Length, Min, Max, Matches } from 'class-validator';
 import { BaseDTO } from '../../../service/dto/base.dto';
 
+import { BusinessEntityDTO } from '../../business-entity/_base/business-entity.dto';
 import { BusinessEntityFieldFieldType } from '../../../entities/business-entity-field/_base/business-entity-field-field-type.enum';
 
 /**
@@ -17,6 +18,9 @@ export class BusinessEntityFieldDTO extends BaseDTO {
 
     @ApiProperty({ enum: BusinessEntityFieldFieldType, description: 'fieldType enum field', required: false })
     fieldType: BusinessEntityFieldFieldType;
+
+    @ApiProperty({ type: BusinessEntityDTO, description: 'businessEntity relationship' })
+    businessEntity: BusinessEntityDTO;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

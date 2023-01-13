@@ -9,6 +9,7 @@ type DataBaseEntityViewFieldMetaData = {
     size?: number;
     label?: string;
     showFields?: string[];
+    embebedFields?: DataBaseEntityViews;
     superSelect?: string[];
     widthPreview?: string;
     heightPreview?: string;

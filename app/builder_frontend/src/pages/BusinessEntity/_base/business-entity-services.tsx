@@ -7,7 +7,17 @@ export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (resp
         sort,
         page,
         size,
-        selectColumns: ['entityName', 'entityNameHumanized', 'entityNameHumanizedPlural', 'hasWhiteLabel', 'hasDateAudit', 'frontPath'],
+        selectColumns: [
+            'entityName',
+            'entityNameHumanized',
+            'entityNameHumanizedPlural',
+            'hasWhiteLabel',
+            'hasDateAudit',
+            'frontPath',
+            'businessEntityField.id',
+            'businessEntityField.fieldName',
+            'businessEntityField.fieldNameHumanized',
+        ],
         onSuccess,
     });
 };
@@ -16,7 +26,18 @@ export const apiGetEntityForm = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`business-entities`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['entityName', 'entityNameHumanized', 'entityNameHumanizedPlural', 'hasWhiteLabel', 'hasDateAudit', 'frontPath'],
+        selectColumns: [
+            'entityName',
+            'entityNameHumanized',
+            'entityNameHumanizedPlural',
+            'hasWhiteLabel',
+            'hasDateAudit',
+            'frontPath',
+
+            'businessEntityField.id',
+            'businessEntityField.fieldName',
+            'businessEntityField.fieldNameHumanized',
+        ],
         onSuccess,
     });
 };
@@ -25,7 +46,18 @@ export const apiGetEntityView = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`business-entities`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['entityName', 'entityNameHumanized', 'entityNameHumanizedPlural', 'hasWhiteLabel', 'hasDateAudit', 'frontPath'],
+        selectColumns: [
+            'entityName',
+            'entityNameHumanized',
+            'entityNameHumanizedPlural',
+            'hasWhiteLabel',
+            'hasDateAudit',
+            'frontPath',
+
+            'businessEntityField.id',
+            'businessEntityField.fieldName',
+            'businessEntityField.fieldNameHumanized',
+        ],
         onSuccess,
     });
 };

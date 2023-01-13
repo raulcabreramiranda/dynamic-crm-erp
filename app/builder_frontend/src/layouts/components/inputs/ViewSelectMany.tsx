@@ -1,4 +1,4 @@
-import { Chip } from 'primereact/chip';
+import { Tag } from 'primereact/tag';
 import {Context, useContext, ReactElement } from 'react'
 
 
@@ -35,23 +35,24 @@ const ViewSelectMany = ({ name, label, entityContext: EntityContext, optionsLink
   const fieldName = typeof name !== 'undefined' ? name : ''
 
 
-  const processValue = (value: any): ReactElement | ReactElement[] => {
+  const processValue = (value: any): ReactElement | ReactElement[] | string => {
     if (Array.isArray(value)) {
-        return value.map(v=> <Chip label={`${processValue(v)}`} />);
+      console.info(value)
+        return value.map(v=> <Tag value={`${processValue(v)}`} />);
     }
     if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
         if (optionsShowFields.length > 0) { 
-          return <>{ optionsShowFields.map((v: string) => showFieldsSelectAsync(value,v)).join(' | ') }</>
+          return optionsShowFields.map((v: string) => showFieldsSelectAsync(value,v)).join(' | ')
         }
-        return <>{value['id']}</>
+        return value['id']
     }
-    return <>{value}</>;
-};
+    return value
+  };
 
   return (
     <>
       <Typography variant='subtitle1' sx={{ mr: 2 }}>
-            <b>{label}</b>
+            <b>{label}: {' '}</b> 
       </Typography>
       <Typography variant='subtitle2' sx={{ mr: 2 }}>
           {processValue(entityView[fieldName])}

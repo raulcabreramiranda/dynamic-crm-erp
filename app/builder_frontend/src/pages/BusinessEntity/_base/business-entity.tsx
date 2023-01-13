@@ -89,6 +89,7 @@ const MUITable = () => {
             (entityFilter.hasWhiteLabel ? 'hasWhiteLabel=' + entityFilter.hasWhiteLabel + '&' : '') +
             (entityFilter.hasDateAudit ? 'hasDateAudit=' + entityFilter.hasDateAudit + '&' : '') +
             (entityFilter.frontPath ? 'frontPath=' + entityFilter.frontPath + '&' : '') +
+            (entityFilter.businessEntityField ? 'businessEntityField=' + entityFilter.businessEntityField.map((v: any) => v.id + '<->' + v.label).join(',') + '&' : '') +
             (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
             (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
             'page=' +

@@ -129,6 +129,28 @@ const FilterList = () => {
                                 }
                             />
                         </Grid>
+
+                        <Grid item xs={3}>
+                            <div>
+                                <FilterSelectMany
+                                    id="business-entity-field-businessEntity-form"
+                                    options={[]}
+                                    entityContext={EntityContext}
+                                    optionsLink={'business-entities'}
+                                    relationshipType={'many-to-one'}
+                                    optionsSort={{ entityName: 'asc' }}
+                                    optionsShowFields={['entityName', 'entityNameHumanized']}
+                                    name="businessEntity"
+                                    filterKey="businessEntity.id"
+                                    filterMethod="in"
+                                    label={
+                                        <>
+                                            <Translate contentKey="businessEntityField.Entity" />
+                                        </>
+                                    }
+                                />
+                            </div>
+                        </Grid>
                     </Grid>
 
                     <Button onClick={handleFilter} variant="contained" sx={{ marginRight: 3.5 }}>
