@@ -2,6 +2,8 @@ import { Context, ReactElement, useContext } from 'react'
 import Typography from '../Typography'
 
 interface Props {
+  id?: string
+  type?: string
   entityContext: Context<any>
   options: any[]
   name: string

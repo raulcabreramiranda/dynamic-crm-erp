@@ -5,6 +5,7 @@ const entity: DataBaseEntityType = {
   entityNameHumanized: "Business Entity",
   entityNameHumanizedPlural: "Business Entities",
   frontPath: "BusinessEntity",
+  allViewInOne: false,
   showClientView: true,
   hasWhiteLabel: true,
   hasDateAudit: true,
@@ -41,7 +42,14 @@ const entity: DataBaseEntityType = {
       fieldType: "Boolean",
     },
   ],
-  relationships: [],
+  relationships: [
+    {
+        fieldName: 'businessEntityField',
+        otherEntityTableName: 'BusinessEntityField',
+        otherEntityRelationshipName: 'businessEntity',
+        fieldType: 'OneToMany_reverso',
+    },
+  ],
   views: {
     filterLayout: {
       entityName: { size: 3, label: "Name" },

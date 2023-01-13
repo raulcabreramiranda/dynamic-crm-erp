@@ -1,4 +1,5 @@
 // ** MUI Imports
+import { useRouter } from 'next/router';
 import Grid from 'src/layouts/components/Grid';
 import Link from 'src/layouts/components/Link';
 import Card from 'src/layouts/components/Card/Card';
@@ -32,53 +33,50 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './business-entity-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './business-entity-services';
 
 import { IBusinessEntity, IBusinessEntityFilters } from './business-entity-model';
-import FormView from './business-entity-view';
 import FormUpdate from './business-entity-form';
-import ListTable, { IEntityListSort } from './business-entity-list';
-import FilterList from './business-entity-filter';
-
-export interface IReloadList {
-    filters?: IBusinessEntity | false;
-    sort?: IEntityListSort | false;
-    page?: number | false;
-    size?: number | false;
-}
 
 export const EntityContext = createContext(
     {} as {
+        entityEdit: IBusinessEntity;
+        setEntityEdit: Dispatch<IBusinessEntity>;
+        entityView: IBusinessEntity;
+        setEntityView: Dispatch<IBusinessEntity>;
         entityFilter: IBusinessEntityFilters;
         setEntityFilter: Dispatch<IBusinessEntityFilters>;
-        entityList: IBusinessEntity[];
-        setEntityList: Dispatch<IBusinessEntity[]>;
-        entityListPage: number;
-        setEntityListPage: Dispatch<number>;
-        entityListSize: number;
-        setEntityListSize: Dispatch<number>;
-        entityListCount: number;
-        setEntityListCount: Dispatch<number>;
-        reloadList: (data: IReloadList) => void;
         loading: boolean;
         setLoading: Dispatch<boolean>;
-        entityListSort: IEntityListSort;
-        setEntityListSort: Dispatch<IEntityListSort>;
         getEntityFiltersURL(offset?: number | null): string;
     },
 );
 
 const MUITable = () => {
+    const router = useRouter();
+
     const [loading, setLoading] = useState(true);
 
-    const [entityList, setEntityList] = useState<IBusinessEntity[]>([]);
     const [entityFilter, setEntityFilter] = useState<IBusinessEntityFilters>({});
-    const [entityListPage, setEntityListPage] = useState<number>(0);
-    const [entityListSize, setEntityListSize] = useState<number>(25);
-    const [entityListCount, setEntityListCount] = useState<number>(0);
-    const [entityListSort, setEntityListSort] = useState<IEntityListSort>({ id: 'asc' });
 
+    const [entityEdit, setEntityEdit] = useState<IBusinessEntity>({});
+    const [entityView, setEntityView] = useState<IBusinessEntity>({});
     const [showFilters, setShowFilters] = useState<boolean>(false);
+
+    const openUpdateModal = (entity: IBusinessEntity) => {
+        if (typeof entity.id === 'number' && entity?.id > 0) {
+            const handleSuccess = (response: IApiResponseProps) => {
+                const _entityEdit = response['data'][0] || {};
+                setEntityEdit(_entityEdit);
+            };
+            apiGetEntityForm(entity.id, handleSuccess);
+        }
+    };
+
+    useEffect(() => {
+        const id = +(router.query?.slug || -1);
+        openUpdateModal({ id });
+    }, []);
 
     const getEntityFiltersURL = (offset = null) => {
         return (
@@ -107,71 +105,60 @@ const MUITable = () => {
         );
     };
 
-    const reloadList = ({ filters = false, sort = false, page = false, size = false }: IReloadList) => {
-        const handleSuccessList = (response: IApiResponseProps) => {
-            const _entityList = response['data'] || [];
-            setEntityList(_entityList);
-        };
-        apiGetList(
-            {
-                filters: filters ? filters : entityFilter,
-                sort: sort ? sort : entityListSort,
-                page: page ? page : entityListPage,
-                size: size ? size : entityListSize,
-            },
-            handleSuccessList,
-        );
+    const saveChanges = () => {
+        if (!!entityEdit.id && entityEdit?.id > 0) {
+            const handleSuccess = (response: IApiResponseProps): void => {
+                handleClose();
+            };
+            apiUpdateEntity(entityEdit, handleSuccess);
+        } else {
+            const handleSuccess = (response: IApiResponseProps): void => {
+                handleClose();
+            };
+            apiNewEntity(entityEdit, handleSuccess);
+        }
+    };
+
+    const handleClose = () => {
+        router.push(`/BusinessEntity?${getEntityFiltersURL()}`);
     };
 
     return (
         <EntityContext.Provider
             value={{
-                reloadList,
                 loading,
                 setLoading,
                 getEntityFiltersURL,
-                entityList,
-                setEntityList,
                 entityFilter,
                 setEntityFilter,
-                entityListPage,
-                setEntityListPage,
-                entityListSort,
-                setEntityListSort,
-                entityListSize,
-                setEntityListSize,
-                entityListCount,
-                setEntityListCount,
+                entityEdit,
+                setEntityEdit,
+                entityView,
+                setEntityView,
             }}
         >
             <CardHeader
                 title={
                     <>
-                        <h2>List BusinessEntity </h2>
+                        <h2>Update BusinessEntity </h2>
                     </>
                 }
                 buttons={
                     <>
-                        <Button color="primary" size="sm" isLink={true} href={`/BusinessEntity/new?${getEntityFiltersURL()}`} icon={'plus'}>
-                            New
+                        <Button onClick={saveChanges} icon={'save'}>
+                            Save Changes
                         </Button>
-                        <Button icon="pi pi-filter-fill" onClick={() => setShowFilters(!showFilters)}>
-                            {showFilters ? 'Hide Filters' : 'Filters'}
+                        <Button onClick={handleClose} icon={'ban'}>
+                            Cancel
                         </Button>
                     </>
                 }
             ></CardHeader>
 
-            {showFilters && (
-                <Card>
-                    <FilterList />
-                </Card>
-            )}
-
             <Grid item xs={12}>
                 <Card>
                     <Paper>
-                        <ListTable />
+                        <FormUpdate isNew={false} />
                     </Paper>
                 </Card>
             </Grid>

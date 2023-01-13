@@ -1,4 +1,4 @@
-import { BusinessEntity } from './business-entity.entity';
+import { BusinessEntity } from '../../../entities/business-entity/_base/business-entity.entity';
 import { BusinessEntityDTO } from './business-entity.dto';
 
 /**

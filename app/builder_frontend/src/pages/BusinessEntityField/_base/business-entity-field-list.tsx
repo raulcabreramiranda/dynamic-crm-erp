@@ -31,11 +31,11 @@ import Button from 'src/layouts/components/Button';
 
 import { APP_LOCAL_DATE_FORMAT, BASE_API_VERSION_PATH } from 'src/util/constants';
 import { hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from './business-entity-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from './business-entity-field-services';
 
-import { IBusinessEntity } from './business-entity-model';
+import { IBusinessEntityField } from './business-entity-field-model';
 
-import { EntityContext } from './business-entity';
+import { EntityContext } from './business-entity-field';
 
 export interface IEntityListSort {
     [key: string]: 'asc' | 'desc';
@@ -60,7 +60,7 @@ const ListTable = ({}: any) => {
         getEntityFiltersURL,
     } = useContext(EntityContext);
 
-    const deleteEntityModal = (entity: IBusinessEntity) => {
+    const deleteEntityModal = (entity: IBusinessEntityField) => {
         if (typeof entity.id === 'number' && entity?.id > 0) {
             const handleSuccess = (response1: IApiResponseProps): void => {
                 reloadList({});
@@ -68,7 +68,7 @@ const ListTable = ({}: any) => {
             apiDeleteEntity(entity.id, handleSuccess);
         }
     };
-    const openUpdateModal = (entity: IBusinessEntity) => {
+    const openUpdateModal = (entity: IBusinessEntityField) => {
         if (typeof entity.id === 'number' && entity?.id > 0) {
             const handleSuccess = (response: IApiResponseProps) => {
                 const _entityEdit = response['data'][0] || {};
@@ -77,7 +77,7 @@ const ListTable = ({}: any) => {
             apiGetEntityForm(entity.id, handleSuccess);
         }
     };
-    const openViewModal = (entity: IBusinessEntity) => {
+    const openViewModal = (entity: IBusinessEntityField) => {
         if (typeof entity.id === 'number' && entity?.id > 0) {
             const handleSuccess = (response: IApiResponseProps) => {
                 const _entityView = response['data'][0] || {};
@@ -154,34 +154,22 @@ const ListTable = ({}: any) => {
     return (
         <>
             {entityList && entityList.filter && entityList.filter((v: any) => typeof v.deletedAt === 'undefined' || v.deletedAt === null).length > 0 ? (
-                <div id="business-entity-table-list" className="table-list">
+                <div id="business-entity-field-table-list" className="table-list">
                     <TableContainer>
                         <Table>
                             <TableHead>
                                 <TableHeadRow>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('entityName')}>
-                                        <Translate contentKey="businessEntity.entityName" />
-                                        <i className={sort === 'entityName' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    <TableHeadCell align={'left'} onClick={sortFunction('fieldName')}>
+                                        <Translate contentKey="businessEntityField.fieldName" />
+                                        <i className={sort === 'fieldName' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('entityNameHumanized')}>
-                                        <Translate contentKey="businessEntity.entityNameHumanized" />
-                                        <i className={sort === 'entityNameHumanized' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    <TableHeadCell align={'left'} onClick={sortFunction('fieldNameHumanized')}>
+                                        <Translate contentKey="businessEntityField.fieldNameHumanized" />
+                                        <i className={sort === 'fieldNameHumanized' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('entityNameHumanizedPlural')}>
-                                        <Translate contentKey="businessEntity.entityNameHumanizedPlural" />
-                                        <i className={sort === 'entityNameHumanizedPlural' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
-                                    </TableHeadCell>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('hasWhiteLabel')}>
-                                        <Translate contentKey="businessEntity.hasWhiteLabel" />
-                                        <i className={sort === 'hasWhiteLabel' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
-                                    </TableHeadCell>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('hasDateAudit')}>
-                                        <Translate contentKey="businessEntity.hasDateAudit" />
-                                        <i className={sort === 'hasDateAudit' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
-                                    </TableHeadCell>
-                                    <TableHeadCell align={'left'} onClick={sortFunction('frontPath')}>
-                                        <Translate contentKey="businessEntity.frontPath" />
-                                        <i className={sort === 'frontPath' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    <TableHeadCell align={'left'} onClick={sortFunction('fieldType')}>
+                                        <Translate contentKey="businessEntityField.fieldType" />
+                                        <i className={sort === 'fieldType' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
 
                                     <TableHeadCell align={'left'} />
@@ -190,66 +178,34 @@ const ListTable = ({}: any) => {
                             <TableBody>
                                 {entityList
                                     .filter((v: any) => typeof v.deletedAt === 'undefined' || v.deletedAt === null)
-                                    .map((businessEntity: any, i: number) => (
+                                    .map((businessEntityField: any, i: number) => (
                                         <TableBodyRow tableRowIndex={i} key={`entity-${i}`}>
-                                            <TableBodyCell id="entityName-cell" align={'left'}>
-                                                <TableText name={'entityName'} entityView={businessEntity} />
+                                            <TableBodyCell id="fieldName-cell" align={'left'}>
+                                                <TableText name={'fieldName'} entityView={businessEntityField} />
                                             </TableBodyCell>
 
-                                            <TableBodyCell id="entityNameHumanized-cell" align={'left'}>
-                                                <TableText name={'entityNameHumanized'} entityView={businessEntity} />
+                                            <TableBodyCell id="fieldNameHumanized-cell" align={'left'}>
+                                                <TableText name={'fieldNameHumanized'} entityView={businessEntityField} />
                                             </TableBodyCell>
 
-                                            <TableBodyCell id="entityNameHumanizedPlural-cell" align={'left'}>
-                                                <TableText name={'entityNameHumanizedPlural'} entityView={businessEntity} />
-                                            </TableBodyCell>
-
-                                            <TableBodyCell id="hasWhiteLabel-cell" align={'left'}>
-                                                <TableBoolean
-                                                    options={[
-                                                        { value: true, label: translate('businessEntity.hasWhiteLabel.YES') },
-                                                        { value: false, label: translate('businessEntity.hasWhiteLabel.NOT') },
-                                                    ]}
-                                                    entityView={businessEntity}
-                                                    name="hasWhiteLabel"
-                                                />
-                                            </TableBodyCell>
-
-                                            <TableBodyCell id="hasDateAudit-cell" align={'left'}>
-                                                <TableBoolean
-                                                    options={[
-                                                        { value: true, label: translate('businessEntity.hasDateAudit.YES') },
-                                                        { value: false, label: translate('businessEntity.hasDateAudit.NOT') },
-                                                    ]}
-                                                    entityView={businessEntity}
-                                                    name="hasDateAudit"
-                                                />
-                                            </TableBodyCell>
-
-                                            <TableBodyCell id="frontPath-cell" align={'left'}>
-                                                <TableText name={'frontPath'} entityView={businessEntity} />
+                                            <TableBodyCell id="fieldType-cell" align={'left'}>
+                                                <TableDate name={'fieldType'} entityView={businessEntityField} format={APP_LOCAL_DATE_FORMAT} />
                                             </TableBodyCell>
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['businessEntity'], 'view') ? (
-                                                        <Button color="success" size="sm" isLink={true} href={`/BusinessEntity/${businessEntity.id}?${getEntityFiltersURL()}`} icon={'eye'}></Button>
+                                                    {hasAnyAuthority(null, ['businessEntityField'], 'view') ? (
+                                                        <Button color="primary" size="small" onClick={() => openViewModal(businessEntityField)} isLink={false} icon={'eye'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}
-                                                    {hasAnyAuthority(null, ['businessEntity'], 'edit') ? (
-                                                        <Button
-                                                            color="primary"
-                                                            size="sm"
-                                                            isLink={true}
-                                                            href={`/BusinessEntity/${businessEntity.id}/edit?${getEntityFiltersURL()}`}
-                                                            icon={'pencil'}
-                                                        ></Button>
+                                                    {hasAnyAuthority(null, ['businessEntityField'], 'edit') ? (
+                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(businessEntityField)} isLink={false} icon={'pencil'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}
-                                                    {hasAnyAuthority(null, ['businessEntity'], 'canDelete') ? (
-                                                        <Button color="dancem" size="sm" onClick={() => deleteEntityModal(businessEntity)} isLink={false} icon={'trash'}></Button>
+                                                    {hasAnyAuthority(null, ['businessEntityField'], 'canDelete') ? (
+                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(businessEntityField)} isLink={false} icon={'trash'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}{' '}
@@ -296,7 +252,7 @@ const ListTable = ({}: any) => {
                 </div>
             ) : !loading ? (
                 <div className="alert alert-warning">
-                    <Translate contentKey="businessEntity.home.notFound">No Business Entities found</Translate>
+                    <Translate contentKey="businessEntityField.home.notFound">No Business Entity Fields found</Translate>
                 </div>
             ) : (
                 <div />

@@ -9,7 +9,8 @@ import InputSelect from 'src/layouts/components/inputs/InputSelect';
 import InputSelectMany from 'src/layouts/components/inputs/InputSelectMany';
 import InputImage from 'src/layouts/components/inputs/InputImage';
 import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSuperSelect';
-import { EntityContext } from './business-entity';
+
+import { EntityContext } from './business-entity-update';
 
 const FormUpdate = ({ isNew }: any) => {
     return (
@@ -76,24 +77,21 @@ const FormUpdate = ({ isNew }: any) => {
                     <Grid item xs={3}>
                         <div>
                             <Grid>
-                                <div className="switcher switcher-success">
-                                    <InputBoolean
-                                        id="business-entity-hasWhiteLabel"
-                                        options={[
-                                            { value: true, label: translate('businessEntity.hasWhiteLabel.YES') },
-                                            { value: false, label: translate('businessEntity.hasWhiteLabel.NOT') },
-                                        ]}
-                                        entityContext={EntityContext}
-                                        name="hasWhiteLabel"
-                                        labelPos="top"
-                                        label={
-                                            <>
-                                                <Translate contentKey="businessEntity.hasWhiteLabel" />
-                                            </>
-                                        }
-                                    />
-                                    <label className="slider round" htmlFor={'hasWhiteLabel_checkbox'} />
-                                </div>
+                                <InputBoolean
+                                    id="business-entity-hasWhiteLabel"
+                                    options={[
+                                        { value: true, label: translate('businessEntity.hasWhiteLabel.YES') },
+                                        { value: false, label: translate('businessEntity.hasWhiteLabel.NOT') },
+                                    ]}
+                                    entityContext={EntityContext}
+                                    name="hasWhiteLabel"
+                                    labelPos="top"
+                                    label={
+                                        <>
+                                            <Translate contentKey="businessEntity.hasWhiteLabel" />
+                                        </>
+                                    }
+                                />
                             </Grid>
                         </div>
                     </Grid>
@@ -101,24 +99,21 @@ const FormUpdate = ({ isNew }: any) => {
                     <Grid item xs={3}>
                         <div>
                             <Grid>
-                                <div className="switcher switcher-success">
-                                    <InputBoolean
-                                        id="business-entity-hasDateAudit"
-                                        options={[
-                                            { value: true, label: translate('businessEntity.hasDateAudit.YES') },
-                                            { value: false, label: translate('businessEntity.hasDateAudit.NOT') },
-                                        ]}
-                                        entityContext={EntityContext}
-                                        name="hasDateAudit"
-                                        labelPos="top"
-                                        label={
-                                            <>
-                                                <Translate contentKey="businessEntity.hasDateAudit" />
-                                            </>
-                                        }
-                                    />
-                                    <label className="slider round" htmlFor={'hasDateAudit_checkbox'} />
-                                </div>
+                                <InputBoolean
+                                    id="business-entity-hasDateAudit"
+                                    options={[
+                                        { value: true, label: translate('businessEntity.hasDateAudit.YES') },
+                                        { value: false, label: translate('businessEntity.hasDateAudit.NOT') },
+                                    ]}
+                                    entityContext={EntityContext}
+                                    name="hasDateAudit"
+                                    labelPos="top"
+                                    label={
+                                        <>
+                                            <Translate contentKey="businessEntity.hasDateAudit" />
+                                        </>
+                                    }
+                                />
                             </Grid>
                         </div>
                     </Grid>

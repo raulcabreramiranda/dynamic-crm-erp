@@ -1,6 +1,9 @@
 interface Props {
+    id?: string;
+    align?: string;
+    onClick?: Function;
     className?: string;
-    children: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
+    children?: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
 }
 
 const TableHeadCell = (props: Props) => {

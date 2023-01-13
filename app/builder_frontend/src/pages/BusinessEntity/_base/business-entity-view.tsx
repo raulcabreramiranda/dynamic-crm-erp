@@ -10,7 +10,7 @@ import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
 import { IBusinessEntity } from './business-entity-model';
-import { EntityContext } from './business-entity';
+import { EntityContext } from './business-entity-detail';
 
 const ViewForm = () => {
     return (
@@ -105,23 +105,20 @@ const ViewForm = () => {
                         <Grid item xs={3}>
                             <div>
                                 <Grid>
-                                    <div className="switcher switcher-success">
-                                        <ViewBoolean
-                                            id="business-entity-hasWhiteLabel"
-                                            options={[
-                                                { value: true, label: translate('businessEntity.hasWhiteLabel.YES') },
-                                                { value: false, label: translate('businessEntity.hasWhiteLabel.NOT') },
-                                            ]}
-                                            entityContext={EntityContext}
-                                            name="hasWhiteLabel"
-                                            label={
-                                                <>
-                                                    <Translate contentKey="businessEntity.hasWhiteLabel" />
-                                                </>
-                                            }
-                                        />
-                                        <label className="slider round" htmlFor={'hasWhiteLabel_checkbox'} />
-                                    </div>
+                                    <ViewBoolean
+                                        id="business-entity-hasWhiteLabel"
+                                        options={[
+                                            { value: true, label: translate('businessEntity.hasWhiteLabel.YES') },
+                                            { value: false, label: translate('businessEntity.hasWhiteLabel.NOT') },
+                                        ]}
+                                        entityContext={EntityContext}
+                                        name="hasWhiteLabel"
+                                        label={
+                                            <>
+                                                <Translate contentKey="businessEntity.hasWhiteLabel" />
+                                            </>
+                                        }
+                                    />{' '}
                                 </Grid>
                             </div>
                         </Grid>
@@ -129,23 +126,20 @@ const ViewForm = () => {
                         <Grid item xs={3}>
                             <div>
                                 <Grid>
-                                    <div className="switcher switcher-success">
-                                        <ViewBoolean
-                                            id="business-entity-hasDateAudit"
-                                            options={[
-                                                { value: true, label: translate('businessEntity.hasDateAudit.YES') },
-                                                { value: false, label: translate('businessEntity.hasDateAudit.NOT') },
-                                            ]}
-                                            entityContext={EntityContext}
-                                            name="hasDateAudit"
-                                            label={
-                                                <>
-                                                    <Translate contentKey="businessEntity.hasDateAudit" />
-                                                </>
-                                            }
-                                        />
-                                        <label className="slider round" htmlFor={'hasDateAudit_checkbox'} />
-                                    </div>
+                                    <ViewBoolean
+                                        id="business-entity-hasDateAudit"
+                                        options={[
+                                            { value: true, label: translate('businessEntity.hasDateAudit.YES') },
+                                            { value: false, label: translate('businessEntity.hasDateAudit.NOT') },
+                                        ]}
+                                        entityContext={EntityContext}
+                                        name="hasDateAudit"
+                                        label={
+                                            <>
+                                                <Translate contentKey="businessEntity.hasDateAudit" />
+                                            </>
+                                        }
+                                    />{' '}
                                 </Grid>
                             </div>
                         </Grid>

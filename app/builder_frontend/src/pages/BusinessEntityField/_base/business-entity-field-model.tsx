@@ -1,13 +1,11 @@
+import { BusinessEntityFieldFieldType } from '../../../components/enumerations/business-entity-field-field-type.model';
 import { Dayjs } from 'dayjs';
 
-export interface IBusinessEntity {
+export interface IBusinessEntityField {
     id?: number;
-    entityName?: string;
-    entityNameHumanized?: string;
-    entityNameHumanizedPlural?: string;
-    frontPath?: string;
-    hasWhiteLabel?: boolean;
-    hasDateAudit?: boolean;
+    fieldName?: string;
+    fieldNameHumanized?: string;
+    fieldType?: BusinessEntityFieldFieldType;
 
     whiteLabel?: number;
     createdBy?: number;
@@ -17,7 +15,7 @@ export interface IBusinessEntity {
     deletedAt?: Dayjs;
 }
 
-export interface IBusinessEntityFilters extends IBusinessEntity {
+export interface IBusinessEntityFieldFilters extends IBusinessEntityField {
     baseFilters?: string;
     extraFilters?: string;
     activePage?: number;
@@ -26,7 +24,7 @@ export interface IBusinessEntityFilters extends IBusinessEntity {
     order?: 'asc' | 'desc';
 }
 
-export const defaultValue: Readonly<IBusinessEntity> = {
+export const defaultValue: Readonly<IBusinessEntityField> = {
     id: 0,
 };
 

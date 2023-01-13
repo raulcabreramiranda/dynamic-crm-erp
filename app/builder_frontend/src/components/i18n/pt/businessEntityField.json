@@ -1,0 +1,75 @@
+{
+    "businessEntityField": {
+        "home": {
+            "title": "Business Entity Fields",
+            "btn_filter": "Filtrar",
+            "btn_filter_clean": "Limpar Filtros",
+            "btn_filter_open": "Filtros",
+            "createLabel": "Criar novo Business Entity Field",
+            "editLabel": "Editar Business Entity Field",
+            "createOrEditLabel": "Criar ou editar Business Entity Field",
+            "notFound": "Nenhum Business Entity Field encontrado"
+        },
+        "listSelectedButtons": {
+            "clearSelect": "Limpar Seleção",
+            "selectAll": "Selecionar os {{totalItems}} Business Entity Fields",
+            "allItensAreSelected": "Os {{totalItems}} Business Entity Fields nesta página estão selecionados.",
+            "allItensAreSelectedThisPage": "Todos os {{itemsPerPage}} Business Entity Fields nesta página estão selecionados.",
+            "allItensAreSelectedAllPages": "Todas os {{totalItems}} Business Entity Fields estão selecionados."
+        },
+        "listTopButtons": {},
+        "listButtons": {
+            "view": "view",
+            "edit": "edit",
+            "delete": "delete"
+        },
+        "viewButtons": {},
+
+        "dropdown_btn": "Actions",
+
+        "created": "Um novo Business Entity Field foi criado com o identificador {{ param }}",
+        "updated": "Um Business Entity Field foi atualizado com o identificador {{ param }}",
+        "deleted": "Um Business Entity Field foi excluído com o identificador {{ param }}",
+        "delete": {
+            "question": "Tem certeza de que deseja excluir?"
+        },
+        "field_id": "ID",
+        "btnNewItem": "Criar novo Business Entity Field",
+        "btnFilter": "Filtrar",
+        "btnOpenFilter": "Filtrar",
+        "btnCleanFilter": "Limpar Filtro",
+        "btnEditItem": "Editar",
+        "btnActions": "Ações",
+        "btnSave": "Salvar",
+        "btnBack": "Ir na listagem",
+        "btnCancel": "Cancelar",
+        "btnDelete": "Apagar",
+        "btnOpen": "Abrir",
+        "createdDate": "Data criação",
+        "lastModifiedDate": "Data modificação",
+        "createdBy": "Criado por",
+        "lastModifiedBy": "Modificado por",
+
+        "BusinessEntityFieldFieldType.FRONT": "FRONT",
+        "BusinessEntityFieldFieldType.END": "END",
+
+        "detail": {
+            "title": "Business Entity Field"
+        },
+        "id_start": "ID (Inicio)",
+        "id_end": "ID (Fim)",
+
+        "fieldName_start": "fieldName (Inicio)",
+        "fieldName_end": "fieldName (Fim)",
+
+        "fieldNameHumanized_start": "fieldNameHumanized (Inicio)",
+        "fieldNameHumanized_end": "fieldNameHumanized (Fim)",
+
+        "fieldType_start": "fieldType (Inicio)",
+        "fieldType_end": "fieldType (Fim)",
+        "id": "ID",
+        "fieldName": "fieldName",
+        "fieldNameHumanized": "fieldNameHumanized",
+        "fieldType": "fieldType"
+    }
+}

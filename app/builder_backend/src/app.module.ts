@@ -12,6 +12,8 @@ import { AdminProfileModule } from './entities/admin-profile/admin-profile.modul
 import { AdminUserModule } from './entities/admin-user/admin-user.module';
 import { AdminWhiteLabelModule } from './entities/admin-white-label/admin-white-label.module';
 import { BusinessEntityModule } from './entities/business-entity/business-entity.module';
+import { BusinessEntityFieldModule } from './entities/business-entity-field/business-entity-field.module';
+
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { BusinessEntityModule } from './entities/business-entity/business-entity
     AdminUserModule,
     AdminWhiteLabelModule,
     BusinessEntityModule,
+    BusinessEntityFieldModule,
   ],
   controllers: [AppController],
   providers: [AppService],
