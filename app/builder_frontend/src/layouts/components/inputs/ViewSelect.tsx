@@ -6,6 +6,7 @@ interface Props {
     options: any[];
     label: string | ReactElement
     name: string;
+    id?: string;
 }
 
 const InputSelect = ({ options, label, name, entityContext: EntityContext }: Props) => {

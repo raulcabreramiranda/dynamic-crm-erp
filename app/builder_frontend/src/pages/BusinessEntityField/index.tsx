@@ -1,4 +1,4 @@
-import BusinessEntityFieldBase from './_base/business-entity-field';
+import BusinessEntityFieldBase from 'src/pages/BusinessEntityField/_base/business-entity-field';
 
 export default function BusinessEntityField(props: any) {
     return <BusinessEntityFieldBase />;

@@ -7,12 +7,13 @@ import FilterSpecified from './FilterSpecified';
 interface Props {
     entityContext: Context<any>;
     precision?: number;
+    id: string;
     type: string;
     labelPos?: "top" | "left";
     filterKey: string;
     label: string | ReactElement;
-    placeholder: string;
-    name: string;
+    placeholder?: string;
+    name?: string;
     filterMethod: 'contains' | 'equals' | 'in' | 'notIn' | 'greaterThan' | 'lessThan' | 'greaterOrEqualThan' | 'lessOrEqualThan' | 'between' | 'specified';
 }
 

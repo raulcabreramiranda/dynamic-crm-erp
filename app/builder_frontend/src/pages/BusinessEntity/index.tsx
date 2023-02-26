@@ -1,4 +1,4 @@
-import BusinessEntityBase from './_base/business-entity';
+import BusinessEntityBase from 'src/pages/BusinessEntity/_base/business-entity';
 
 export default function BusinessEntity(props: any) {
     return <BusinessEntityBase />;

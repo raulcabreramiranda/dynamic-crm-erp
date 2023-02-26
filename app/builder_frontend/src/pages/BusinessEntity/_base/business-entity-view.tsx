@@ -9,8 +9,9 @@ import ViewSelect from 'src/layouts/components/inputs/ViewSelect';
 import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
-import { IBusinessEntity } from './business-entity-model';
-import { EntityContext } from './business-entity-detail';
+import { IBusinessEntity } from 'src/pages/BusinessEntity/_base/business-entity-model';
+
+import { EntityContext } from './business-entity-details';
 
 const ViewForm = () => {
     return (

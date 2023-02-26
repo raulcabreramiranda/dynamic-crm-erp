@@ -31,9 +31,9 @@ import Button from 'src/layouts/components/Button';
 
 import { APP_LOCAL_DATE_FORMAT, BASE_API_VERSION_PATH } from 'src/util/constants';
 import { hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from './business-entity-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from 'src/pages/BusinessEntity/_base/business-entity-services';
 
-import { IBusinessEntity } from './business-entity-model';
+import { IBusinessEntity } from 'src/pages/BusinessEntity/_base/business-entity-model';
 
 import { EntityContext } from './business-entity';
 
@@ -42,6 +42,7 @@ export interface IEntityListSort {
 }
 const ListTable = ({}: any) => {
     const {
+        baseFilters,
         reloadList,
         loading,
         setLoading,
@@ -96,7 +97,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: newPage,
                 size: entityListSize,
             },
@@ -111,7 +112,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: 0,
                 size: +event.target.value,
             },
@@ -124,7 +125,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: entityListPage,
                 size: entityListSize,
             },
@@ -143,7 +144,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: _entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: entityListPage,
                 size: entityListSize,
             },

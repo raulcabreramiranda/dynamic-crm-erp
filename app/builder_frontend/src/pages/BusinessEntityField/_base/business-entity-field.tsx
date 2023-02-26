@@ -32,9 +32,9 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './business-entity-field-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/BusinessEntityField/_base/business-entity-field-services';
 
-import { IBusinessEntityField, IBusinessEntityFieldFilters } from './business-entity-field-model';
+import { IBusinessEntityField, IBusinessEntityFieldFilters } from 'src/pages/BusinessEntityField/_base/business-entity-field-model';
 import FormView from './business-entity-field-view';
 import FormUpdate from './business-entity-field-form';
 import ListTable, { IEntityListSort } from './business-entity-field-list';
@@ -47,8 +47,16 @@ export interface IReloadList {
     size?: number | false;
 }
 
+export interface Props {
+    baseFilters?: IBusinessEntityFieldFilters | any;
+    baseEntity?: IBusinessEntityFieldFilters | any;
+    startList?: IBusinessEntityField[];
+}
+
 export const EntityContext = createContext(
     {} as {
+        baseFilters?: IBusinessEntityFieldFilters | any;
+        baseEntity?: IBusinessEntityFieldFilters | any;
         entityEdit: IBusinessEntityField;
         setEntityEdit: Dispatch<IBusinessEntityField>;
         entityView: IBusinessEntityField;
@@ -130,10 +138,8 @@ function ModalUpdate() {
                 <FormUpdate isNew={false} />
             </DialogContent>
             <DialogActions>
-                <Button onClick={saveChanges} variant="contained">
-                    Save Changes
-                </Button>
-                <Button onClick={handleClose} type="reset" variant="outlined" color="secondary">
+                <Button onClick={saveChanges}>Save Changes</Button>
+                <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
             </DialogActions>
@@ -141,11 +147,11 @@ function ModalUpdate() {
     );
 }
 
-const MUITable = () => {
+const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
     const [loading, setLoading] = useState(true);
 
-    const [entityList, setEntityList] = useState<IBusinessEntityField[]>([]);
-    const [entityFilter, setEntityFilter] = useState<IBusinessEntityFieldFilters>({});
+    const [entityList, setEntityList] = useState<IBusinessEntityField[]>(startList || []);
+    const [entityFilter, setEntityFilter] = useState<IBusinessEntityFieldFilters>(baseFilters || {});
     const [entityListPage, setEntityListPage] = useState<number>(0);
     const [entityListSize, setEntityListSize] = useState<number>(25);
     const [entityListCount, setEntityListCount] = useState<number>(0);
@@ -156,7 +162,7 @@ const MUITable = () => {
     const [showFilters, setShowFilters] = useState<boolean>(false);
 
     const openNewModal = () => {
-        setEntityEdit({ id: -1 });
+        setEntityEdit({ ...{ id: -1 }, ...baseEntity });
     };
 
     const getEntityFiltersURL = (offset = null) => {
@@ -203,6 +209,7 @@ const MUITable = () => {
     return (
         <EntityContext.Provider
             value={{
+                baseFilters,
                 reloadList,
                 loading,
                 setLoading,

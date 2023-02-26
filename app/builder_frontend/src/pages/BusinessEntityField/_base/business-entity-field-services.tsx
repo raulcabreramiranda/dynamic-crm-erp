@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IBusinessEntityField } from './business-entity-field-model';
+import { IBusinessEntityField } from 'src/pages/BusinessEntityField/_base/business-entity-field-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`business-entity-fields`, {

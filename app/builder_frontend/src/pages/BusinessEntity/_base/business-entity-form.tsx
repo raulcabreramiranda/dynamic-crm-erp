@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
+
+import EmbebedBusinessEntityField from './businessEntityField/business-entity-field';
 
 import InputBoolean from 'src/layouts/components/inputs/InputBoolean';
 import InputDate from 'src/layouts/components/inputs/InputDate';
@@ -12,6 +15,10 @@ import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSup
 import { EntityContext } from './business-entity-update';
 
 const FormUpdate = ({ isNew }: any) => {
+    const { entityEdit } = useContext(EntityContext);
+    if (!entityEdit || !entityEdit.id) {
+        return <> </>;
+    }
     return (
         <>
             <form>
@@ -137,23 +144,11 @@ const FormUpdate = ({ isNew }: any) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <div>
-                            <InputSelectMany
-                                id="business-entity-businessEntityField-form"
-                                options={[]}
-                                entityContext={EntityContext}
-                                relationshipType={'one-to-many'}
-                                optionsLink={'business-entity-fields'}
-                                optionsSort={{ fieldName: 'asc' }}
-                                optionsShowFields={['fieldName', 'fieldNameHumanized']}
-                                name="businessEntityField"
-                                label={
-                                    <>
-                                        <Translate contentKey="businessEntity.Fields" />
-                                    </>
-                                }
-                            />
-                        </div>
+                        <EmbebedBusinessEntityField
+                            baseFilters={{ 'businessEntity.id.in': entityEdit.id }}
+                            baseEntity={{ businessEntity: { id: entityEdit.id } }}
+                            startList={entityEdit.businessEntityField}
+                        />
                     </Grid>
                 </Grid>
             </form>

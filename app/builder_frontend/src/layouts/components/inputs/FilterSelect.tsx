@@ -7,9 +7,10 @@ interface Props {
     entityContext: Context<any>;
     options: any[];
     labelPos?: "top" | "left";
+    id: string;
     filterKey: string;
     name: string;
-    label: string | ReactElement;
+    label?: string | ReactElement;
     filterMethod: 'contains' | 'equals' | 'in' | 'notIn' | 'greaterThan' | 'lessThan' | 'greaterOrEqualThan' | 'lessOrEqualThan' | 'between' | 'specified';
 }
 
@@ -32,7 +33,7 @@ const FilterSelect = ({ options, name, label, entityContext: EntityContext, filt
     const itemTemplate = (option: any) => {
         return (
             <div className="flex align-items-center">
-                <span className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px', height: '12px' }} />
+                <span className={`mr-2 flag flag-${option?.code?.toLowerCase()}`} style={{ width: '18px', height: '12px' }} />
                 <span>{option.name}</span>
             </div>
         );

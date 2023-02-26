@@ -33,13 +33,14 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './business-entity-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/BusinessEntity/_base/business-entity-services';
 
-import { IBusinessEntity, IBusinessEntityFilters } from './business-entity-model';
-import FormUpdate from './business-entity-form';
+import { IBusinessEntity, IBusinessEntityFilters } from 'src/pages/BusinessEntity/_base/business-entity-model';
+import FormUpdate from 'src/pages/BusinessEntity/_base/business-entity-form';
 
 export const EntityContext = createContext(
     {} as {
+        baseFilters?: IBusinessEntityFilters | any;
         entityEdit: IBusinessEntity;
         setEntityEdit: Dispatch<IBusinessEntity>;
         entityView: IBusinessEntity;
@@ -70,6 +71,8 @@ const MUITable = () => {
                 setEntityEdit(_entityEdit);
             };
             apiGetEntityForm(entity.id, handleSuccess);
+        } else {
+            //  setEntityEdit({...{id: -1}, ...baseEntity})
         }
     };
 

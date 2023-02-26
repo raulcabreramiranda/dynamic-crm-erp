@@ -10,8 +10,10 @@ export interface IEntityListSort {
 interface Props {
   options: any[]
   entityView: any
+  id: string
   optionsLink: string
   name: string
+  label: string | ReactElement
   relationshipType: string
   optionsSort: IEntityListSort
   optionsShowFields: string[]

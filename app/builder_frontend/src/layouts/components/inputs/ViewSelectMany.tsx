@@ -12,6 +12,7 @@ interface Props  {
   entityContext: Context<any>
   options: any[]
   relationshipType: string
+  id?: string
   name: string
   label: string | ReactElement
   optionsLink: string

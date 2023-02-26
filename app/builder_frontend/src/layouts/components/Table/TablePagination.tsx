@@ -3,7 +3,7 @@ interface Props {
     children: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
 }
 
-const TablePagination = (props: Props) => {
+const TablePagination = (props: any) => {
     return (
         <div className={`TablePagination ${props.className || ""}`}>
            {props.children}

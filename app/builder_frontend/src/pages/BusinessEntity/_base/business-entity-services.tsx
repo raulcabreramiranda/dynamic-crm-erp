@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IBusinessEntity } from './business-entity-model';
+import { IBusinessEntity } from 'src/pages/BusinessEntity/_base/business-entity-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`business-entities`, {
@@ -26,18 +26,7 @@ export const apiGetEntityForm = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`business-entities`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: [
-            'entityName',
-            'entityNameHumanized',
-            'entityNameHumanizedPlural',
-            'hasWhiteLabel',
-            'hasDateAudit',
-            'frontPath',
-
-            'businessEntityField.id',
-            'businessEntityField.fieldName',
-            'businessEntityField.fieldNameHumanized',
-        ],
+        selectColumns: ['entityName', 'entityNameHumanized', 'entityNameHumanizedPlural', 'hasWhiteLabel', 'hasDateAudit', 'frontPath', 'businessEntityField.id'],
         onSuccess,
     });
 };

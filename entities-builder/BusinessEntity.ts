@@ -80,11 +80,26 @@ const entity: DataBaseEntityType = {
         size: 12, 
         label: "Fields", 
         embebedFields: {
+          filterLayout: {
+            fieldName: { size: 3, label: "Name" },
+            fieldNameHumanized: { size: 3, label: "Humanized" },
+            fieldType: { size: 3, label: "Type" },
+          },
+          tableLayout: {
+            fieldName: { label: "Name" },
+            fieldNameHumanized: { label: "Humanized" },
+            fieldType: { label: "Type" },
+          },
           formLayout: {
             fieldName: { size: 3, label: "Name" },
             fieldNameHumanized: { size: 3, label: "Humanized" },
-            fieldType: { size: 3, label: "Type" }, 
-          }         
+            fieldType: { size: 3, label: "Type" },
+          },
+          viewLayout: {
+            fieldName: { size: 3, label: "Name" },
+            fieldNameHumanized: { size: 3, label: "Humanized" },
+            fieldType: { size: 3, label: "Type" },
+          },      
         }
       },
     },

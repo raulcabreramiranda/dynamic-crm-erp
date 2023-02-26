@@ -32,28 +32,39 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/BusinessEntity/_base/business-entity-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/BusinessEntityField/_base/business-entity-field-services';
 
-import { IBusinessEntity, IBusinessEntityFilters } from 'src/pages/BusinessEntity/_base/business-entity-model';
-import FormView from 'src/pages/BusinessEntity/_base/business-entity-view';
-import FormUpdate from 'src/pages/BusinessEntity/_base/business-entity-form';
-import ListTable, { IEntityListSort } from 'src/pages/BusinessEntity/_base/business-entity-list';
-import FilterList from 'src/pages/BusinessEntity/_base/business-entity-filter';
+import { IBusinessEntityField, IBusinessEntityFieldFilters } from 'src/pages/BusinessEntityField/_base/business-entity-field-model';
+import FormView from './business-entity-field-view';
+import FormUpdate from './business-entity-field-form';
+import ListTable, { IEntityListSort } from './business-entity-field-list';
+import FilterList from './business-entity-field-filter';
 
 export interface IReloadList {
-    filters?: IBusinessEntity | false;
+    filters?: IBusinessEntityField | false;
     sort?: IEntityListSort | false;
     page?: number | false;
     size?: number | false;
 }
 
+export interface Props {
+    baseFilters?: IBusinessEntityFieldFilters | any;
+    baseEntity?: IBusinessEntityFieldFilters | any;
+    startList?: IBusinessEntityField[];
+}
+
 export const EntityContext = createContext(
     {} as {
-        baseFilters?: IBusinessEntityFilters | any;
-        entityFilter: IBusinessEntityFilters;
-        setEntityFilter: Dispatch<IBusinessEntityFilters>;
-        entityList: IBusinessEntity[];
-        setEntityList: Dispatch<IBusinessEntity[]>;
+        baseFilters?: IBusinessEntityFieldFilters | any;
+        baseEntity?: IBusinessEntityFieldFilters | any;
+        entityEdit: IBusinessEntityField;
+        setEntityEdit: Dispatch<IBusinessEntityField>;
+        entityView: IBusinessEntityField;
+        setEntityView: Dispatch<IBusinessEntityField>;
+        entityFilter: IBusinessEntityFieldFilters;
+        setEntityFilter: Dispatch<IBusinessEntityFieldFilters>;
+        entityList: IBusinessEntityField[];
+        setEntityList: Dispatch<IBusinessEntityField[]>;
         entityListPage: number;
         setEntityListPage: Dispatch<number>;
         entityListSize: number;
@@ -69,28 +80,97 @@ export const EntityContext = createContext(
     },
 );
 
-const MUITable = () => {
+function ModalView() {
+    const { entityView, setEntityView } = useContext(EntityContext);
+    if (!entityView || !entityView?.id) {
+        return <></>;
+    }
+
+    const handleClose = () => {
+        setEntityView({} as IBusinessEntityField);
+    };
+
+    return (
+        <Dialog isOpen={true} onClose={handleClose}>
+            <DialogTitle onClose={handleClose}>Subscribe {entityView.id} </DialogTitle>
+            <DialogContent>
+                <FormView />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="secondary">
+                    Close
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
+function ModalUpdate() {
+    const { entityEdit, setEntityEdit, reloadList } = useContext(EntityContext);
+    if (!entityEdit || !entityEdit?.id) {
+        return <></>;
+    }
+
+    const handleClose = () => {
+        setEntityEdit({} as IBusinessEntityField);
+    };
+
+    const saveChanges = () => {
+        if (!!entityEdit.id && entityEdit?.id > 0) {
+            const handleSuccess = (response: IApiResponseProps): void => {
+                handleClose();
+                reloadList({});
+            };
+            apiUpdateEntity(entityEdit, handleSuccess);
+        } else {
+            const handleSuccess = (response: IApiResponseProps): void => {
+                handleClose();
+                reloadList({});
+            };
+            apiNewEntity(entityEdit, handleSuccess);
+        }
+    };
+
+    return (
+        <Dialog isOpen={true} onClose={handleClose}>
+            <DialogTitle onClose={handleClose}>Subscribe {entityEdit.id} </DialogTitle>
+            <DialogContent>
+                <FormUpdate isNew={false} />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={saveChanges}>Save Changes</Button>
+                <Button onClick={handleClose} color="secondary">
+                    Cancel
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
+const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
     const [loading, setLoading] = useState(true);
 
-    const [entityList, setEntityList] = useState<IBusinessEntity[]>([]);
-    const [entityFilter, setEntityFilter] = useState<IBusinessEntityFilters>({});
+    const [entityList, setEntityList] = useState<IBusinessEntityField[]>(startList || []);
+    const [entityFilter, setEntityFilter] = useState<IBusinessEntityFieldFilters>(baseFilters || {});
     const [entityListPage, setEntityListPage] = useState<number>(0);
     const [entityListSize, setEntityListSize] = useState<number>(25);
     const [entityListCount, setEntityListCount] = useState<number>(0);
     const [entityListSort, setEntityListSort] = useState<IEntityListSort>({ id: 'asc' });
 
+    const [entityEdit, setEntityEdit] = useState<IBusinessEntityField>({});
+    const [entityView, setEntityView] = useState<IBusinessEntityField>({});
     const [showFilters, setShowFilters] = useState<boolean>(false);
+
+    const openNewModal = () => {
+        setEntityEdit({ ...{ id: -1 }, ...baseEntity });
+    };
 
     const getEntityFiltersURL = (offset = null) => {
         return (
             '' +
-            (entityFilter.entityName ? 'entityName=' + entityFilter.entityName + '&' : '') +
-            (entityFilter.entityNameHumanized ? 'entityNameHumanized=' + entityFilter.entityNameHumanized + '&' : '') +
-            (entityFilter.entityNameHumanizedPlural ? 'entityNameHumanizedPlural=' + entityFilter.entityNameHumanizedPlural + '&' : '') +
-            (entityFilter.hasWhiteLabel ? 'hasWhiteLabel=' + entityFilter.hasWhiteLabel + '&' : '') +
-            (entityFilter.hasDateAudit ? 'hasDateAudit=' + entityFilter.hasDateAudit + '&' : '') +
-            (entityFilter.frontPath ? 'frontPath=' + entityFilter.frontPath + '&' : '') +
-            (entityFilter.businessEntityField ? 'businessEntityField=' + entityFilter.businessEntityField.map((v: any) => v.id + '<->' + v.label).join(',') + '&' : '') +
+            (entityFilter.fieldName ? 'fieldName=' + entityFilter.fieldName + '&' : '') +
+            (entityFilter.fieldNameHumanized ? 'fieldNameHumanized=' + entityFilter.fieldNameHumanized + '&' : '') +
+            (entityFilter.fieldType ? 'fieldType=' + entityFilter.fieldType + '&' : '') +
             (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
             (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
             'page=' +
@@ -128,6 +208,7 @@ const MUITable = () => {
     return (
         <EntityContext.Provider
             value={{
+                baseFilters,
                 reloadList,
                 loading,
                 setLoading,
@@ -144,17 +225,21 @@ const MUITable = () => {
                 setEntityListSize,
                 entityListCount,
                 setEntityListCount,
+                entityEdit,
+                setEntityEdit,
+                entityView,
+                setEntityView,
             }}
         >
             <CardHeader
                 title={
                     <>
-                        <h2>List BusinessEntity </h2>
+                        <h2>List BusinessEntityField </h2>
                     </>
                 }
                 buttons={
                     <>
-                        <Button color="primary" size="sm" isLink={true} href={`/BusinessEntity/new?${getEntityFiltersURL()}`} icon={'plus'}>
+                        <Button icon="pi pi-plus" onClick={openNewModal}>
                             New
                         </Button>
                         <Button icon="pi pi-filter-fill" onClick={() => setShowFilters(!showFilters)}>
@@ -174,6 +259,8 @@ const MUITable = () => {
                 <Card>
                     <Paper>
                         <ListTable />
+                        <ModalUpdate />
+                        <ModalView />
                     </Paper>
                 </Card>
             </Grid>

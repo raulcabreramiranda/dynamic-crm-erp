@@ -33,13 +33,14 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './business-entity-services';
+import { apiGetList, apiGetEntityForm, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/BusinessEntity/_base/business-entity-services';
 
-import { IBusinessEntity, IBusinessEntityFilters } from './business-entity-model';
-import FormView from './business-entity-view';
+import { IBusinessEntity, IBusinessEntityFilters } from 'src/pages/BusinessEntity/_base/business-entity-model';
+import FormView from 'src/pages/BusinessEntity/_base/business-entity-view';
 
 export const EntityContext = createContext(
     {} as {
+        baseFilters?: IBusinessEntityFilters | any;
         entityView: IBusinessEntity;
         setEntityView: Dispatch<IBusinessEntity>;
         entityFilter: IBusinessEntityFilters;
