@@ -2,6 +2,7 @@ import { useState, Context, useContext, useEffect, SyntheticEvent, ReactElement 
 import { apiGet, showFieldsSelectAsync } from 'src/util/entity-utils';
 import { MultiSelect } from 'primereact/multiselect';
 import Label from 'src/layouts/components/Label';
+import { Dropdown } from 'primereact/dropdown';
 
 export interface IEntityListSort {
     [key: string]: 'asc' | 'desc';
@@ -12,6 +13,7 @@ interface Props {
     relationshipType: string;
     optionsLink: string;
     labelPos?: 'top' | 'left';
+    id?: string;
     name: string;
     label: string | ReactElement;
     optionsSort: IEntityListSort;
@@ -50,6 +52,11 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
         _entityEdit[fieldName] = value;
         setEntityEdit(_entityEdit);
     };
+    const handleClose = (value: IOption) => {
+        const _entityEdit = { ...entityEdit };
+        _entityEdit[fieldName] = _entityEdit[fieldName].filter((v: any)=> v.id !== value.id);
+        setEntityEdit(_entityEdit);
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -65,20 +72,37 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
             });
         }
     };
-    const handleClose = () => {
-        setOpen(false);
+
+    const selectedItemTemplate = (option: any) => {
+        return (
+            <div className="p-multiselect-token">
+                <span className="p-multiselect-token-label">
+                {optionsShowFields.map((v, i) => (
+                    <>
+                        {i > 0 && <>&nbsp;|&nbsp;</>}
+                        <span>{showFieldsSelectAsync(option, v)}</span>
+                    </>
+                ))}
+                </span>
+                <span className="p-multiselect-token-icon pi pi-times-circle" onClick={()=>handleClose(option)}></span>
+            </div>
+        );
     };
 
     const itemTemplate = (option: any) => {
         return (
             <div className="flex align-items-center">
-                <span className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px', height: '12px' }} />
-                <span>{option.name}</span>
+                {optionsShowFields.map((v, i) => (
+                    <>
+                        {i > 0 && <>&nbsp;|&nbsp;</>}
+                        <span>{showFieldsSelectAsync(option, v)}</span>
+                    </>
+                ))}
             </div>
         );
     };
 
-    const loading = open && options === undefined;
+    const value = entityEdit[fieldName] || [];
     return (
         <div className={labelPos === 'top' ? `p-fluid` : ``}>
             <div className="field">
@@ -86,38 +110,18 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
 
                 <MultiSelect
                     id={`input-multiselect-${fieldName}`}
-                    value={entityEdit[fieldName] || []}
-                    onFilter={() => console.info("onFilter")}
-                    onShow={() => console.info("onShow")}
+                    value={value}
+                    onFilter={() => console.info('onFilter')}
+                    onShow={() => handleOpen()}
                     onChange={(e) => handleChange(e.value)}
-                    options={!!options && options.length > 0 ? options : []}
+                    options={!!options && options.length > 0 ? options : [...value]}
                     optionLabel="label"
                     placeholder="Select"
                     filter
                     display="chip"
                     itemTemplate={itemTemplate}
+                    selectedItemTemplate={selectedItemTemplate}
                 />
-
-                {/*  <Autocomplete
-        fullWidth
-        multiple
-        id='tags-outlined'
-        options={!!options && options.length > 0 ? options : []}
-        open={open}
-        onOpen={handleOpen}
-        onClose={handleClose}
-        loading={loading}
-        value={entityEdit[fieldName] || []}
-        onChange={handleChange}
-        getOptionLabel={option => {
-          if (optionsShowFields.length > 0) {
-            return optionsShowFields.map((v: string) => showFieldsSelectAsync(option,v)).join(' | ')
-          }
-          return option['id']
-        }}
-        filterSelectedOptions
-        renderInput={params => <TextField {...params} InputLabelProps={{ shrink: true }} label={label} />}
-      /> */}
             </div>
         </div>
     );
@@ -150,52 +154,39 @@ const InputSelectOne = ({ name, label, labelPos, entityContext: EntityContext, o
             });
         }
     };
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const itemTemplate = (option: any) => {
         return (
             <div className="flex align-items-center">
-                <span className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px', height: '12px' }} />
-                <span>{option.name}</span>
+                {optionsShowFields.map((v, i) => (
+                    <>
+                        {i > 0 && <>&nbsp;|&nbsp;</>}
+                        <span>{showFieldsSelectAsync(option, v)}</span>
+                    </>
+                ))}
             </div>
         );
     };
 
     const loading = open && options === undefined;
+    const value = entityEdit[fieldName] || {};
+
     return (
         <div className={labelPos === 'top' ? `p-fluid` : ``}>
             <div className="field">
                 <Label htmlFor={`input-multiselect-${fieldName}`}>{label}</Label>
-                <MultiSelect
-                    id={`input-multiselect-${fieldName}`}
-                    multiple={false}
-                    value={entityEdit[fieldName] || []}
-                    onFilter={() => console.info("onFilter1")}
-                    onShow={() => console.info("onShow1")}
+                <Dropdown
+                    id={`input-select-${fieldName}`}
+                    value={value}
+                    onShow={() => handleOpen()}
                     onChange={(e) => handleChange(e.value)}
-                    options={!!options && options.length > 0 ? options : []}
+                    options={!!options && options.length > 0 ? options : [value]}
                     optionLabel="label"
                     placeholder="Select"
                     filter
-                    display="chip"
                     itemTemplate={itemTemplate}
+                    valueTemplate={itemTemplate}
                 />
-                {/*        <Autocomplete
-                fullWidth
-                id="tags-outlined"
-                options={!!options && options.length > 0 ? options : []}
-                open={open}
-                onOpen={handleOpen}
-                onClose={handleClose}
-                loading={loading}
-                value={entityEdit[fieldName] || []}
-                onChange={handleChange}
-                getOptionLabel={(option) => optionsShowFields.map((v: string) => option[v]).join(' | ') || option['id']}
-                filterSelectedOptions
-                renderInput={(params) => <TextField {...params} InputLabelProps={{ shrink: true }} label={label} />}
-            /> */}
             </div>
         </div>
     );

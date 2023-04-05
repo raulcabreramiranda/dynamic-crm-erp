@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { BaseEntity } from '../../../domain/base/base.entity';
+import { BaseEntity } from 'src/domain/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { TypeContent } from './type-content.enum';
+import { PhotoTypeContent } from './photo-type-content.enum';
 
 import tablesName from '../../tablesName';
 
@@ -16,7 +16,7 @@ export class Photo extends BaseEntity {
             hour: String,
             link: String,
             linkContentType: String,
-            typeContent: TypeContent,
+            typeContent: PhotoTypeContent,
         };
     }
 
@@ -40,9 +40,9 @@ export class Photo extends BaseEntity {
     @ApiProperty({ required: false })
     linkContentType: string;
 
-    @Column({ type: 'simple-enum', name: 'typeContent', enum: TypeContent, nullable: true })
+    @Column({ type: 'simple-enum', name: 'typeContent', enum: PhotoTypeContent, nullable: true })
     @ApiProperty({ required: false })
-    typeContent: TypeContent;
+    typeContent: PhotoTypeContent;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { BaseEntity } from '../../../domain/base/base.entity';
+import { BaseEntity } from 'src/domain/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { AdminProfile } from '../../admin-profile/_base/admin-profile.entity';
 import { AdminPermissionUser } from '../../admin-permission-user/_base/admin-permission-user.entity';
 import { AdminWhiteLabel } from '../../admin-white-label/_base/admin-white-label.entity';
-import { UserType } from './user-type.enum';
+import { AdminUserUserType } from './admin-user-user-type.enum';
 
 import tablesName from '../../tablesName';
 
@@ -28,7 +28,7 @@ export class AdminUser extends BaseEntity {
             resetDate: String,
             re: String,
             ra: String,
-            userType: UserType,
+            userType: AdminUserUserType,
             clientId: Number,
             adminProfile: AdminProfile,
             adminPermissionUsers: AdminPermissionUser,
@@ -96,9 +96,9 @@ export class AdminUser extends BaseEntity {
     @ApiProperty({ required: false })
     ra: string;
 
-    @Column({ type: 'simple-enum', name: 'userType', enum: UserType, nullable: true })
+    @Column({ type: 'simple-enum', name: 'userType', enum: AdminUserUserType, nullable: true })
     @ApiProperty({ required: false })
-    userType: UserType;
+    userType: AdminUserUserType;
 
     @Column({ type: 'integer', name: 'clientId', nullable: true })
     @ApiProperty({ required: false })

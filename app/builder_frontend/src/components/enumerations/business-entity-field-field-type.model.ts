@@ -1,4 +1,4 @@
-export enum FieldType {
+export enum BusinessEntityFieldFieldType {
     FRONT = 'FRONT',
     END = 'END',
 }

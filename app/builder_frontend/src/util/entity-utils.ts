@@ -16,6 +16,19 @@ import dayjs, { Dayjs } from 'dayjs';
 // import withReactContent from 'sweetalert2-react-content';
 // const MySwal = withReactContent(Swal);
 
+export interface IFilter<T> {
+  in: Array<T>;
+  notIn: Array<T>;
+  contains: string;
+  equals: T;
+  greaterThan: T;
+  lessThan: T;
+  greaterOrEqualThan: T;
+  lessOrEqualThan: T;
+  between: [T, T];
+  specified: boolean;
+}
+
 export const INumber: number = 0;
 export const IBoolean: boolean = true;
 export const IString: string = '';

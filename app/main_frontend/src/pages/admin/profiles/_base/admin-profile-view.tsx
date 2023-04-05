@@ -9,7 +9,8 @@ import ViewSelect from 'src/layouts/components/inputs/ViewSelect';
 import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
-import { IAdminProfile } from './admin-profile-model';
+import { IAdminProfile } from 'src/pages/admin/profiles/_base/admin-profile-model';
+
 import { EntityContext } from './admin-profile';
 
 const ViewForm = () => {

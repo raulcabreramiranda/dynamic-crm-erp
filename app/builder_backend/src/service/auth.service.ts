@@ -9,7 +9,6 @@ import { UserService } from './user.service';
 
 import { getManager, Repository } from 'typeorm';
 import * as moment from 'moment';
-import { UserType } from 'src/entities/admin-user/_base/user-type.enum';
 import AdminPermissionUser from 'src/entities/admin-permission-user/_base/admin-permission-user.entity';
 
 type PlataformUserData = {
@@ -18,7 +17,7 @@ type PlataformUserData = {
   plataformId: number;
   disciplineId: number;
   degreeId: number;
-  userType: UserType;
+  userType: any;
 };
 @Injectable()
 export class AuthService {

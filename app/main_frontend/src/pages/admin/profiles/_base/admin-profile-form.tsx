@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
@@ -12,6 +13,10 @@ import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSup
 import { EntityContext } from './admin-profile';
 
 const FormUpdate = ({ isNew }: any) => {
+    const { entityEdit } = useContext(EntityContext);
+    if (!entityEdit || !entityEdit.id) {
+        return <> </>;
+    }
     return (
         <>
             <form>

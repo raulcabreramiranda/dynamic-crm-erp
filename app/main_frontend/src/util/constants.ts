@@ -2,12 +2,12 @@ export const BASE_IMG_PATH = process.env.NEXT_PUBLIC_BASE_IMG_PATH || 'http://lo
 //export const BASE_API_VERSION_PATH = process.env.NEXT_PUBLIC_SERVER_API_URL || process.env.NODE_SERVER_API_URL || 'http://local.node.server:8081/'
 export const BASE_API_VERSION_PATH = 'http://local.node.server:8081/'
 
-export const SERVER_LOGIN_URL = process.env.NEXT_PUBLIC_SERVER_LOGIN_URL || 'https://simulados.evolucional.com.br/entrar?ReturnUrl=%2fpainel123'
-export const SERVER_LOGOUT_URL = process.env.NEXT_PUBLIC_SERVER_LOGOUT_URL || 'https://simulados.evolucional.com.br/sair'
+export const SERVER_LOGIN_URL = '/login'
+export const SERVER_LOGOUT_URL = '/login'
 
 export const NODE_SERVER_ENV = process.env.NEXT_PUBLIC_SERVER_ENV_ENV || 'local'
 
-export const AUTH_TOKEN_KEY = 'jhiAuthenticationToken';
+export const AUTH_TOKEN_KEY = 'healthAuthenticationToken';
 export const ERROR_DATA_KEY = 'containerErrorData';
 export const USER_DATA_KEY = 'userDataEvo';
 

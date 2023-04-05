@@ -5,11 +5,11 @@ import AdminUser from './_base/admin-user.entity';
 import { AdminUserController as AdminUserControllerBase } from './_base/admin-user.controller';
 
 import { AdminUserService } from './admin-user.service';
-import { AuthGuard, Roles, RolesGuard, RoleType } from '../../security';
-import { HeaderUtil } from '../../client/header-util';
-import { LoggingInterceptor } from '../../client/interceptors/logging.interceptor';
-import { UserRepository } from '../../repository/user.repository';
-import { AuthService } from '../../service/auth.service';
+import { AuthGuard, Roles, RolesGuard, RoleType } from 'src/security';
+import { HeaderUtil } from 'src/client/header-util';
+import { LoggingInterceptor } from 'src/client/interceptors/logging.interceptor';
+import { UserRepository } from 'src/repository/user.repository';
+import { AuthService } from 'src/service/auth.service';
 
 @Controller('api/admin-users')
 @UseGuards(AuthGuard, RolesGuard)

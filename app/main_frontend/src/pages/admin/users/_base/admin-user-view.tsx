@@ -9,7 +9,8 @@ import ViewSelect from 'src/layouts/components/inputs/ViewSelect';
 import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
-import { IAdminUser } from './admin-user-model';
+import { IAdminUser } from 'src/pages/admin/users/_base/admin-user-model';
+
 import { EntityContext } from './admin-user';
 
 const ViewForm = () => {

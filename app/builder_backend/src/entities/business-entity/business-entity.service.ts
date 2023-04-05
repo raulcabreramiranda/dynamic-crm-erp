@@ -4,14 +4,16 @@ import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import BusinessEntity from './_base/business-entity.entity';
 import { BusinessEntityService as BusinessEntityServiceBase } from './_base/business-entity.service';
+import { IBusinessEntityRepository } from './business-entity.providers';
 
 const relationshipNames = [];
+relationshipNames.push('businessEntityField');
 
 @Injectable({ scope: Scope.REQUEST })
 export class BusinessEntityService extends BusinessEntityServiceBase {
     logger = new Logger('BusinessEntityService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('BUSINESSENTITY_REPOSITORY') protected businessEntityRepository: Repository<BusinessEntity>) {
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('BUSINESSENTITY_REPOSITORY') protected businessEntityRepository: IBusinessEntityRepository) {
         super(request, businessEntityRepository);
     }
 

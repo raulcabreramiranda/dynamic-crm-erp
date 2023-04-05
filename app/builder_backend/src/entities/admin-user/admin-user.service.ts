@@ -4,6 +4,7 @@ import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminUser from './_base/admin-user.entity';
 import { AdminUserService as AdminUserServiceBase } from './_base/admin-user.service';
+import { IAdminUserRepository } from './admin-user.providers';
 
 const relationshipNames = [];
 relationshipNames.push('adminProfile');
@@ -14,7 +15,7 @@ relationshipNames.push('adminWhiteLabel');
 export class AdminUserService extends AdminUserServiceBase {
     logger = new Logger('AdminUserService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINUSER_REPOSITORY') protected adminUserRepository: Repository<AdminUser>) {
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINUSER_REPOSITORY') protected adminUserRepository: IAdminUserRepository) {
         super(request, adminUserRepository);
     }
 

@@ -9,7 +9,8 @@ import ViewSelect from 'src/layouts/components/inputs/ViewSelect';
 import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
-import { IPhoto } from './photo-model';
+import { IPhoto } from 'src/pages/photos/_base/photo-model';
+
 import { EntityContext } from './photo';
 
 const ViewForm = () => {
@@ -89,9 +90,9 @@ const ViewForm = () => {
                                     <ViewSelect
                                         id="photo-typeContent"
                                         options={[
-                                            { value: 'TEXT', label: translate('photo.TypeContent.TEXT') },
-                                            { value: 'PRESENTATION', label: translate('photo.TypeContent.PRESENTATION') },
-                                            { value: 'DEEPENING', label: translate('photo.TypeContent.DEEPENING') },
+                                            { value: 'TEXT', label: translate('photo.PhotoTypeContent.TEXT') },
+                                            { value: 'PRESENTATION', label: translate('photo.PhotoTypeContent.PRESENTATION') },
+                                            { value: 'DEEPENING', label: translate('photo.PhotoTypeContent.DEEPENING') },
                                         ]}
                                         entityContext={EntityContext}
                                         name="typeContent"

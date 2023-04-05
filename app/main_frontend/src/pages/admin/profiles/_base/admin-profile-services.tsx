@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IAdminProfile } from './admin-profile-model';
+import { IAdminProfile } from 'src/pages/admin/profiles/_base/admin-profile-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`admin-profiles`, {

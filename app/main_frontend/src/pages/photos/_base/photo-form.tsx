@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
@@ -12,6 +13,10 @@ import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSup
 import { EntityContext } from './photo';
 
 const FormUpdate = ({ isNew }: any) => {
+    const { entityEdit } = useContext(EntityContext);
+    if (!entityEdit || !entityEdit.id) {
+        return <> </>;
+    }
     return (
         <>
             <form>
@@ -81,9 +86,9 @@ const FormUpdate = ({ isNew }: any) => {
                                 <InputSelect
                                     id="photo-typeContent"
                                     options={[
-                                        { value: 'TEXT', label: translate('photo.TypeContent.TEXT') },
-                                        { value: 'PRESENTATION', label: translate('photo.TypeContent.PRESENTATION') },
-                                        { value: 'DEEPENING', label: translate('photo.TypeContent.DEEPENING') },
+                                        { value: 'TEXT', label: translate('photo.PhotoTypeContent.TEXT') },
+                                        { value: 'PRESENTATION', label: translate('photo.PhotoTypeContent.PRESENTATION') },
+                                        { value: 'DEEPENING', label: translate('photo.PhotoTypeContent.DEEPENING') },
                                     ]}
                                     entityContext={EntityContext}
                                     name="typeContent"

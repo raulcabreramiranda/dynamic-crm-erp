@@ -35,11 +35,10 @@ export class PhotoService {
             options.relations = relationshipNames;
         }
 
-        options.where = { id: Equal(Number.parseInt(id)) };
         const result = await getManyAndCount2({
             options,
             selectColumns,
-            filters: [],
+            filters: [{ column: 'id', value: id, operation: 'equals' }],
             repository: this.photoRepository,
             Entity: Photo,
             userRequest: {

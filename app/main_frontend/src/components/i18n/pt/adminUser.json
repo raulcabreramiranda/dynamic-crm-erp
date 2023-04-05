@@ -56,12 +56,6 @@
 
         "upload_imageUrl": "Subir User",
 
-        "UserType.ADMIN": "ADMIN",
-        "UserType.COORDINATOR": "COORDINATOR",
-        "UserType.TEACHER": "TEACHER",
-        "UserType.REVIEWER": "REVIEWER",
-        "UserType.STUDENT": "STUDENT",
-
         "detail": {
             "title": "User"
         },

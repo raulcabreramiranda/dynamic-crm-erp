@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IAdminUser } from './admin-user-model';
+import { IAdminUser } from 'src/pages/admin/users/_base/admin-user-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`admin-users`, {

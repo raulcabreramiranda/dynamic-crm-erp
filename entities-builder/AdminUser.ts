@@ -1,0 +1,158 @@
+import DataBaseEntityType from "./_DataBaseEntity";
+
+const entity: DataBaseEntityType = {
+  entityName: "AdminUser",
+  entityNameHumanized: "User",
+  entityNameHumanizedPlural: "Users",
+  frontPath: "admin/users",
+  hasWhiteLabel: true,
+  hasSoftDelete: false,
+  hasDateAudit: true,
+  pagePath: "pages/admin/users",
+  fields: [
+    { fieldName: "login", fieldNameHumanized: "Login", fieldType: "String" },
+    {
+      fieldName: "fullname",
+      fieldNameHumanized: "Nome Completo",
+      fieldType: "String",
+    },
+    {
+      fieldName: "cellphone",
+      fieldNameHumanized: "Celular",
+      fieldType: "String",
+    },
+    { fieldName: "phone", fieldNameHumanized: "Telefone", fieldType: "String" },
+    { fieldName: "email", fieldNameHumanized: "Email", fieldType: "String" },
+    {
+      fieldName: "activated",
+      fieldNameHumanized: "Ativado(a)",
+      fieldType: "Boolean",
+    },
+    {
+      fieldName: "langKey",
+      fieldNameHumanized: "Lang Key",
+      fieldType: "String",
+    },
+    { fieldName: "password", fieldNameHumanized: "Senha", fieldType: "String" },
+    {
+      fieldName: "imageUrl",
+      fieldNameHumanized: "Imagem",
+      fieldType: "ImageBlob",
+    },
+    {
+      fieldName: "resetDate",
+      fieldNameHumanized: "Redefinir Data",
+      fieldType: "String",
+    },
+    { fieldName: "re", fieldNameHumanized: "RE", fieldType: "String" },
+    { fieldName: "ra", fieldNameHumanized: "RA", fieldType: "String" },
+    {
+      fieldName: "userType",
+      fieldNameHumanized: "Tipo de Usuário",
+      fieldType: "Enum",
+      fieldValues: "ADMIN,COORDINATOR,TEACHER,REVIEWER,STUDENT",
+    },
+    {
+      fieldName: "clientId",
+      fieldNameHumanized: "Client Id",
+      fieldType: "Integer",
+    },
+  ],
+  relationships: [
+    {
+      fieldName: "adminProfile",
+      otherEntityTableName: "AdminProfile",
+      otherEntityRelationshipName: "adminUsers",
+      fieldType: "OneToMany_reverso",
+    },
+    {
+      fieldName: "adminPermissionUsers",
+      otherEntityTableName: "AdminPermissionUser",
+      otherEntityRelationshipName: "adminUser",
+      fieldType: "OneToMany",
+    },
+    {
+      fieldName: "adminWhiteLabel",
+      otherEntityTableName: "AdminWhiteLabel",
+      otherEntityRelationshipName: "adminUsers",
+      fieldType: "OneToMany_reverso",
+    },
+  ],
+  showClientView: true,
+  views: {
+    tableLayout: {
+      fullname: { label: "Image" },
+      cellphone: { label: "cellphone" },
+      adminProfile: { label: "Profile", showFields: ["id", "name"] },
+      adminPermissionUsers: {
+        label: "PermissionUsers",
+        showFields: ["id", "adminPermission.id", "adminPermission.name"],
+      },
+      adminWhiteLabel: { label: "WhiteLabel" },
+    },
+    filterLayout: {
+      adminProfile: {
+        label: "Profile",
+        showFields: ["id", "name"],
+        superSelect: ["id", "name"],
+      },
+      adminPermissionUsers: {
+        label: "PermissionUsers",
+        showFields: ["id", "adminPermission.id", "adminPermission.name"],
+        superSelect: ["id", "adminPermission.id", "adminPermission.name"],
+      },
+      adminWhiteLabel: { label: "WhiteLabel" },
+      // login:  { label: "login" },
+      // cellphone:  { label: "cellphone" },
+      // phone:  { label: "phone" },
+      // email:  { label: "email" },
+      // activated:  { label: "activated" },
+      // langKey:  { label: "langKey" },
+      // password:  { label: "password" },
+      // imageUrl:  { label: "imageUrl" },
+      // resetDate:  { label: "resetDate" },
+      // re:  { label: "re" },
+      // ra:  { label: "ra" },
+      // userType:  { label: "userType" },
+      // clientId:  { label: "clientId" },
+    },
+    formLayout: {
+      login: { label: "login" },
+      fullname: { label: "Image" },
+      adminProfile: {
+        label: "Profile",
+        showFields: ["id", "name"],
+        superSelect: ["id"],
+      },
+      adminPermissionUsers: {
+        label: "PermissionUsers",
+        showFields: ["id", "adminPermission.id", "adminPermission.name"],
+        superSelect: ["id", "adminPermission.id", "adminPermission.name"],
+      },
+      adminWhiteLabel: { label: "WhiteLabel" },
+      // phone:  { label: "phone" },
+      // email:  { label: "email" },
+      // activated:  { label: "activated" },
+      // langKey:  { label: "langKey" },
+      // password:  { label: "password" },
+      // imageUrl:  { label: "imageUrl" },
+      // resetDate:  { label: "resetDate" },
+      // re:  { label: "re" },
+      // ra:  { label: "ra" },
+      // userType:  { label: "userType" },
+      // clientId:  { label: "clientId" },
+    },
+    viewLayout: {
+      login: { label: "login" },
+      fullname: { label: "Image" },
+      adminProfile: { label: "Profile", showFields: ["id", "name"] },
+      adminPermissionUsers: {
+        label: "PermissionUsers",
+        showFields: ["id", "adminPermission.id", "adminPermission.name"],
+      },
+      adminWhiteLabel: { label: "WhiteLabel" },
+    },
+  },
+};
+
+export default entity;

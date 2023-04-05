@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export interface ILayoutState {
     staticMenuDesktopInactive: boolean;
@@ -88,6 +89,12 @@ export const LayoutProvider = (props: ILayoutProvider) => {
         onMenuToggle,
         showProfileSidebar
     };
-
-    return <LayoutContext.Provider value={value}>{props.children}</LayoutContext.Provider>;
+    const theme = createTheme({
+        // your custom theme options here
+      });
+    return (
+        <ThemeProvider theme={theme}>
+            <LayoutContext.Provider value={value}>{props.children}</LayoutContext.Provider>
+        </ThemeProvider>
+    );
 };

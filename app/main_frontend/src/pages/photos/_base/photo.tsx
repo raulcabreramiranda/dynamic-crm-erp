@@ -32,9 +32,9 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './photo-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/photos/_base/photo-services';
 
-import { IPhoto } from './photo-model';
+import { IPhoto, IPhotoFilters } from 'src/pages/photos/_base/photo-model';
 import FormView from './photo-view';
 import FormUpdate from './photo-form';
 import ListTable, { IEntityListSort } from './photo-list';
@@ -47,14 +47,22 @@ export interface IReloadList {
     size?: number | false;
 }
 
+export interface Props {
+    baseFilters?: IPhotoFilters | any;
+    baseEntity?: IPhotoFilters | any;
+    startList?: IPhoto[];
+}
+
 export const EntityContext = createContext(
     {} as {
+        baseFilters?: IPhotoFilters | any;
+        baseEntity?: IPhotoFilters | any;
         entityEdit: IPhoto;
         setEntityEdit: Dispatch<IPhoto>;
         entityView: IPhoto;
         setEntityView: Dispatch<IPhoto>;
-        entityFilter: IPhoto;
-        setEntityFilter: Dispatch<IPhoto>;
+        entityFilter: IPhotoFilters;
+        setEntityFilter: Dispatch<IPhotoFilters>;
         entityList: IPhoto[];
         setEntityList: Dispatch<IPhoto[]>;
         entityListPage: number;
@@ -68,6 +76,7 @@ export const EntityContext = createContext(
         setLoading: Dispatch<boolean>;
         entityListSort: IEntityListSort;
         setEntityListSort: Dispatch<IEntityListSort>;
+        getEntityFiltersURL(offset?: number | null): string;
     },
 );
 
@@ -129,10 +138,8 @@ function ModalUpdate() {
                 <FormUpdate isNew={false} />
             </DialogContent>
             <DialogActions>
-                <Button onClick={saveChanges} variant="contained">
-                    Save Changes
-                </Button>
-                <Button onClick={handleClose} type="reset" variant="outlined" color="secondary">
+                <Button onClick={saveChanges}>Save Changes</Button>
+                <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
             </DialogActions>
@@ -140,11 +147,11 @@ function ModalUpdate() {
     );
 }
 
-const MUITable = () => {
+const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
     const [loading, setLoading] = useState(true);
 
-    const [entityList, setEntityList] = useState<IPhoto[]>([]);
-    const [entityFilter, setEntityFilter] = useState<IPhoto>({});
+    const [entityList, setEntityList] = useState<IPhoto[]>(startList || []);
+    const [entityFilter, setEntityFilter] = useState<IPhotoFilters>(baseFilters || {});
     const [entityListPage, setEntityListPage] = useState<number>(0);
     const [entityListSize, setEntityListSize] = useState<number>(25);
     const [entityListCount, setEntityListCount] = useState<number>(0);
@@ -155,7 +162,32 @@ const MUITable = () => {
     const [showFilters, setShowFilters] = useState<boolean>(false);
 
     const openNewModal = () => {
-        setEntityEdit({ id: -1 });
+        setEntityEdit({ ...{ id: -1 }, ...baseEntity });
+    };
+
+    const getEntityFiltersURL = (offset = null) => {
+        return (
+            '' +
+            (entityFilter.title ? 'title=' + entityFilter.title + '&' : '') +
+            (entityFilter.description ? 'description=' + entityFilter.description + '&' : '') +
+            (entityFilter.link ? 'link=' + entityFilter.link + '&' : '') +
+            (entityFilter.typeContent ? 'typeContent=' + entityFilter.typeContent + '&' : '') +
+            (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
+            (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
+            'page=' +
+            entityFilter.activePage +
+            '&' +
+            'size=' +
+            entityFilter.itemsPerPage +
+            '&' +
+            (offset !== null ? 'offset=' + offset + '&' : '') +
+            'sort=' +
+            entityFilter.sort +
+            ',' +
+            entityFilter.order +
+            '&' +
+            ''
+        );
     };
 
     const reloadList = ({ filters = false, sort = false, page = false, size = false }: IReloadList) => {
@@ -177,9 +209,11 @@ const MUITable = () => {
     return (
         <EntityContext.Provider
             value={{
+                baseFilters,
                 reloadList,
                 loading,
                 setLoading,
+                getEntityFiltersURL,
                 entityList,
                 setEntityList,
                 entityFilter,

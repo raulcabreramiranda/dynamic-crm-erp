@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IAdminPermission } from './admin-permission-model';
+import { IAdminPermission } from 'src/pages/admin/permissions/_base/admin-permission-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`admin-permissions`, {

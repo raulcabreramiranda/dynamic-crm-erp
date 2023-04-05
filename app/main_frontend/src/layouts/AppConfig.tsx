@@ -84,6 +84,8 @@ const AppConfig = (props: { simple?: any; }) => {
         applyScale();
     }, [layoutConfig.scale]);
 
+    //HIDE VIEW COFNGI
+    return <></>
     return (
         <>
             <button className="layout-config-button p-link" type="button" onClick={onConfigButtonClick}>

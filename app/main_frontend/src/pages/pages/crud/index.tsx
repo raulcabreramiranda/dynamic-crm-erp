@@ -13,7 +13,6 @@ import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { ProductService } from '../../../../demo/service/ProductService';
 
 const Crud = () => {
     let emptyProduct = {
@@ -40,10 +39,6 @@ const Crud = () => {
     const dt = useRef(null);
     const contextPath = getConfig().publicRuntimeConfig.contextPath;
 
-    useEffect(() => {
-        const productService = new ProductService();
-        productService.getProducts().then((data) => setProducts(data));
-    }, []);
 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });

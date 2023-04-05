@@ -32,9 +32,9 @@ import DialogTitle from 'src/layouts/components/Dialog/DialogTitle';
 
 import { BASE_API_VERSION_PATH } from 'src/util/constants';
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from './admin-profile-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiUpdateEntity, apiNewEntity, apiDeleteEntity } from 'src/pages/admin/profiles/_base/admin-profile-services';
 
-import { IAdminProfile } from './admin-profile-model';
+import { IAdminProfile, IAdminProfileFilters } from 'src/pages/admin/profiles/_base/admin-profile-model';
 import FormView from './admin-profile-view';
 import FormUpdate from './admin-profile-form';
 import ListTable, { IEntityListSort } from './admin-profile-list';
@@ -47,14 +47,22 @@ export interface IReloadList {
     size?: number | false;
 }
 
+export interface Props {
+    baseFilters?: IAdminProfileFilters | any;
+    baseEntity?: IAdminProfileFilters | any;
+    startList?: IAdminProfile[];
+}
+
 export const EntityContext = createContext(
     {} as {
+        baseFilters?: IAdminProfileFilters | any;
+        baseEntity?: IAdminProfileFilters | any;
         entityEdit: IAdminProfile;
         setEntityEdit: Dispatch<IAdminProfile>;
         entityView: IAdminProfile;
         setEntityView: Dispatch<IAdminProfile>;
-        entityFilter: IAdminProfile;
-        setEntityFilter: Dispatch<IAdminProfile>;
+        entityFilter: IAdminProfileFilters;
+        setEntityFilter: Dispatch<IAdminProfileFilters>;
         entityList: IAdminProfile[];
         setEntityList: Dispatch<IAdminProfile[]>;
         entityListPage: number;
@@ -68,6 +76,7 @@ export const EntityContext = createContext(
         setLoading: Dispatch<boolean>;
         entityListSort: IEntityListSort;
         setEntityListSort: Dispatch<IEntityListSort>;
+        getEntityFiltersURL(offset?: number | null): string;
     },
 );
 
@@ -129,10 +138,8 @@ function ModalUpdate() {
                 <FormUpdate isNew={false} />
             </DialogContent>
             <DialogActions>
-                <Button onClick={saveChanges} variant="contained">
-                    Save Changes
-                </Button>
-                <Button onClick={handleClose} type="reset" variant="outlined" color="secondary">
+                <Button onClick={saveChanges}>Save Changes</Button>
+                <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
             </DialogActions>
@@ -140,11 +147,11 @@ function ModalUpdate() {
     );
 }
 
-const MUITable = () => {
+const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
     const [loading, setLoading] = useState(true);
 
-    const [entityList, setEntityList] = useState<IAdminProfile[]>([]);
-    const [entityFilter, setEntityFilter] = useState<IAdminProfile>({});
+    const [entityList, setEntityList] = useState<IAdminProfile[]>(startList || []);
+    const [entityFilter, setEntityFilter] = useState<IAdminProfileFilters>(baseFilters || {});
     const [entityListPage, setEntityListPage] = useState<number>(0);
     const [entityListSize, setEntityListSize] = useState<number>(25);
     const [entityListCount, setEntityListCount] = useState<number>(0);
@@ -155,7 +162,29 @@ const MUITable = () => {
     const [showFilters, setShowFilters] = useState<boolean>(false);
 
     const openNewModal = () => {
-        setEntityEdit({ id: -1 });
+        setEntityEdit({ ...{ id: -1 }, ...baseEntity });
+    };
+
+    const getEntityFiltersURL = (offset = null) => {
+        return (
+            '' +
+            (entityFilter.name ? 'name=' + entityFilter.name + '&' : '') +
+            (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
+            (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
+            'page=' +
+            entityFilter.activePage +
+            '&' +
+            'size=' +
+            entityFilter.itemsPerPage +
+            '&' +
+            (offset !== null ? 'offset=' + offset + '&' : '') +
+            'sort=' +
+            entityFilter.sort +
+            ',' +
+            entityFilter.order +
+            '&' +
+            ''
+        );
     };
 
     const reloadList = ({ filters = false, sort = false, page = false, size = false }: IReloadList) => {
@@ -177,9 +206,11 @@ const MUITable = () => {
     return (
         <EntityContext.Provider
             value={{
+                baseFilters,
                 reloadList,
                 loading,
                 setLoading,
+                getEntityFiltersURL,
                 entityList,
                 setEntityList,
                 entityFilter,

@@ -4,6 +4,7 @@ import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminWhiteLabel from './_base/admin-white-label.entity';
 import { AdminWhiteLabelService as AdminWhiteLabelServiceBase } from './_base/admin-white-label.service';
+import { IAdminWhiteLabelRepository } from './admin-white-label.providers';
 
 const relationshipNames = [];
 relationshipNames.push('adminUsers');
@@ -12,7 +13,7 @@ relationshipNames.push('adminUsers');
 export class AdminWhiteLabelService extends AdminWhiteLabelServiceBase {
     logger = new Logger('AdminWhiteLabelService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINWHITELABEL_REPOSITORY') protected adminWhiteLabelRepository: Repository<AdminWhiteLabel>) {
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINWHITELABEL_REPOSITORY') protected adminWhiteLabelRepository: IAdminWhiteLabelRepository) {
         super(request, adminWhiteLabelRepository);
     }
 

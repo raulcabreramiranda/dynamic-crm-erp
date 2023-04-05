@@ -128,8 +128,8 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
       }
     });
 
+  const builder = repository.createQueryBuilder('A0').where({});
 
-  const builder = repository.createQueryBuilder('A0').where(options.where || {});
   const myJoin = {};
   const filterJoinWhiteLabel = (i, element) => {
     let EleArray = Entity;
@@ -139,7 +139,7 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
 
     const hasWhiteLabel = typeof EleArray.columnsMetaData()['whiteLabel'] !== 'undefined';
     if (userRequest && userRequest['whiteLabel'] && hasWhiteLabel) {
-      return `((A${i + 1}.whiteLabel is null OR A${i + 1}.whiteLabel = :A0_whiteLabel ))`;
+      return `(("A${i + 1}"."whiteLabel" is null OR "A${i + 1}"."whiteLabel" = :A0_whiteLabel ))`;
     }
     return ``;
   };
@@ -178,17 +178,18 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
   });
 
   _filters
-    .filter((v) => v['column'] && v['column'].split('.').length > 1)
+    // .filter((v) => v['column'] && v['column'].split('.').length > 1)
     .forEach((v) => {
+      const column = v['column'].split('.').length > 1 ? v['column'] : 'A0.' + v['column'];
       const parameter = {};
-      const parameterName = v['column'].split('.').join('_') + '_' + v['operation'];
+      const parameterName = column.split('.').join('_') + '_' + v['operation'];
       if ((v['value'] + '').trim()) {
         if (v['operation'] === 'in') {
           v['value'].split(',').map((v1, i) => {
             parameter[parameterName + '_' + i] = v1;
           });
           builder.andWhere(
-            v['column'] +
+            column +
               ' in (' +
               v['value']
                 .split(',')
@@ -202,7 +203,7 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
             parameter[parameterName + '_' + i] = v1;
           });
           builder.andWhere(
-            v['column'] +
+            column +
               ' not in (' +
               v['value']
                 .split(',')
@@ -213,26 +214,31 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
           );
         } else if (v['operation'] === 'equals') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' = :' + parameterName, parameter);
+          builder.andWhere(column + ' = :' + parameterName, parameter);
         } else if (v['operation'] === 'greaterThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' > :' + parameterName, parameter);
+          builder.andWhere(column + ' > :' + parameterName, parameter);
         } else if (v['operation'] === 'lessThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' < :' + parameterName, parameter);
+          builder.andWhere(column + ' < :' + parameterName, parameter);
         } else if (v['operation'] === 'greaterOrEqualThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' >= :' + parameterName, parameter);
+          builder.andWhere(column + ' >= :' + parameterName, parameter);
         } else if (v['operation'] === 'lessOrEqualThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' <= :' + parameterName, parameter);
+          builder.andWhere(column + ' <= :' + parameterName, parameter);
+        } else if (v['operation'] === 'between') {
+          parameter[parameterName + 'Start'] = v['value'].split(',')[0];
+          builder.andWhere(column + ' > :' + parameterName + 'Start', parameter);
+          parameter[parameterName + 'End'] = v['value'].split(',')[1];
+          builder.andWhere(column + ' < :' + parameterName + 'End', parameter);
         } else if (v['operation'] === 'specified' && v['value'] == 'true') {
-          builder.andWhere(v['column'] + ' is not null', parameter);
+          builder.andWhere(column + ' is not null', parameter);
         } else if (v['operation'] === 'specified' && v['value'] == 'false') {
-          builder.andWhere(v['column'] + ' is null', parameter);
+          builder.andWhere(column + ' is null', parameter);
         } else {
           parameter[parameterName] = '%' + v['value'] + '%';
-          builder.andWhere(v['column'] + ' like :' + parameterName, parameter);
+          builder.andWhere(column + ' like :' + parameterName, parameter);
         }
       }
     });
@@ -243,20 +249,31 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
   }
 
   if (options['order'] === 'RANDOM') {
-    builder.orderBy('NEWID()', 'ASC');
+    builder.addOrderBy('NEWID()', 'ASC');
   } else if (options['order']) {
-    Object.keys(options['order']).forEach((element) => {
-      let orderColumn = '';
-      if (element.split('.').length > 1) {
-        const pos = options.relations.indexOf(element.split('.').slice(0, -1).join('.'));
-        orderColumn = `A${pos + 1}.${element.split('.').pop()}`;
+    Object.keys(options['order']).forEach((element: string) => {
+      const orderSplit = element.split('.');
+      const allowColumns = { id: 1, ...Entity.columnsMetaData() };
+      if (allowColumns[orderSplit[0]] === undefined) {
+        let orderBySQL = element;
+        orderBySQL.split(`this.`).join(`A0.`);
+        options.relations.forEach((element, pos) => {
+          orderBySQL = orderBySQL.split(`"${element}"`).join(`A${pos + 1}`);
+        });
+        builder.addOrderBy(orderBySQL, options['order'][element]);
       } else {
-        orderColumn = `A0.${element}`;
-      }
-      builder.orderBy(orderColumn, options['order'][element]);
+        let orderColumn = '';
+        if (orderSplit.length > 1) {
+          const pos = options.relations.indexOf(orderSplit.slice(0, -1).join('.'));
+          orderColumn = `A${pos + 1}.${orderSplit.pop()}`;
+        } else {
+          orderColumn = `A0.${element}`;
+        }
+        builder.addOrderBy(orderColumn, options['order'][element]);
 
-      if (_selectColumns.length > 0 && !_selectColumns.includes(orderColumn)) {
-        _selectColumns.push(orderColumn);
+        if (_selectColumns.length > 0 && !_selectColumns.includes(orderColumn)) {
+          _selectColumns.push(orderColumn);
+        }
       }
     });
   }
@@ -449,6 +466,26 @@ async function uploadFileS3(fileName, fileContent) {
 //     nextSequenceToken = response.nextSequenceToken;
 //     return response;
 // }
+
+export async function createImage(imageData: Object, image, path, prefix = '') {
+  const fs = require('fs');
+  const re = /(?:\.([^.]+))?$/;
+
+  const imageBase64 = imageData[`${image}Base64`];
+  if (imageBase64) {
+    const imageFileName = imageData[`${image}FileName`];
+    const imageBDDir = imageData['forceImageName']
+      ? trim(imageData['forceImageName'], '/').substr(0, trim(imageData['forceImageName'], '/').lastIndexOf('/'))
+      : `arquivos/${imageData['clientId'] ? imageData['clientId'] + '/' : ''}${imageData['whiteLabel'] ? imageData['whiteLabel'] + '/' : ''}${path}/`;
+
+    const imageBDName = imageData['forceImageName'] ? trim(imageData['forceImageName'], '/') : imageBDDir + prefix + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + '.' + re.exec(imageFileName)[1];
+    await fs.mkdirSync(imageBDDir, { recursive: true });
+    await fs.writeFileSync(imageBDName, imageBase64.substring(imageBase64.indexOf(',') + 1), 'base64');
+
+    // return s3Data.Location;
+    return './' + imageBDName;
+  }
+}
 
 export async function uploadFile2(imageData: Object, adminUser: Object, image, path, prefix = '') {
   const fs = require('fs');

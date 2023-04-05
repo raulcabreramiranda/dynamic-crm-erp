@@ -1,5 +1,5 @@
 import { apiGet, apiPost, apiPut, apiDelete, hasAnyAuthority, trim, IApiResponseProps } from 'src/util/entity-utils';
-import { IAdminWhiteLabel } from './admin-white-label-model';
+import { IAdminWhiteLabel } from 'src/pages/admin/white-labels/_base/admin-white-label-model';
 
 export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (response: IApiResponseProps) => void) => {
     apiGet(`admin-white-labels`, {

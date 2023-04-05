@@ -54,10 +54,6 @@
 
         "upload_link": "Subir Photo",
 
-        "TypeContent.TEXT": "TEXT",
-        "TypeContent.PRESENTATION": "PRESENTATION",
-        "TypeContent.DEEPENING": "DEEPENING",
-
         "detail": {
             "title": "Photo"
         },

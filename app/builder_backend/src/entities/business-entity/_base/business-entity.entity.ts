@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { BaseEntity } from '../../../domain/base/base.entity';
+import { BaseEntity } from 'src/domain/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { BusinessEntityField } from '../../business-entity-field/_base/business-entity-field.entity';

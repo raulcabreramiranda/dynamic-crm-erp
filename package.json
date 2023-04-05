@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "main:start": "cd app/main_frontend && npm run dev & cd app/main_backend && npm run start:dev",        
+    "main:start": "cd app/main_frontend && npm run dev & cd app/main_backend && npm run start:dev",
     "main:generate": "cd entities && rimraf dist && tsc &&  cd ../ && node ./generator/ejs.js entitiesDir=./entities/dist",
     "main:generate1": "node ./generator/ejs.js entitiesDir=./entities/dist",
-    "builder:start": "cd app/builder_frontend && npm run dev & cd app/builder_backend && npm run start:dev",        
+    "builder:start": "cd app/builder_frontend && npm run dev & cd app/builder_backend && npm run start:dev",
     "builder:generate": "cd entities-builder && rimraf dist && tsc && cd ../ && node ./generator/ejs.js entitiesDir=./entities-builder/dist",
     "builder:generate1": "node ./generator/ejs.js entitiesDir=./entities-builder/dist"
   },
@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/raulcabreramiranda/dynamic-crm-erp#readme",
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.16",
     "dayjs": "^1.11.7",
+    "mdi-material-ui": "^7.7.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {

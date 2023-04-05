@@ -4,6 +4,7 @@ import Router, { useRouter } from 'next/router';
 import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { LayoutContext } from './context/layoutcontext';
+import { logoutFunction } from 'src/util/entity-utils';
 
 const AppTopbar = forwardRef((props, ref) => {
     const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
@@ -20,18 +21,18 @@ const AppTopbar = forwardRef((props, ref) => {
 
     return (
         <div className="layout-topbar">
+            <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
+                <i className="pi pi-bars" />
+            </button>
+
             <Link href="/">
                 <a className="layout-topbar-logo">
                     <>
                         <img src={`${contextPath}/layout/images/logo-${layoutConfig.colorScheme !== 'light' ? 'white' : 'dark'}.svg`} width="47.22px" height={'35px'} alt="logo" />
-                        <span>SAKAI</span>
+                        <span>HealthFlow </span>
                     </>
                 </a>
             </Link>
-
-            <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
-                <i className="pi pi-bars" />
-            </button>
 
             <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
                 <i className="pi pi-ellipsis-v" />
@@ -46,12 +47,10 @@ const AppTopbar = forwardRef((props, ref) => {
                     <i className="pi pi-user"></i>
                     <span>Profile</span>
                 </button>
-                <Link href="/documentation">
-                    <button type="button" className="p-link layout-topbar-button">
-                        <i className="pi pi-cog"></i>
-                        <span>Settings</span>
-                    </button>
-                </Link>
+                <button type="button" className="p-link layout-topbar-button" onClick={logoutFunction}>
+                    <i className="pi pi-sign-out"></i>
+                    <span>Sair</span>
+                </button>
             </div>
         </div>
     );

@@ -4,12 +4,12 @@ import { Request } from 'express';
 import AdminPermissionUser from './admin-permission-user.entity';
 
 import { AdminPermissionUserService } from '../admin-permission-user.service';
-import { PageRequest, Page } from '../../../domain/base/pagination.entity';
-import { AuthGuard, Roles, RolesGuard, RoleType } from '../../../security';
-import { HeaderUtil } from '../../../client/header-util';
-import { LoggingInterceptor } from '../../../client/interceptors/logging.interceptor';
-import { UserRepository } from '../../../repository/user.repository';
-import { AuthService } from '../../../service/auth.service';
+import { PageRequest, Page } from 'src/domain/base/pagination.entity';
+import { AuthGuard, Roles, RolesGuard, RoleType } from 'src/security';
+import { HeaderUtil } from 'src/client/header-util';
+import { LoggingInterceptor } from 'src/client/interceptors/logging.interceptor';
+import { UserRepository } from 'src/repository/user.repository';
+import { AuthService } from 'src/service/auth.service';
 
 @Controller('api/admin-permission-users')
 @UseGuards(AuthGuard, RolesGuard)

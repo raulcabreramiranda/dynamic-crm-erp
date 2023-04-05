@@ -35,11 +35,10 @@ export class AdminAuditEntityService {
             options.relations = relationshipNames;
         }
 
-        options.where = { id: Equal(Number.parseInt(id)) };
         const result = await getManyAndCount2({
             options,
             selectColumns,
-            filters: [],
+            filters: [{ column: 'id', value: id, operation: 'equals' }],
             repository: this.adminAuditEntityRepository,
             Entity: AdminAuditEntity,
             userRequest: {

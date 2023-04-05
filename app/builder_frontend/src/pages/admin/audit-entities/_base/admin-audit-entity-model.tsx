@@ -1,5 +1,7 @@
 import { Dayjs } from 'dayjs';
+import { IFilter } from 'src/util/entity-utils';
 
+export const ApiPathAdminAuditEntity = 'admin-audit-entities';
 export interface IAdminAuditEntity {
     id?: number;
     entityId?: number;
@@ -14,6 +16,31 @@ export interface IAdminAuditEntity {
     lastModifiedBy?: number;
     lastModifiedDate?: Dayjs;
     deletedAt?: Dayjs;
+}
+
+export interface IAdminAuditEntityFilter {
+    id?: IFilter<number>;
+    entityId?: IFilter<number>;
+    entityType?: IFilter<string>;
+    action?: IFilter<string>;
+    entityValue?: IFilter<any>;
+    entityKeyDiff?: IFilter<any>;
+    commitVersion?: IFilter<number>;
+
+    createdBy?: number;
+    createdDate?: Dayjs;
+    lastModifiedBy?: number;
+    lastModifiedDate?: Dayjs;
+    deletedAt?: Dayjs;
+}
+
+export interface IAdminAuditEntityFilters extends IAdminAuditEntity {
+    baseFilters?: string;
+    extraFilters?: string;
+    activePage?: number;
+    itemsPerPage?: number;
+    sortField?: string;
+    sortOrder?: 'asc' | 'desc';
 }
 
 export const defaultValue: Readonly<IAdminAuditEntity> = {

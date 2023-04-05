@@ -6,6 +6,7 @@ import {
   BASE_IMG_PATH,
   ERROR_DATA_KEY,
   USER_DATA_KEY,
+  SERVER_LOGOUT_URL,
 } from './constants';
 import cookie from 'js-cookie';
 import { useRouter as useRouterAux } from 'next/router';
@@ -15,6 +16,20 @@ import dayjs, { Dayjs } from 'dayjs';
 // import Swal, { SweetAlertIcon, SweetAlertOptions } from 'sweetalert2';
 // import withReactContent from 'sweetalert2-react-content';
 // const MySwal = withReactContent(Swal);
+
+
+export interface IFilter<T> {
+  in: Array<T>;
+  notIn: Array<T>;
+  contains: string;
+  equals: T;
+  greaterThan: T;
+  lessThan: T;
+  greaterOrEqualThan: T;
+  lessOrEqualThan: T;
+  between: [T, T];
+  specified: boolean;
+}
 
 export const INumber: number = 0;
 export const IBoolean: boolean = true;
@@ -461,12 +476,27 @@ export function getLoggedUser(): ICookieUser {
 }
 
 
+
+export async function loginFunction(
+  jwt: string,
+  userlogged: Object,
+  module?: string
+) {
+
+  cookie.set(AUTH_TOKEN_KEY, jwt, { expires: 10000 });
+  localStorage.setItem(USER_DATA_KEY, JSON.stringify({ ...userlogged }));
+
+  router.push(`/`);
+}
+
 export async function logoutFunction() {
   const userLogger = { ...getLoggedUser() };
 
   cookie.set(AUTH_TOKEN_KEY, '', { expires: 10000 });
   localStorage.setItem(USER_DATA_KEY, '');
 
+  
+    document.location.href = SERVER_LOGOUT_URL;
 }
 
 export interface IApiResponseProps { data?: any; headers?: Headers; userLogged?: any; status?: number }

@@ -4,12 +4,12 @@ import { Request } from 'express';
 import BusinessEntityField from './business-entity-field.entity';
 
 import { BusinessEntityFieldService } from '../business-entity-field.service';
-import { PageRequest, Page } from '../../../domain/base/pagination.entity';
-import { AuthGuard, Roles, RolesGuard, RoleType } from '../../../security';
-import { HeaderUtil } from '../../../client/header-util';
-import { LoggingInterceptor } from '../../../client/interceptors/logging.interceptor';
-import { UserRepository } from '../../../repository/user.repository';
-import { AuthService } from '../../../service/auth.service';
+import { PageRequest, Page } from 'src/domain/base/pagination.entity';
+import { AuthGuard, Roles, RolesGuard, RoleType } from 'src/security';
+import { HeaderUtil } from 'src/client/header-util';
+import { LoggingInterceptor } from 'src/client/interceptors/logging.interceptor';
+import { UserRepository } from 'src/repository/user.repository';
+import { AuthService } from 'src/service/auth.service';
 
 @Controller('api/business-entity-fields')
 @UseGuards(AuthGuard, RolesGuard)

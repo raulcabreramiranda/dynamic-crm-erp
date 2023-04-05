@@ -31,9 +31,9 @@ import Button from 'src/layouts/components/Button';
 
 import { APP_LOCAL_DATE_FORMAT, BASE_API_VERSION_PATH } from 'src/util/constants';
 import { hasAnyAuthority, trim, IApiResponseProps, showFieldsSelectAsync } from 'src/util/entity-utils';
-import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from './admin-white-label-services';
+import { apiGetList, apiGetEntityForm, apiGetEntityView, apiDeleteEntity } from 'src/pages/admin/white-labels/_base/admin-white-label-services';
 
-import { IAdminWhiteLabel } from './admin-white-label-model';
+import { IAdminWhiteLabel } from 'src/pages/admin/white-labels/_base/admin-white-label-model';
 
 import { EntityContext } from './admin-white-label';
 
@@ -42,6 +42,7 @@ export interface IEntityListSort {
 }
 const ListTable = ({}: any) => {
     const {
+        baseFilters,
         reloadList,
         loading,
         setLoading,
@@ -57,6 +58,7 @@ const ListTable = ({}: any) => {
         setEntityListPage,
         entityListSize,
         setEntityListSize,
+        getEntityFiltersURL,
     } = useContext(EntityContext);
 
     const deleteEntityModal = (entity: IAdminWhiteLabel) => {
@@ -95,7 +97,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: newPage,
                 size: entityListSize,
             },
@@ -110,7 +112,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: 0,
                 size: +event.target.value,
             },
@@ -123,7 +125,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: entityListPage,
                 size: entityListSize,
             },
@@ -142,7 +144,7 @@ const ListTable = ({}: any) => {
         apiGetList(
             {
                 sort: _entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: entityListPage,
                 size: entityListSize,
             },
@@ -154,8 +156,8 @@ const ListTable = ({}: any) => {
         <>
             {entityList && entityList.filter && entityList.filter((v: any) => typeof v.deletedAt === 'undefined' || v.deletedAt === null).length > 0 ? (
                 <div id="admin-white-label-table-list" className="table-list">
-                    <TableContainer sx={{ maxHeight: '69vh' }}>
-                        <Table stickyHeader aria-label="sticky table">
+                    <TableContainer>
+                        <Table>
                             <TableHead>
                                 <TableHeadRow>
                                     <TableHeadCell align={'left'} onClick={sortFunction('name')}>
@@ -178,17 +180,17 @@ const ListTable = ({}: any) => {
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
                                                     {hasAnyAuthority(null, ['adminWhiteLabel'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(adminWhiteLabel)} icon={'eye'}></Button>
+                                                        <Button color="primary" size="small" onClick={() => openViewModal(adminWhiteLabel)} isLink={false} icon={'eye'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}
                                                     {hasAnyAuthority(null, ['adminWhiteLabel'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(adminWhiteLabel)} icon={'pencil'}></Button>
+                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(adminWhiteLabel)} isLink={false} icon={'pencil'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}
                                                     {hasAnyAuthority(null, ['adminWhiteLabel'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(adminWhiteLabel)} icon={'trash'}></Button>
+                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(adminWhiteLabel)} isLink={false} icon={'trash'}></Button>
                                                     ) : (
                                                         <></>
                                                     )}{' '}

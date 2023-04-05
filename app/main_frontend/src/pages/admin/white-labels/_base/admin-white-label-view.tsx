@@ -9,7 +9,8 @@ import ViewSelect from 'src/layouts/components/inputs/ViewSelect';
 import ViewSelectMany from 'src/layouts/components/inputs/ViewSelectMany';
 import ViewImage from 'src/layouts/components/inputs/ViewImage';
 
-import { IAdminWhiteLabel } from './admin-white-label-model';
+import { IAdminWhiteLabel } from 'src/pages/admin/white-labels/_base/admin-white-label-model';
+
 import { EntityContext } from './admin-white-label';
 
 const ViewForm = () => {

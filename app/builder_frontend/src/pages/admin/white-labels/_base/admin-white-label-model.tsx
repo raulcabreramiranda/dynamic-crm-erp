@@ -1,6 +1,8 @@
-import { IAdminUser } from '../../../admin/users/_base/admin-user-model';
+import { IAdminUser, IAdminUserFilter } from '../../../admin/users/_base/admin-user-model';
 import { Dayjs } from 'dayjs';
+import { IFilter } from 'src/util/entity-utils';
 
+export const ApiPathAdminWhiteLabel = 'admin-white-labels';
 export interface IAdminWhiteLabel {
     id?: number;
     name?: string;
@@ -25,6 +27,41 @@ export interface IAdminWhiteLabel {
     lastModifiedBy?: number;
     lastModifiedDate?: Dayjs;
     deletedAt?: Dayjs;
+}
+
+export interface IAdminWhiteLabelFilter {
+    id?: IFilter<number>;
+    name?: IFilter<string>;
+    logoContentType?: string;
+    logoBase64?: string;
+    logoFileName?: string;
+    logo?: IFilter<any>;
+    socialReason?: IFilter<string>;
+    fantasyName?: IFilter<string>;
+    cnpj?: IFilter<string>;
+    zipCode?: IFilter<string>;
+    street?: IFilter<string>;
+    complement?: IFilter<string>;
+    number?: IFilter<string>;
+    neighborhood?: IFilter<string>;
+    city?: IFilter<string>;
+    uf?: IFilter<string>;
+    adminUsers?: IAdminUserFilter[];
+
+    createdBy?: number;
+    createdDate?: Dayjs;
+    lastModifiedBy?: number;
+    lastModifiedDate?: Dayjs;
+    deletedAt?: Dayjs;
+}
+
+export interface IAdminWhiteLabelFilters extends IAdminWhiteLabel {
+    baseFilters?: string;
+    extraFilters?: string;
+    activePage?: number;
+    itemsPerPage?: number;
+    sortField?: string;
+    sortOrder?: 'asc' | 'desc';
 }
 
 export const defaultValue: Readonly<IAdminWhiteLabel> = {

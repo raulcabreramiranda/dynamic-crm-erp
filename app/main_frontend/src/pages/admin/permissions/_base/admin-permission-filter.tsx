@@ -6,7 +6,7 @@ import { IApiResponseProps } from 'src/util/entity-utils';
 import Button from 'src/layouts/components/Button';
 
 import { EntityContext } from './admin-permission';
-import { apiGetList } from './admin-permission-services';
+import { apiGetList } from 'src/pages/admin/permissions/_base/admin-permission-services';
 
 import FilterBoolean from 'src/layouts/components/inputs/FilterBoolean';
 import FilterDate from 'src/layouts/components/inputs/FilterDate';
@@ -16,13 +16,13 @@ import FilterSelectMany from 'src/layouts/components/inputs/FilterSelectMany';
 import FilterSuperSelect from 'src/layouts/components/modal-super-select/FilterSuperSelect';
 
 const FilterList = () => {
-    const { entityListSort, entityListSize, setEntityListPage, entityFilter, setEntityFilter, setEntityList } = useContext(EntityContext);
+    const { baseFilters, entityListSort, entityListSize, setEntityListPage, entityFilter, setEntityFilter, setEntityList } = useContext(EntityContext);
     const handleSuccessList = (response: IApiResponseProps) => {
         const _entityList = response['data'] || [];
         setEntityList(_entityList);
     };
     //  const addMethodsToFilters = (filters) => {
-    //    const _filters = {}
+    //    const _filters = baseFilters
     //    Object.keys(filters).forEach((key: string)=>{
     //      _filters[`${key}.contains`] = filters[key]
     //    })
@@ -44,7 +44,7 @@ const FilterList = () => {
         Object.keys(entityFilter).forEach((key: string) => {
             _filters[key] = processFiltersValue(filters[key]);
         });
-        return _filters;
+        return { ..._filters, ...baseFilters };
     };
 
     const handleFilter = () => {
@@ -61,12 +61,12 @@ const FilterList = () => {
     };
 
     const handleClear = () => {
-        setEntityFilter({});
+        setEntityFilter(baseFilters || {});
         setEntityListPage(0);
         apiGetList(
             {
                 sort: entityListSort,
-                filters: {},
+                filters: baseFilters || {},
                 page: 0,
                 size: entityListSize,
             },
@@ -96,12 +96,8 @@ const FilterList = () => {
                         </Grid>
                     </Grid>
 
-                    <Button onClick={handleFilter} variant="contained" sx={{ marginRight: 3.5 }}>
-                        Filter
-                    </Button>
-                    <Button onClick={handleClear} variant="contained" sx={{ marginRight: 3.5 }}>
-                        Clear
-                    </Button>
+                    <Button onClick={handleFilter}>Filter</Button>
+                    <Button onClick={handleClear}>Clear</Button>
                 </form>
             </CardContent>
         </>

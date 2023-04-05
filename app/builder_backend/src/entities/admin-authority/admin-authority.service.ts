@@ -4,6 +4,7 @@ import { Inject, Injectable, Logger, Scope } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, Like, Equal, IsNull, Not, MoreThan, LessThan, In, MoreThanOrEqual, LessThanOrEqual, Between } from 'typeorm';
 import AdminAuthority from './_base/admin-authority.entity';
 import { AdminAuthorityService as AdminAuthorityServiceBase } from './_base/admin-authority.service';
+import { IAdminAuthorityRepository } from './admin-authority.providers';
 
 const relationshipNames = [];
 
@@ -11,7 +12,7 @@ const relationshipNames = [];
 export class AdminAuthorityService extends AdminAuthorityServiceBase {
     logger = new Logger('AdminAuthorityService');
 
-    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINAUTHORITY_REPOSITORY') protected adminAuthorityRepository: Repository<AdminAuthority>) {
+    constructor(@Inject(REQUEST) protected readonly request: Request, @Inject('ADMINAUTHORITY_REPOSITORY') protected adminAuthorityRepository: IAdminAuthorityRepository) {
         super(request, adminAuthorityRepository);
     }
 

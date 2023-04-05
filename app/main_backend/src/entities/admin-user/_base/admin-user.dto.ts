@@ -6,7 +6,7 @@ import { BaseDTO } from '../../../service/dto/base.dto';
 import { AdminProfileDTO } from '../../admin-profile/_base/admin-profile.dto';
 import { AdminPermissionUserDTO } from '../../admin-permission-user/_base/admin-permission-user.dto';
 import { AdminWhiteLabelDTO } from '../../admin-white-label/_base/admin-white-label.dto';
-import { UserType } from '../../../entities/admin-user/_base/user-type.enum';
+import { AdminUserUserType } from '../../../entities/admin-user/_base/admin-user-user-type.enum';
 
 /**
  * A AdminUser DTO object.
@@ -48,8 +48,8 @@ export class AdminUserDTO extends BaseDTO {
     @ApiProperty({ description: 'ra field', required: false })
     ra: string;
 
-    @ApiProperty({ enum: UserType, description: 'userType enum field', required: false })
-    userType: UserType;
+    @ApiProperty({ enum: AdminUserUserType, description: 'userType enum field', required: false })
+    userType: AdminUserUserType;
 
     @ApiProperty({ description: 'clientId field', required: false })
     clientId: number;

@@ -1,4 +1,4 @@
-import AdminProfileBase from './_base/admin-profile';
+import AdminProfileBase from 'src/pages/admin/profiles/_base/admin-profile';
 
 export default function AdminProfile(props: any) {
     return <AdminProfileBase />;
