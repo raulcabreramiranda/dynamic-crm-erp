@@ -55,10 +55,10 @@ const ViewForm = () => {
                     <Grid item xs={3}>
                         <div>
                             <Grid>
-                                <ViewText
+                                <ViewSelect
                                     id="admin-permission-session"
+                                    options={[{ value: 'PATIENT', label: translate('adminPermission.AdminPermissionSession.PATIENT') }]}
                                     entityContext={EntityContext}
-                                    type="text"
                                     name="session"
                                     label={
                                         <>
@@ -66,16 +66,6 @@ const ViewForm = () => {
                                         </>
                                     }
                                 />
-                                {/* <input
-            onChange={evt => setState({ ...state,  sessionFormValue: evt.target.value })} 
-            value={state.sessionFormValue ? state.sessionFormValue : ""}
-            id="admin-permission-session" 
-            entityContext={EntityContext}
-            type="text" 
-            name="session" 
-            className={"form-control"} 
-             
-          /> */}
                             </Grid>
                         </div>
                     </Grid>

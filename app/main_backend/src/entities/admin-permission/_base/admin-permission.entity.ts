@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { AdminPermissionProfile } from '../../admin-permission-profile/_base/admin-permission-profile.entity';
 import { AdminPermissionUser } from '../../admin-permission-user/_base/admin-permission-user.entity';
+import { AdminPermissionSession } from './admin-permission-session.enum';
 import { AdminPermissionMethod } from './admin-permission-method.enum';
 
 import tablesName from '../../tablesName';
@@ -14,7 +15,7 @@ export class AdminPermission extends BaseEntity {
     static columnsMetaData() {
         return {
             name: String,
-            session: String,
+            session: AdminPermissionSession,
             method: AdminPermissionMethod,
             adminPermissionProfiles: AdminPermissionProfile,
             adminPermissionUsers: AdminPermissionUser,
@@ -29,9 +30,9 @@ export class AdminPermission extends BaseEntity {
     @ApiProperty({ required: false })
     name: string;
 
-    @Column({ name: 'session', nullable: true })
+    @Column({ type: 'simple-enum', name: 'session', enum: AdminPermissionSession, nullable: true })
     @ApiProperty({ required: false })
-    session: string;
+    session: AdminPermissionSession;
 
     @Column({ type: 'simple-enum', name: 'method', enum: AdminPermissionMethod, nullable: true })
     @ApiProperty({ required: false })

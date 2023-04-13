@@ -190,7 +190,7 @@ const ListTable = ({}: any) => {
                                             </TableBodyCell>
 
                                             <TableBodyCell id="session-cell" align={'left'}>
-                                                <TableText name={'session'} entityView={adminPermission} />
+                                                <TableDate name={'session'} entityView={adminPermission} format={APP_LOCAL_DATE_FORMAT} />
                                             </TableBodyCell>
 
                                             <TableBodyCell id="method-cell" align={'left'}>

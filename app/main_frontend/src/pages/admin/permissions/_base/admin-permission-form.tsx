@@ -47,10 +47,10 @@ const FormUpdate = ({ isNew }: any) => {
                     <Grid item xs={3}>
                         <div>
                             <Grid>
-                                <InputText
+                                <InputSelect
                                     id="admin-permission-session"
+                                    options={[{ value: 'PATIENT', label: translate('adminPermission.AdminPermissionSession.PATIENT') }]}
                                     entityContext={EntityContext}
-                                    type="text"
                                     name="session"
                                     labelPos="top"
                                     label={

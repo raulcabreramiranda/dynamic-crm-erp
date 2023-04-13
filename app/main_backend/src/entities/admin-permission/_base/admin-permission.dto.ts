@@ -5,6 +5,7 @@ import { BaseDTO } from '../../../service/dto/base.dto';
 
 import { AdminPermissionProfileDTO } from '../../admin-permission-profile/_base/admin-permission-profile.dto';
 import { AdminPermissionUserDTO } from '../../admin-permission-user/_base/admin-permission-user.dto';
+import { AdminPermissionSession } from '../../../entities/admin-permission/_base/admin-permission-session.enum';
 import { AdminPermissionMethod } from '../../../entities/admin-permission/_base/admin-permission-method.enum';
 
 /**
@@ -14,8 +15,8 @@ export class AdminPermissionDTO extends BaseDTO {
     @ApiProperty({ description: 'name field', required: false })
     name: string;
 
-    @ApiProperty({ description: 'session field', required: false })
-    session: string;
+    @ApiProperty({ enum: AdminPermissionSession, description: 'session enum field', required: false })
+    session: AdminPermissionSession;
 
     @ApiProperty({ enum: AdminPermissionMethod, description: 'method enum field', required: false })
     method: AdminPermissionMethod;
