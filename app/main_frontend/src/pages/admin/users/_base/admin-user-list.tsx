@@ -53,6 +53,7 @@ const ListTable = ({}: any) => {
         setEntityList,
         setEntityEdit,
         entityListCount,
+        setFormTabActive,
         setEntityListCount,
         entityListPage,
         setEntityListPage,
@@ -76,6 +77,7 @@ const ListTable = ({}: any) => {
                 setEntityEdit(_entityEdit);
             };
             apiGetEntityForm(entity.id, handleSuccess);
+            setFormTabActive(0);
         }
     };
     const openViewModal = (entity: IAdminUser) => {
@@ -161,21 +163,25 @@ const ListTable = ({}: any) => {
                             <TableHead>
                                 <TableHeadRow>
                                     <TableHeadCell align={'left'} onClick={sortFunction('fullname')}>
-                                        <Translate contentKey="adminUser.fullname" />
+                                        <Translate label={{ pt: 'Image' }} contentKey="adminUser.fullname" />
                                         <i className={sort === 'fullname' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} onClick={sortFunction('cellphone')}>
-                                        <Translate contentKey="adminUser.cellphone" />
+                                        <Translate label={{ pt: 'cellphone' }} contentKey="adminUser.cellphone" />
                                         <i className={sort === 'cellphone' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} id="adminProfile-cell-header">
-                                        <Translate contentKey="adminUser.adminProfile" />
+                                        <Translate label={{ pt: 'Profile' }} contentKey="adminUser.adminProfile" />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} id="adminPermissionUsers-cell-header">
-                                        <Translate contentKey="adminUser.adminPermissionUsers" />
+                                        <Translate label={{ pt: 'PermissionUsers' }} contentKey="adminUser.adminPermissionUsers" />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} id="adminWhiteLabel-cell-header">
-                                        <Translate contentKey="adminUser.adminWhiteLabel" />
+                                        <Translate label={{ pt: 'WhiteLabel' }} contentKey="adminUser.adminWhiteLabel" />
                                     </TableHeadCell>
 
                                     <TableHeadCell align={'left'} />

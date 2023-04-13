@@ -5,11 +5,12 @@ export const translate = (
 ) => contentKey.split('.').slice(-1).pop();
 
 export const Translate = (props: {
+  label?: any;
   contentKey: string;
   interpolate?: any;
   children?: string;
 }) => {
-  return <>{translate(props.contentKey)}</>;
+  return <>{props?.label?.pt ? props.label.pt : translate(props.contentKey)}</>;
 };
 
 // export const translate = (

@@ -1,18 +1,15 @@
 import { IAdminPermissionProfile, IAdminPermissionProfileFilter } from '../../../admin/permission-profiles/_base/admin-permission-profile-model';
 import { IAdminPermissionUser, IAdminPermissionUserFilter } from '../../../admin/permission-users/_base/admin-permission-user-model';
+import { AdminPermissionMethod } from '../../../../components/enumerations/admin-permission-method.model';
 import { Dayjs } from 'dayjs';
-import { IFilter } from '../../../../components/util/entity-utils';
+import { IFilter } from 'src/util/entity-utils';
 
 export const ApiPathAdminPermission = 'admin-permissions';
 export interface IAdminPermission {
     id?: number;
     name?: string;
-    slug?: string;
-    view?: boolean;
-    resgister?: boolean;
-    edit?: boolean;
-    deleteRow?: boolean;
-    report?: boolean;
+    session?: string;
+    method?: AdminPermissionMethod;
     adminPermissionProfiles?: IAdminPermissionProfile[];
     adminPermissionUsers?: IAdminPermissionUser[];
 
@@ -26,12 +23,8 @@ export interface IAdminPermission {
 export interface IAdminPermissionFilter {
     id?: IFilter<number>;
     name?: IFilter<string>;
-    slug?: IFilter<string>;
-    view?: IFilter<boolean>;
-    resgister?: IFilter<boolean>;
-    edit?: IFilter<boolean>;
-    deleteRow?: IFilter<boolean>;
-    report?: IFilter<boolean>;
+    session?: IFilter<string>;
+    method?: IFilter<AdminPermissionMethod>;
     adminPermissionProfiles?: IAdminPermissionProfileFilter[];
     adminPermissionUsers?: IAdminPermissionUserFilter[];
 

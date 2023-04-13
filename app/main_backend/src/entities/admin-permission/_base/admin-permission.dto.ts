@@ -5,6 +5,7 @@ import { BaseDTO } from '../../../service/dto/base.dto';
 
 import { AdminPermissionProfileDTO } from '../../admin-permission-profile/_base/admin-permission-profile.dto';
 import { AdminPermissionUserDTO } from '../../admin-permission-user/_base/admin-permission-user.dto';
+import { AdminPermissionMethod } from '../../../entities/admin-permission/_base/admin-permission-method.enum';
 
 /**
  * A AdminPermission DTO object.
@@ -13,23 +14,11 @@ export class AdminPermissionDTO extends BaseDTO {
     @ApiProperty({ description: 'name field', required: false })
     name: string;
 
-    @ApiProperty({ description: 'slug field', required: false })
-    slug: string;
+    @ApiProperty({ description: 'session field', required: false })
+    session: string;
 
-    @ApiProperty({ description: 'view field', required: false })
-    view: boolean;
-
-    @ApiProperty({ description: 'resgister field', required: false })
-    resgister: boolean;
-
-    @ApiProperty({ description: 'edit field', required: false })
-    edit: boolean;
-
-    @ApiProperty({ description: 'deleteRow field', required: false })
-    deleteRow: boolean;
-
-    @ApiProperty({ description: 'report field', required: false })
-    report: boolean;
+    @ApiProperty({ enum: AdminPermissionMethod, description: 'method enum field', required: false })
+    method: AdminPermissionMethod;
 
     @ApiProperty({ type: AdminPermissionProfileDTO, isArray: true, description: 'adminPermissionProfiles relationship' })
     adminPermissionProfiles: AdminPermissionProfileDTO[];

@@ -89,7 +89,7 @@ const FilterList = () => {
                                 name="name"
                                 label={
                                     <>
-                                        <Translate contentKey="adminProfile.name" />
+                                        <Translate label={{ pt: 'name' }} contentKey="adminProfile.name" />
                                     </>
                                 }
                             />

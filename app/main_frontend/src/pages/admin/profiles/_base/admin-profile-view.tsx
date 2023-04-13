@@ -1,3 +1,7 @@
+import { useContext } from 'react';
+import { TabView, TabPanel } from 'primereact/tabview';
+import Button from 'src/layouts/components/Button';
+
 import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
@@ -14,26 +18,27 @@ import { IAdminProfile } from 'src/pages/admin/profiles/_base/admin-profile-mode
 import { EntityContext } from './admin-profile';
 
 const ViewForm = () => {
+    const { viewTabActive, setViewTabActive } = useContext(EntityContext);
+
     return (
         <>
-            <CardContent>
-                <form>
-                    <Grid container spacing={7}>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid>
-                                    <ViewText
-                                        id="admin-profile-name"
-                                        entityContext={EntityContext}
-                                        type="text"
-                                        name="name"
-                                        label={
-                                            <>
-                                                <Translate contentKey="adminProfile.name" />
-                                            </>
-                                        }
-                                    />
-                                    {/* <input
+            <form>
+                <Grid container spacing={7}>
+                    <Grid item xs={12}>
+                        <div>
+                            <Grid>
+                                <ViewText
+                                    id="admin-profile-name"
+                                    entityContext={EntityContext}
+                                    type="text"
+                                    name="name"
+                                    label={
+                                        <>
+                                            <Translate label={{ pt: 'name' }} contentKey="adminProfile.name" />
+                                        </>
+                                    }
+                                />
+                                {/* <input
             onChange={evt => setState({ ...state,  nameFormValue: evt.target.value })} 
             value={state.nameFormValue ? state.nameFormValue : ""}
             id="admin-profile-name" 
@@ -43,12 +48,11 @@ const ViewForm = () => {
             className={"form-control"} 
              
           /> */}
-                                </Grid>
-                            </div>
-                        </Grid>
+                            </Grid>
+                        </div>
                     </Grid>
-                </form>
-            </CardContent>
+                </Grid>
+            </form>
         </>
     );
 };

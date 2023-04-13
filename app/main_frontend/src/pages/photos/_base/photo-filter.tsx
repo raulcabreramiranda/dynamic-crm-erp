@@ -89,7 +89,7 @@ const FilterList = () => {
                                 name="title"
                                 label={
                                     <>
-                                        <Translate contentKey="photo.title" />
+                                        <Translate label={{ pt: 'title' }} contentKey="photo.title" />
                                     </>
                                 }
                             />
@@ -105,7 +105,7 @@ const FilterList = () => {
                                 name="description"
                                 label={
                                     <>
-                                        <Translate contentKey="photo.description" />
+                                        <Translate label={{ pt: 'description' }} contentKey="photo.description" />
                                     </>
                                 }
                             />
@@ -121,7 +121,7 @@ const FilterList = () => {
                                 name="link"
                                 label={
                                     <>
-                                        <Translate contentKey="photo.link" />
+                                        <Translate label={{ pt: 'link' }} contentKey="photo.link" />
                                     </>
                                 }
                             />
@@ -141,7 +141,7 @@ const FilterList = () => {
                                 name="typeContent"
                                 label={
                                     <>
-                                        <Translate contentKey="photo.typeContent" />
+                                        <Translate label={{ pt: 'typeContent' }} contentKey="photo.typeContent" />
                                     </>
                                 }
                             />

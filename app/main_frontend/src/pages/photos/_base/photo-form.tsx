@@ -3,6 +3,8 @@ import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
 
+import { TabView, TabPanel } from 'primereact/tabview';
+import Button from 'src/layouts/components/Button';
 import InputBoolean from 'src/layouts/components/inputs/InputBoolean';
 import InputDate from 'src/layouts/components/inputs/InputDate';
 import InputText from 'src/layouts/components/inputs/InputText';
@@ -13,10 +15,12 @@ import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSup
 import { EntityContext } from './photo';
 
 const FormUpdate = ({ isNew }: any) => {
-    const { entityEdit } = useContext(EntityContext);
+    const { entityEdit, formTabActive, setFormTabActive } = useContext(EntityContext);
+
     if (!entityEdit || !entityEdit.id) {
         return <> </>;
     }
+
     return (
         <>
             <form>
@@ -32,7 +36,7 @@ const FormUpdate = ({ isNew }: any) => {
                                     labelPos="top"
                                     label={
                                         <>
-                                            <Translate contentKey="photo.title" />
+                                            <Translate label={{ pt: 'title' }} contentKey="photo.title" />
                                         </>
                                     }
                                 />
@@ -52,7 +56,7 @@ const FormUpdate = ({ isNew }: any) => {
                                     labelPos="top"
                                     label={
                                         <>
-                                            <Translate contentKey="photo.description" />
+                                            <Translate label={{ pt: 'description' }} contentKey="photo.description" />
                                         </>
                                     }
                                 />
@@ -72,7 +76,7 @@ const FormUpdate = ({ isNew }: any) => {
                                     labelPos="top"
                                     label={
                                         <>
-                                            <Translate contentKey="photo.link" />
+                                            <Translate label={{ pt: 'link' }} contentKey="photo.link" />
                                         </>
                                     }
                                 />
@@ -95,7 +99,7 @@ const FormUpdate = ({ isNew }: any) => {
                                     labelPos="top"
                                     label={
                                         <>
-                                            <Translate contentKey="photo.typeContent" />
+                                            <Translate label={{ pt: 'typeContent' }} contentKey="photo.typeContent" />
                                         </>
                                     }
                                 />

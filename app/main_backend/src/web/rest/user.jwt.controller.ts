@@ -30,35 +30,8 @@ export class UserJWTController {
     return res.json(jwt);
   }
 
-  @Post('/login-token')
-  @ApiOperation({
-    summary: 'Criar um token de login.',
-    description: '<h3>Uma solicitação bem-sucedida para este endpoint permite que um aplicativo use um token de solicitação OAuth para solicitar autorização do usuário.</h3>',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'Authorized',
-  })
-  async loginToken(@Req() req: Request, @Body() user: any, @Res() res: Response): Promise<any> {
-    const link = await this.authService.loginToken(user);
-    return res.json(link);
-  }
 
-  @Post('/:module/single-sign-on-core')
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'Criar um link de login.',
-    description: '<h3>Criar um link de login de uso único para acessar a um dos modulos ja estando logado no sistema.</h3>',
-  })
-  @ApiParam({ name: 'module', type: 'string', description: 'mmmodule' })
-  @ApiResponse({
-    status: 201,
-    description: 'Authorized',
-  })
-  async createLoginLink(@Req() req: Request, @Body() user: any, @Res() res: Response, @Param('module') module: string): Promise<any> {
-    const link = await this.authService.createLoginLink(user, module);
-    return res.json(link);
-  }
+
 
   @Post('/react-errors')
   @ApiExcludeEndpoint()

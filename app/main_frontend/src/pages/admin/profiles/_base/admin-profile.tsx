@@ -59,8 +59,12 @@ export const EntityContext = createContext(
         baseEntity?: IAdminProfileFilters | any;
         entityEdit: IAdminProfile;
         setEntityEdit: Dispatch<IAdminProfile>;
+        formTabActive: number;
+        setFormTabActive: Dispatch<number>;
         entityView: IAdminProfile;
         setEntityView: Dispatch<IAdminProfile>;
+        viewTabActive: number;
+        setViewTabActive: Dispatch<number>;
         entityFilter: IAdminProfileFilters;
         setEntityFilter: Dispatch<IAdminProfileFilters>;
         entityList: IAdminProfile[];
@@ -106,7 +110,7 @@ function ModalView() {
 }
 
 function ModalUpdate() {
-    const { entityEdit, setEntityEdit, reloadList } = useContext(EntityContext);
+    const { entityEdit, setEntityEdit, reloadList, setFormTabActive, formTabActive } = useContext(EntityContext);
     if (!entityEdit || !entityEdit?.id) {
         return <></>;
     }
@@ -130,15 +134,16 @@ function ModalUpdate() {
             apiNewEntity(entityEdit, handleSuccess);
         }
     };
-
+    const isNew = !entityEdit?.id || entityEdit?.id < 0;
     return (
         <Dialog isOpen={true} onClose={handleClose}>
             <DialogTitle onClose={handleClose}>Subscribe {entityEdit.id} </DialogTitle>
             <DialogContent>
-                <FormUpdate isNew={false} />
+                <FormUpdate isNew={isNew} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={saveChanges}>Save Changes</Button>
+
                 <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
@@ -159,10 +164,13 @@ const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
 
     const [entityEdit, setEntityEdit] = useState<IAdminProfile>({});
     const [entityView, setEntityView] = useState<IAdminProfile>({});
+    const [formTabActive, setFormTabActive] = useState<number>(0);
+    const [viewTabActive, setViewTabActive] = useState<number>(0);
     const [showFilters, setShowFilters] = useState<boolean>(false);
 
     const openNewModal = () => {
         setEntityEdit({ ...{ id: -1 }, ...baseEntity });
+        setFormTabActive(0);
     };
 
     const getEntityFiltersURL = (offset = null) => {
@@ -227,6 +235,10 @@ const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
                 setEntityEdit,
                 entityView,
                 setEntityView,
+                formTabActive,
+                setFormTabActive,
+                viewTabActive,
+                setViewTabActive,
             }}
         >
             <CardHeader

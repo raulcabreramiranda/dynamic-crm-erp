@@ -1,11 +1,13 @@
 import Typography from '../Typography'
-import { Context, useContext } from 'react'
+import { Context, ReactElement, useContext } from 'react'
 
 interface Props{
   entityContext: Context<any>
   precision?: number
   label: string | ReactElement
   name: string
+  id?: string
+  type?: string
 }
 
 const InputText = ({ entityContext: EntityContext, label, name }: Props) => {

@@ -1,17 +1,17 @@
-import { createQueryBuilder, Equal, getManager, SelectQueryBuilder } from 'typeorm';
+import { SelectQueryBuilder } from 'typeorm';
 import { Request } from 'express';
 
-export const deleteEntity = async (table, where) => {
+export const deleteEntity = async (entityManager, table, where) => {
   let query = `DELETE FROM ${table} WHERE `;
   query += Object.keys(where)
     .map((v, i) => `${v} = @${i}`)
     .join(' and ');
 
   const params = Object.values(where);
-  return await getManager().query(query, params);
+  return await entityManager.query(query, params);
 };
 
-export const updateQuery = async (table, where, body) => {
+export const updateQuery = async (entityManager, table, where, body) => {
   let query = /* SQL*/ `UPDATE ${table} SET 
                             lastModifiedDate = GETDATE(),
                             ${Object.keys(body)
@@ -25,11 +25,11 @@ export const updateQuery = async (table, where, body) => {
 
   const params = [...Object.values(body), ...Object.values(where)];
   // console.info({query, params})
-  await getManager().query(query, params);
+  await entityManager.query(query, params);
   return body;
 };
 
-export const findQuery = async (table, where, columns = []) => {
+export const findQuery = async (entityManager, table, where, columns = []) => {
   let query = `SELECT ${columns.length > 0 ? columns.join(', ') : '*'} FROM ${table}`;
   query += ' WHERE ';
   query += Object.keys(where)
@@ -38,10 +38,10 @@ export const findQuery = async (table, where, columns = []) => {
 
   const params = Object.values(where);
   // console.info({query, params})
-  return await getManager().query(query, params);
+  return await entityManager.query(query, params);
 };
 
-export const insertQuery = async (table, body) => {
+export const insertQuery = async (entityManager, table, body) => {
   const query = /* SQL*/ `INSERT INTO ${table} 
             (createdDate, lastModifiedDate, ${Object.keys(body).join(',')}) VALUES 
             ( GETDATE(), GETDATE(), ${Object.keys(body)
@@ -51,12 +51,12 @@ export const insertQuery = async (table, body) => {
   const params = Object.values(body);
   // console.info({query, params})
   return {
-    ...(await getManager().query(query, params)).pop(),
+    ...(await entityManager.query(query, params)).pop(),
     ...body,
   };
 };
 
-export const getManyAndCount: any = async (options, filters, Entity, userRequest, selectColumns, repository = null) => {
+export const getManyAndCount: any = async (options, filters, Entity, userRequest, selectColumns, repository) => {
   const _selectColumns = typeof selectColumns === 'string' ? JSON.parse(selectColumns) : selectColumns;
   const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns, repository);
 
@@ -68,7 +68,7 @@ export const getManyAndCount: any = async (options, filters, Entity, userRequest
   //  );
   return result;
 };
-export const getManyAndCount2: any = async ({options, filters, Entity, userRequest, selectColumns, repository}: any) => {
+export const getManyAndCount2: any = async ({ options, filters, Entity, userRequest, selectColumns, repository }: any) => {
   const _selectColumns = typeof selectColumns === 'string' ? JSON.parse(selectColumns) : selectColumns;
   const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns, repository);
 
@@ -81,9 +81,9 @@ export const getManyAndCount2: any = async ({options, filters, Entity, userReque
   return result;
 };
 
-export const getMany: any = async (options, filters, Entity, userRequest, selectColumns) => {
+export const getMany: any = async (options, filters, Entity, userRequest, selectColumns, repository) => {
   const _selectColumns = typeof selectColumns === 'string' ? JSON.parse(selectColumns) : selectColumns;
-  const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns);
+  const builder: SelectQueryBuilder<any> = executeSQL(options, filters, Entity, userRequest, _selectColumns, repository);
 
   const result = await builder.getMany();
   /* 
@@ -128,8 +128,8 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
       }
     });
 
+  const builder = repository.createQueryBuilder('A0').where({});
 
-  const builder = repository.createQueryBuilder('A0').where(options.where || {});
   const myJoin = {};
   const filterJoinWhiteLabel = (i, element) => {
     let EleArray = Entity;
@@ -178,17 +178,18 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
   });
 
   _filters
-    .filter((v) => v['column'] && v['column'].split('.').length > 1)
+    // .filter((v) => v['column'] && v['column'].split('.').length > 1)
     .forEach((v) => {
+      const column = v['column'].split('.').length > 1 ? v['column'] : 'A0.' + v['column'];
       const parameter = {};
-      const parameterName = v['column'].split('.').join('_') + '_' + v['operation'];
+      const parameterName = column.split('.').join('_') + '_' + v['operation'];
       if ((v['value'] + '').trim()) {
         if (v['operation'] === 'in') {
           v['value'].split(',').map((v1, i) => {
             parameter[parameterName + '_' + i] = v1;
           });
           builder.andWhere(
-            v['column'] +
+            column +
               ' in (' +
               v['value']
                 .split(',')
@@ -202,7 +203,7 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
             parameter[parameterName + '_' + i] = v1;
           });
           builder.andWhere(
-            v['column'] +
+            column +
               ' not in (' +
               v['value']
                 .split(',')
@@ -213,26 +214,31 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
           );
         } else if (v['operation'] === 'equals') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' = :' + parameterName, parameter);
+          builder.andWhere(column + ' = :' + parameterName, parameter);
         } else if (v['operation'] === 'greaterThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' > :' + parameterName, parameter);
+          builder.andWhere(column + ' > :' + parameterName, parameter);
         } else if (v['operation'] === 'lessThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' < :' + parameterName, parameter);
+          builder.andWhere(column + ' < :' + parameterName, parameter);
         } else if (v['operation'] === 'greaterOrEqualThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' >= :' + parameterName, parameter);
+          builder.andWhere(column + ' >= :' + parameterName, parameter);
         } else if (v['operation'] === 'lessOrEqualThan') {
           parameter[parameterName] = v['value'];
-          builder.andWhere(v['column'] + ' <= :' + parameterName, parameter);
+          builder.andWhere(column + ' <= :' + parameterName, parameter);
+        } else if (v['operation'] === 'between') {
+          parameter[parameterName + 'Start'] = v['value'].split(',')[0];
+          builder.andWhere(column + ' > :' + parameterName + 'Start', parameter);
+          parameter[parameterName + 'End'] = v['value'].split(',')[1];
+          builder.andWhere(column + ' < :' + parameterName + 'End', parameter);
         } else if (v['operation'] === 'specified' && v['value'] == 'true') {
-          builder.andWhere(v['column'] + ' is not null', parameter);
+          builder.andWhere(column + ' is not null', parameter);
         } else if (v['operation'] === 'specified' && v['value'] == 'false') {
-          builder.andWhere(v['column'] + ' is null', parameter);
+          builder.andWhere(column + ' is null', parameter);
         } else {
           parameter[parameterName] = '%' + v['value'] + '%';
-          builder.andWhere(v['column'] + ' like :' + parameterName, parameter);
+          builder.andWhere(column + ' like :' + parameterName, parameter);
         }
       }
     });
@@ -243,20 +249,31 @@ const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, r
   }
 
   if (options['order'] === 'RANDOM') {
-    builder.orderBy('NEWID()', 'ASC');
+    builder.addOrderBy('NEWID()', 'ASC');
   } else if (options['order']) {
-    Object.keys(options['order']).forEach((element) => {
-      let orderColumn = '';
-      if (element.split('.').length > 1) {
-        const pos = options.relations.indexOf(element.split('.').slice(0, -1).join('.'));
-        orderColumn = `A${pos + 1}.${element.split('.').pop()}`;
+    Object.keys(options['order']).forEach((element: string) => {
+      const orderSplit = element.split('.');
+      const allowColumns = { id: 1, ...Entity.columnsMetaData() };
+      if (allowColumns[orderSplit[0]] === undefined) {
+        let orderBySQL = element;
+        orderBySQL.split(`this.`).join(`A0.`);
+        options.relations.forEach((element, pos) => {
+          orderBySQL = orderBySQL.split(`"${element}"`).join(`A${pos + 1}`);
+        });
+        builder.addOrderBy(orderBySQL, options['order'][element]);
       } else {
-        orderColumn = `A0.${element}`;
-      }
-      builder.orderBy(orderColumn, options['order'][element]);
+        let orderColumn = '';
+        if (orderSplit.length > 1) {
+          const pos = options.relations.indexOf(orderSplit.slice(0, -1).join('.'));
+          orderColumn = `A${pos + 1}.${orderSplit.pop()}`;
+        } else {
+          orderColumn = `A0.${element}`;
+        }
+        builder.addOrderBy(orderColumn, options['order'][element]);
 
-      if (_selectColumns.length > 0 && !_selectColumns.includes(orderColumn)) {
-        _selectColumns.push(orderColumn);
+        if (_selectColumns.length > 0 && !_selectColumns.includes(orderColumn)) {
+          _selectColumns.push(orderColumn);
+        }
       }
     });
   }
@@ -408,47 +425,35 @@ async function uploadFileS3(fileName, fileContent) {
   return data;
 }
 
-// async function listObjectsS(filter) {
-//   const AWS = require('aws-sdk');
+export function removeDuplicatesInArray(originalArray: Array<any>) {
+  let uniqueArray = [];
+  originalArray.forEach((element) => {
+    if (!uniqueArray.includes(element)) {
+      uniqueArray.push(element);
+    }
+  });
+  return uniqueArray;
+}
 
-//   const s3 = new AWS.S3({ apiVersion: '2006-03-01', region: process.env.AWS_REGION });
-//   const params = {
-//     Bucket: process.env.AWS_S3_BUCKET,
-//     Prefix: decodeURIComponent(filter),
-//   };
+export async function createImage(imageData: Object, image, path, prefix = '') {
+  const fs = require('fs');
+  const re = /(?:\.([^.]+))?$/;
 
-//   const result = await s3.listObjectsV2(params).promise();
-//   return result.Contents.map((item) => item.Key);
-// }
+  const imageBase64 = imageData[`${image}Base64`];
+  if (imageBase64) {
+    const imageFileName = imageData[`${image}FileName`];
+    const imageBDDir = imageData['forceImageName']
+      ? trim(imageData['forceImageName'], '/').substr(0, trim(imageData['forceImageName'], '/').lastIndexOf('/'))
+      : `arquivos/${imageData['clientId'] ? imageData['clientId'] + '/' : ''}${imageData['whiteLabel'] ? imageData['whiteLabel'] + '/' : ''}${path}/`;
 
-// async function describeLogStreams() {
-//     const AWS = require('aws-sdk');
+    const imageBDName = imageData['forceImageName'] ? trim(imageData['forceImageName'], '/') : imageBDDir + prefix + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + '.' + re.exec(imageFileName)[1];
+    await fs.mkdirSync(imageBDDir, { recursive: true });
+    await fs.writeFileSync(imageBDName, imageBase64.substring(imageBase64.indexOf(',') + 1), 'base64');
 
-//     const cloudwatchlogs = new AWS.CloudWatchLogs({ region: process.env.AWS_REGION });
-//     const params = { logGroupName: process.env.AWS_CW_GROUP, };
-//     return cloudwatchlogs.describeLogStreams(params).promise();
-// }
-
-// export async function createLog(logStream, message) {
-//     let nextSequenceToken = null;
-//     const AWS = require('aws-sdk');
-//     if (!nextSequenceToken) {
-//         const res = await describeLogStreams();
-//         nextSequenceToken = res.logStreams.filter(v=>v.logStreamName === logStream)[0].uploadSequenceToken;
-//         console.info(logStream, nextSequenceToken, res)
-//     }
-
-//     const cloudwatchlogs = new AWS.CloudWatchLogs({ region: process.env.AWS_CW_REGION });
-//     const params = {
-//         logEvents: [{message, timestamp: (new Date()).getTime()}],
-//         logGroupName: process.env.AWS_CW_GROUP,
-//         logStreamName: logStream,
-//         sequenceToken: nextSequenceToken
-//     };
-//     const response = await cloudwatchlogs.putLogEvents(params).promise();
-//     nextSequenceToken = response.nextSequenceToken;
-//     return response;
-// }
+    // return s3Data.Location;
+    return './' + imageBDName;
+  }
+}
 
 export async function uploadFile2(imageData: Object, adminUser: Object, image, path, prefix = '') {
   const fs = require('fs');
@@ -462,24 +467,38 @@ export async function uploadFile2(imageData: Object, adminUser: Object, image, p
       ? trim(imageData['forceImageName'], '/').substr(0, trim(imageData['forceImageName'], '/').lastIndexOf('/'))
       : `arquivos/${imageData['clientId'] ? imageData['clientId'] + '/' : ''}${imageData['whiteLabel'] ? imageData['whiteLabel'] + '/' : ''}${path}/`;
 
+    console.log('imageBDDir' + imageBDDir);
+
     const imageBDName = imageData['forceImageName'] ? trim(imageData['forceImageName'], '/') : imageBDDir + prefix + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + '.' + re.exec(imageFileName)[1];
+    console.log('imageBDName' + imageBDName);
+
     await fs.mkdir(imageBDDir, { recursive: true }, (err) => {
       try {
-        if (err) console.log(err);
-        else if (imageOldName && trim(imageOldName, '/') !== trim(imageData['forceImageName'], '/')) {
+        if (err) {
+          console.log('Erro upload');
+          console.log(err);
+        } else if (imageOldName && trim(imageOldName, '/') !== trim(imageData['forceImageName'], '/')) {
           fs.stat(imageOldName.replace(/^\/+|\/+$/g, ''), function (err, stats) {
             console.log(stats);
-            if (err) return console.log(err);
+            if (err) {
+              console.log('Erro upload - 2');
+              return console.log(err);
+            }
             fs.unlink(imageOldName.replace(/^\/+|\/+$/g, ''), function (err) {
-              if (err) return console.error(err);
+              if (err) {
+                console.log('Erro upload - 3');
+                return console.error(err);
+              }
               console.log('file deleted successfully');
             });
           });
         }
         require('fs').writeFile(imageBDName, imageBase64.substring(imageBase64.indexOf(',') + 1), 'base64', function (err) {
+          console.log('Erro upload - 4');
           console.log(err);
         });
       } catch (error) {
+        console.log('Erro upload - 5');
         console.info(error);
       }
     });

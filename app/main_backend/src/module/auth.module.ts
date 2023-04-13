@@ -10,6 +10,7 @@ import { AccountController } from '../web/rest/account.controller';
 import { DatabaseModule } from 'src/database/database.module';
 import { adminPermissionUserProviders } from 'src/entities/admin-permission-user/admin-permission-user.providers';
 import { adminAuthorityProviders } from 'src/entities/admin-authority/admin-authority.providers';
+import { adminUserProviders } from 'src/entities/admin-user/admin-user.providers';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { adminAuthorityProviders } from 'src/entities/admin-authority/admin-auth
   ],
   controllers: [UserJWTController, AuthController, AccountController],
   providers: [
+    ...adminUserProviders,
     AuthService,
     JwtStrategy,
     ...adminAuthorityProviders,

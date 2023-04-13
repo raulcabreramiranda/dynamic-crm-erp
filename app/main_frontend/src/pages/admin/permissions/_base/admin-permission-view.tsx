@@ -1,3 +1,7 @@
+import { useContext } from 'react';
+import { TabView, TabPanel } from 'primereact/tabview';
+import Button from 'src/layouts/components/Button';
+
 import Grid from 'src/layouts/components/Grid';
 import { Translate, translate } from 'src/layouts/components/translate-component';
 import CardContent from 'src/layouts/components/Card/CardContent';
@@ -14,26 +18,27 @@ import { IAdminPermission } from 'src/pages/admin/permissions/_base/admin-permis
 import { EntityContext } from './admin-permission';
 
 const ViewForm = () => {
+    const { viewTabActive, setViewTabActive } = useContext(EntityContext);
+
     return (
         <>
-            <CardContent>
-                <form>
-                    <Grid container spacing={7}>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid>
-                                    <ViewText
-                                        id="admin-permission-name"
-                                        entityContext={EntityContext}
-                                        type="text"
-                                        name="name"
-                                        label={
-                                            <>
-                                                <Translate contentKey="adminPermission.name" />
-                                            </>
-                                        }
-                                    />
-                                    {/* <input
+            <form>
+                <Grid container spacing={7}>
+                    <Grid item xs={6}>
+                        <div>
+                            <Grid>
+                                <ViewText
+                                    id="admin-permission-name"
+                                    entityContext={EntityContext}
+                                    type="text"
+                                    name="name"
+                                    label={
+                                        <>
+                                            <Translate label={{ pt: 'name' }} contentKey="adminPermission.name" />
+                                        </>
+                                    }
+                                />
+                                {/* <input
             onChange={evt => setState({ ...state,  nameFormValue: evt.target.value })} 
             value={state.nameFormValue ? state.nameFormValue : ""}
             id="admin-permission-name" 
@@ -43,12 +48,62 @@ const ViewForm = () => {
             className={"form-control"} 
              
           /> */}
-                                </Grid>
-                            </div>
-                        </Grid>
+                            </Grid>
+                        </div>
                     </Grid>
-                </form>
-            </CardContent>
+
+                    <Grid item xs={3}>
+                        <div>
+                            <Grid>
+                                <ViewText
+                                    id="admin-permission-session"
+                                    entityContext={EntityContext}
+                                    type="text"
+                                    name="session"
+                                    label={
+                                        <>
+                                            <Translate label={{ pt: 'Sessão' }} contentKey="adminPermission.session" />
+                                        </>
+                                    }
+                                />
+                                {/* <input
+            onChange={evt => setState({ ...state,  sessionFormValue: evt.target.value })} 
+            value={state.sessionFormValue ? state.sessionFormValue : ""}
+            id="admin-permission-session" 
+            entityContext={EntityContext}
+            type="text" 
+            name="session" 
+            className={"form-control"} 
+             
+          /> */}
+                            </Grid>
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <div>
+                            <Grid>
+                                <ViewSelect
+                                    id="admin-permission-method"
+                                    options={[
+                                        { value: 'SEE', label: translate('adminPermission.AdminPermissionMethod.SEE') },
+                                        { value: 'EDIT', label: translate('adminPermission.AdminPermissionMethod.EDIT') },
+                                        { value: 'REMOVE', label: translate('adminPermission.AdminPermissionMethod.REMOVE') },
+                                        { value: 'CREATE', label: translate('adminPermission.AdminPermissionMethod.CREATE') },
+                                    ]}
+                                    entityContext={EntityContext}
+                                    name="method"
+                                    label={
+                                        <>
+                                            <Translate label={{ pt: 'Método' }} contentKey="adminPermission.method" />
+                                        </>
+                                    }
+                                />
+                            </Grid>
+                        </div>
+                    </Grid>
+                </Grid>
+            </form>
         </>
     );
 };

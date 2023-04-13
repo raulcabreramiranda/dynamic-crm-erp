@@ -53,6 +53,7 @@ const ListTable = ({}: any) => {
         setEntityList,
         setEntityEdit,
         entityListCount,
+        setFormTabActive,
         setEntityListCount,
         entityListPage,
         setEntityListPage,
@@ -76,6 +77,7 @@ const ListTable = ({}: any) => {
                 setEntityEdit(_entityEdit);
             };
             apiGetEntityForm(entity.id, handleSuccess);
+            setFormTabActive(0);
         }
     };
     const openViewModal = (entity: IAdminPermission) => {
@@ -161,8 +163,18 @@ const ListTable = ({}: any) => {
                             <TableHead>
                                 <TableHeadRow>
                                     <TableHeadCell align={'left'} onClick={sortFunction('name')}>
-                                        <Translate contentKey="adminPermission.name" />
+                                        <Translate label={{ pt: 'Nome' }} contentKey="adminPermission.name" />
                                         <i className={sort === 'name' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    </TableHeadCell>
+
+                                    <TableHeadCell align={'left'} onClick={sortFunction('session')}>
+                                        <Translate label={{ pt: 'Sessão' }} contentKey="adminPermission.session" />
+                                        <i className={sort === 'session' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    </TableHeadCell>
+
+                                    <TableHeadCell align={'left'} onClick={sortFunction('method')}>
+                                        <Translate label={{ pt: 'Método' }} contentKey="adminPermission.method" />
+                                        <i className={sort === 'method' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
 
                                     <TableHeadCell align={'left'} />
@@ -175,6 +187,14 @@ const ListTable = ({}: any) => {
                                         <TableBodyRow tableRowIndex={i} key={`entity-${i}`}>
                                             <TableBodyCell id="name-cell" align={'left'}>
                                                 <TableText name={'name'} entityView={adminPermission} />
+                                            </TableBodyCell>
+
+                                            <TableBodyCell id="session-cell" align={'left'}>
+                                                <TableText name={'session'} entityView={adminPermission} />
+                                            </TableBodyCell>
+
+                                            <TableBodyCell id="method-cell" align={'left'}>
+                                                <TableDate name={'method'} entityView={adminPermission} format={APP_LOCAL_DATE_FORMAT} />
                                             </TableBodyCell>
 
                                             <TableBodyCell align={'right'}>

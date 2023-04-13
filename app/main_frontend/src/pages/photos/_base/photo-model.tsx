@@ -1,6 +1,6 @@
 import { PhotoTypeContent } from '../../../components/enumerations/photo-type-content.model';
 import { Dayjs } from 'dayjs';
-import { IFilter } from '../../../components/util/entity-utils';
+import { IFilter } from 'src/util/entity-utils';
 
 export const ApiPathPhoto = 'photos';
 export interface IPhoto {

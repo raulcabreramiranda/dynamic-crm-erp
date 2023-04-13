@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { Button as PrimeButton } from 'primereact/button';
 
 interface Props {
@@ -7,10 +8,15 @@ interface Props {
 }
 
 const Button = (props: any) => {
+    const router = useRouter();
+
     return <PrimeButton  type="button" label={props.children} icon={`pi pi-${props.icon}`} onClick={()=>{
-       props.onClick()
-        console.info("asdasdasd");
-    }} className={`${props.className || ''} mr-2`} />;
+        if(props.onClick){
+            props.onClick()
+        } else if(props.href){
+            router.push(props.href)
+        }
+    }} className={`p-button-${props.color || 'primary'} ${props.className || ''} mr-2`} />;
 };
 
 export default Button;

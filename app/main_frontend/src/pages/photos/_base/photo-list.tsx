@@ -53,6 +53,7 @@ const ListTable = ({}: any) => {
         setEntityList,
         setEntityEdit,
         entityListCount,
+        setFormTabActive,
         setEntityListCount,
         entityListPage,
         setEntityListPage,
@@ -76,6 +77,7 @@ const ListTable = ({}: any) => {
                 setEntityEdit(_entityEdit);
             };
             apiGetEntityForm(entity.id, handleSuccess);
+            setFormTabActive(0);
         }
     };
     const openViewModal = (entity: IPhoto) => {
@@ -161,19 +163,22 @@ const ListTable = ({}: any) => {
                             <TableHead>
                                 <TableHeadRow>
                                     <TableHeadCell align={'left'} onClick={sortFunction('title')}>
-                                        <Translate contentKey="photo.title" />
+                                        <Translate label={{ pt: 'title' }} contentKey="photo.title" />
                                         <i className={sort === 'title' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} onClick={sortFunction('description')}>
-                                        <Translate contentKey="photo.description" />
+                                        <Translate label={{ pt: 'description' }} contentKey="photo.description" />
                                         <i className={sort === 'description' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} onClick={sortFunction('link')}>
-                                        <Translate contentKey="photo.link" />
+                                        <Translate label={{ pt: 'link' }} contentKey="photo.link" />
                                         <i className={sort === 'link' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
+
                                     <TableHeadCell align={'left'} onClick={sortFunction('typeContent')}>
-                                        <Translate contentKey="photo.typeContent" />
+                                        <Translate label={{ pt: 'typeContent' }} contentKey="photo.typeContent" />
                                         <i className={sort === 'typeContent' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
 

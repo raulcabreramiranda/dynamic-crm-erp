@@ -8,11 +8,10 @@ interface Props {
 }
 
 const Grid = (props: Props) => {
-    return (
-        <div>
-           { props.children }
-        </div>
-    );
+    if (props.container) {
+        return <div  className="grid">{props.children}</div>;
+    }
+    return <div className={`col-${props.xs}`}>{props.children}</div>;
 };
 
 export default Grid;

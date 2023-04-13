@@ -4,12 +4,12 @@ import { Context, ReactElement, useContext } from 'react'
 interface Props {
   entityContext: Context<any>
   precision?: number
-  type: string
   name: string
+  id?: string
   label: string | ReactElement
 }
 
-const InputText = ({ entityContext: EntityContext, label, name, type }: Props) => {
+const InputText = ({ entityContext: EntityContext, label, name }: Props) => {
   const { entityView } = useContext(EntityContext)
   const fieldName = typeof name !== 'undefined' ? name : ''
 

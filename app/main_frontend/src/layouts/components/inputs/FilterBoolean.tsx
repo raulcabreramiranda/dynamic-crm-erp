@@ -8,6 +8,8 @@ interface Props {
     options: any[];
     labelPos?: "top" | "left";
     label: string | ReactElement;
+    id?: string;
+    name?: string;
     filterKey: string;
     filterMethod: 'contains' | 'equals' | 'in' | 'notIn' | 'greaterThan' | 'lessThan' | 'greaterOrEqualThan' | 'lessOrEqualThan' | 'between' | 'specified';
 }

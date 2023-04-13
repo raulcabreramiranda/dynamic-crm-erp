@@ -10,11 +10,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
-      secretOrKey: process.env.NODE_SERVER_JWT_SECRET || 'jhipster.security.authentication.jwt.base64-secret',
+      secretOrKey: process.env.NODE_SERVER_JWT_SECRET || 'security.authentication.jwt.base64-secret',
     });
   }
 
   async validate(payload: Payload, done: VerifiedCallback): Promise<any> {
+    
+    console.trace();
+    console.info("ssssssssssssssssss");
+
     if (payload.userType) {
       return done(null, {
         login: payload.username,

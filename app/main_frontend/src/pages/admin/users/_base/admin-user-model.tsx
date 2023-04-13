@@ -3,7 +3,7 @@ import { IAdminPermissionUser, IAdminPermissionUserFilter } from '../../../admin
 import { IAdminWhiteLabel, IAdminWhiteLabelFilter } from '../../../admin/white-labels/_base/admin-white-label-model';
 import { AdminUserUserType } from '../../../../components/enumerations/admin-user-user-type.model';
 import { Dayjs } from 'dayjs';
-import { IFilter } from '../../../../components/util/entity-utils';
+import { IFilter } from 'src/util/entity-utils';
 
 export const ApiPathAdminUser = 'admin-users';
 export interface IAdminUser {

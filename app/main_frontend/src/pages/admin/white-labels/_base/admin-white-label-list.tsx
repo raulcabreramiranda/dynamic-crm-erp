@@ -53,6 +53,7 @@ const ListTable = ({}: any) => {
         setEntityList,
         setEntityEdit,
         entityListCount,
+        setFormTabActive,
         setEntityListCount,
         entityListPage,
         setEntityListPage,
@@ -76,6 +77,7 @@ const ListTable = ({}: any) => {
                 setEntityEdit(_entityEdit);
             };
             apiGetEntityForm(entity.id, handleSuccess);
+            setFormTabActive(0);
         }
     };
     const openViewModal = (entity: IAdminWhiteLabel) => {
@@ -161,7 +163,7 @@ const ListTable = ({}: any) => {
                             <TableHead>
                                 <TableHeadRow>
                                     <TableHeadCell align={'left'} onClick={sortFunction('name')}>
-                                        <Translate contentKey="adminWhiteLabel.name" />
+                                        <Translate label={{ pt: 'name' }} contentKey="adminWhiteLabel.name" />
                                         <i className={sort === 'name' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
 

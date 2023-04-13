@@ -1,7 +1,7 @@
 import { IAdminPermission, IAdminPermissionFilter } from '../../../admin/permissions/_base/admin-permission-model';
 import { IAdminProfile, IAdminProfileFilter } from '../../../admin/profiles/_base/admin-profile-model';
 import { Dayjs } from 'dayjs';
-import { IFilter } from '../../../../components/util/entity-utils';
+import { IFilter } from 'src/util/entity-utils';
 
 export const ApiPathAdminPermissionProfile = 'admin-permission-profiles';
 export interface IAdminPermissionProfile {

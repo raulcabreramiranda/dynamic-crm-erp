@@ -79,7 +79,7 @@ const FilterList = () => {
             <CardContent>
                 <form>
                     <Grid container spacing={5}>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <FilterText
                                 filterKey="name"
                                 filterMethod="contains"
@@ -89,7 +89,7 @@ const FilterList = () => {
                                 name="name"
                                 label={
                                     <>
-                                        <Translate contentKey="adminPermission.name" />
+                                        <Translate label={{ pt: 'name' }} contentKey="adminPermission.name" />
                                     </>
                                 }
                             />

@@ -7,7 +7,7 @@ export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (resp
         sort,
         page,
         size,
-        selectColumns: ['name'],
+        selectColumns: ['name', 'session', 'method'],
         onSuccess,
     });
 };
@@ -16,7 +16,7 @@ export const apiGetEntityForm = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`admin-permissions`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['name'],
+        selectColumns: ['name', 'session', 'method'],
         onSuccess,
     });
 };
@@ -25,7 +25,7 @@ export const apiGetEntityView = (id: number, onSuccess?: (response: IApiResponse
     apiGet(`admin-permissions`, {
         filters: { 'id.equals': id },
         size: 1,
-        selectColumns: ['name'],
+        selectColumns: ['name', 'session', 'method'],
         onSuccess,
     });
 };

@@ -34,6 +34,16 @@ const AppMenu = () => {
             items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
         },
         {
+            label: 'Cadastros',
+            items: [
+                { label: 'Pacientes', icon: 'pi pi-fw pi-home', to: '/patients' },
+                { label: 'Empresa', icon: 'pi pi-fw pi-home', to: '/companies' },
+                { label: 'Filiais', icon: 'pi pi-fw pi-home', to: '/subsidiaries' },
+                { label: 'Clientes', icon: 'pi pi-fw pi-home', to: '/customers' },
+                { label: 'Profissionais / colaboradores', icon: 'pi pi-fw pi-home', to: '/professionals' },
+            ]
+        },
+        {
             label: 'Usuarios',
             items: [
                 { label: 'audit-entities', icon: 'pi pi-fw pi-home', to: '/admin/audit-entities' },
@@ -42,7 +52,7 @@ const AppMenu = () => {
                 { label: 'permissions', icon: 'pi pi-fw pi-home', to: '/admin/permissions' },
                 { label: 'permission-users', icon: 'pi pi-fw pi-home', to: '/admin/permission-users' },
                 { label: 'profiles', icon: 'pi pi-fw pi-home', to: '/admin/profiles' },
-                { label: 'users', icon: 'pi pi-fw pi-home', to: '/admin/users' },
+                { label: 'Usuarios', icon: 'pi pi-fw pi-home', to: '/admin/users' },
                 { label: 'white-labels', icon: 'pi pi-fw pi-home', to: '/admin/white-labels' }
             ]
         }

@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { AdminPermissionProfile } from '../../admin-permission-profile/_base/admin-permission-profile.entity';
 import { AdminPermissionUser } from '../../admin-permission-user/_base/admin-permission-user.entity';
+import { AdminPermissionMethod } from './admin-permission-method.enum';
 
 import tablesName from '../../tablesName';
 
@@ -13,12 +14,8 @@ export class AdminPermission extends BaseEntity {
     static columnsMetaData() {
         return {
             name: String,
-            slug: String,
-            view: Boolean,
-            resgister: Boolean,
-            edit: Boolean,
-            deleteRow: Boolean,
-            report: Boolean,
+            session: String,
+            method: AdminPermissionMethod,
             adminPermissionProfiles: AdminPermissionProfile,
             adminPermissionUsers: AdminPermissionUser,
             createdBy: Number,
@@ -32,29 +29,13 @@ export class AdminPermission extends BaseEntity {
     @ApiProperty({ required: false })
     name: string;
 
-    @Column({ name: 'slug', nullable: true })
+    @Column({ name: 'session', nullable: true })
     @ApiProperty({ required: false })
-    slug: string;
+    session: string;
 
-    @Column({ name: 'view', nullable: true })
+    @Column({ type: 'simple-enum', name: 'method', enum: AdminPermissionMethod, nullable: true })
     @ApiProperty({ required: false })
-    view: boolean;
-
-    @Column({ name: 'resgister', nullable: true })
-    @ApiProperty({ required: false })
-    resgister: boolean;
-
-    @Column({ name: 'edit', nullable: true })
-    @ApiProperty({ required: false })
-    edit: boolean;
-
-    @Column({ name: 'deleteRow', nullable: true })
-    @ApiProperty({ required: false })
-    deleteRow: boolean;
-
-    @Column({ name: 'report', nullable: true })
-    @ApiProperty({ required: false })
-    report: boolean;
+    method: AdminPermissionMethod;
 
     @OneToMany(() => AdminPermissionProfile, (other) => other.adminPermission)
     adminPermissionProfiles: AdminPermissionProfile[];
