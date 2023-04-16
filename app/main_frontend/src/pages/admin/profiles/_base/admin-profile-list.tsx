@@ -167,6 +167,10 @@ const ListTable = ({}: any) => {
                                         <i className={sort === 'name' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
                                     </TableHeadCell>
 
+                                    <TableHeadCell align={'left'} id="adminPermissionProfiles-cell-header">
+                                        <Translate label={{ pt: 'Permisos' }} contentKey="adminProfile.adminPermissionProfiles" />
+                                    </TableHeadCell>
+
                                     <TableHeadCell align={'left'} />
                                 </TableHeadRow>
                             </TableHead>
@@ -179,23 +183,31 @@ const ListTable = ({}: any) => {
                                                 <TableText name={'name'} entityView={adminProfile} />
                                             </TableBodyCell>
 
+                                            <TableBodyCell id="adminPermissionProfiles-cell" align={'left'} role="one-to-many">
+                                                <TableSelectMany
+                                                    id="admin-profile-adminPermissionProfiles-form"
+                                                    options={[]}
+                                                    entityView={adminProfile}
+                                                    relationshipType={'one-to-many'}
+                                                    optionsLink={'admin-permission-profiles'}
+                                                    optionsSort={{ id: 'asc' }}
+                                                    optionsShowFields={['id', 'adminPermission.id', 'adminPermission.name']}
+                                                    name="adminPermissionProfiles"
+                                                    label={
+                                                        <>
+                                                            <Translate contentKey="adminProfile.Permisos" />
+                                                        </>
+                                                    }
+                                                />
+                                            </TableBodyCell>
+
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['adminProfile'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(adminProfile)} isLink={false} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminProfile'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(adminProfile)} isLink={false} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminProfile'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(adminProfile)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button color="success" size="small" onClick={() => openViewModal(adminProfile)} isLink={false} icon={'eye'}></Button>
+
+                                                    <Button color="primary" size="small" onClick={() => openUpdateModal(adminProfile)} isLink={false} icon={'pencil'}></Button>
+
+                                                    <Button color="danger" size="small" onClick={() => deleteEntityModal(adminProfile)} isLink={false} icon={'trash'}></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

@@ -449,6 +449,7 @@ export const containerErrorClear = () => {
 
 export type ICookieUser = {
   id: number;
+  adminProfile?: {adminPermissionProfiles: any[]};
   whiteLabelData?: any[];
   clientId?: number;
   clientData?: any[];

@@ -217,21 +217,11 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['company'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(company)} isLink={false} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['company'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(company)} isLink={false} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['company'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(company)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button color="success" size="small" onClick={() => openViewModal(company)} isLink={false} icon={'eye'}></Button>
+
+                                                    <Button color="primary" size="small" onClick={() => openUpdateModal(company)} isLink={false} icon={'pencil'}></Button>
+
+                                                    <Button color="danger" size="small" onClick={() => deleteEntityModal(company)} isLink={false} icon={'trash'}></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

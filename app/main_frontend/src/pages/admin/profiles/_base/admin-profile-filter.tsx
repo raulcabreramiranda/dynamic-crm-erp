@@ -94,6 +94,28 @@ const FilterList = () => {
                                 }
                             />
                         </Grid>
+
+                        <Grid item xs={12}>
+                            <div>
+                                <FilterSelectMany
+                                    id="admin-profile-adminPermissionProfiles-form"
+                                    options={[]}
+                                    entityContext={EntityContext}
+                                    optionsLink={'admin-permission-profiles'}
+                                    relationshipType={'one-to-many'}
+                                    optionsSort={{ id: 'asc' }}
+                                    optionsShowFields={['id']}
+                                    name="adminPermissionProfiles"
+                                    filterKey="adminPermissionProfiles.id"
+                                    filterMethod="in"
+                                    label={
+                                        <>
+                                            <Translate contentKey="adminProfile.Permisos" />
+                                        </>
+                                    }
+                                />
+                            </div>
+                        </Grid>
                     </Grid>
 
                     <Button onClick={handleFilter}>Filter</Button>

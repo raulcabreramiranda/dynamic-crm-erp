@@ -110,10 +110,6 @@ export class AdminPermissionProfileController {
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     async post(@Req() req: Request, @Body() adminPermissionProfile: AdminPermissionProfile): Promise<AdminPermissionProfile> {
         try {
-            adminPermissionProfile.createdDate = new Date();
-            adminPermissionProfile.lastModifiedDate = new Date();
-            adminPermissionProfile.createdBy = req['user']['id'];
-            adminPermissionProfile.lastModifiedBy = req['user']['id'];
             const created = await this.adminPermissionProfileService.save(adminPermissionProfile);
             HeaderUtil.addEntityCreatedHeaders(req.res, 'AdminPermissionProfile', created.id);
             return created;
@@ -136,9 +132,6 @@ export class AdminPermissionProfileController {
     })
     async put(@Req() req: Request, @Body() adminPermissionProfile: AdminPermissionProfile): Promise<AdminPermissionProfile> {
         try {
-            adminPermissionProfile.lastModifiedDate = new Date();
-            adminPermissionProfile.lastModifiedBy = req['user']['id'];
-
             HeaderUtil.addEntityCreatedHeaders(req.res, 'AdminPermissionProfile', adminPermissionProfile.id);
 
             return await this.adminPermissionProfileService.update(adminPermissionProfile);

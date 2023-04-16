@@ -256,21 +256,11 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['adminUser'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(adminUser)} isLink={false} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminUser'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(adminUser)} isLink={false} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminUser'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(adminUser)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button color="success" size="small" onClick={() => openViewModal(adminUser)} isLink={false} icon={'eye'}></Button>
+
+                                                    <Button color="primary" size="small" onClick={() => openUpdateModal(adminUser)} isLink={false} icon={'pencil'}></Button>
+
+                                                    <Button color="danger" size="small" onClick={() => deleteEntityModal(adminUser)} isLink={false} icon={'trash'}></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

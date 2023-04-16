@@ -181,21 +181,11 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['adminWhiteLabel'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(adminWhiteLabel)} isLink={false} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminWhiteLabel'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(adminWhiteLabel)} isLink={false} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['adminWhiteLabel'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(adminWhiteLabel)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button color="success" size="small" onClick={() => openViewModal(adminWhiteLabel)} isLink={false} icon={'eye'}></Button>
+
+                                                    <Button color="primary" size="small" onClick={() => openUpdateModal(adminWhiteLabel)} isLink={false} icon={'pencil'}></Button>
+
+                                                    <Button color="danger" size="small" onClick={() => deleteEntityModal(adminWhiteLabel)} isLink={false} icon={'trash'}></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

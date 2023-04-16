@@ -156,16 +156,16 @@ const MUITable = () => {
             <CardHeader
                 title={
                     <>
-                        <h2>Update Patient </h2>
+                        <h2>{!!entityEdit.id && entityEdit?.id > 0 ? 'Editar um paciente' : 'Novo pacientes'}</h2>
                     </>
                 }
                 buttons={
                     <>
                         <Button onClick={saveChanges} icon={'save'}>
-                            Save Changes
+                            Salvar agora
                         </Button>
                         <Button onClick={handleClose} icon={'ban'}>
-                            Cancel
+                            Voltar
                         </Button>
                     </>
                 }

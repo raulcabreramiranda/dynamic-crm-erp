@@ -96,7 +96,7 @@ function ModalView() {
 
     return (
         <Dialog isOpen={true} onClose={handleClose}>
-            <DialogTitle onClose={handleClose}>Subscribe {entityView.id} </DialogTitle>
+            <DialogTitle onClose={handleClose}>Detalhe do Subsidiary</DialogTitle>
             <DialogContent>
                 <FormView />
             </DialogContent>
@@ -137,7 +137,7 @@ function ModalUpdate() {
     const isNew = !entityEdit?.id || entityEdit?.id < 0;
     return (
         <Dialog isOpen={true} onClose={handleClose}>
-            <DialogTitle onClose={handleClose}>Subscribe {entityEdit.id} </DialogTitle>
+            <DialogTitle onClose={handleClose}>{!!entityEdit.id && entityEdit?.id > 0 ? 'Atualizar Subsidiary' : 'Criar Subsidiary'}</DialogTitle>
             <DialogContent>
                 <FormUpdate isNew={isNew} />
             </DialogContent>
@@ -248,16 +248,16 @@ const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
             <CardHeader
                 title={
                     <>
-                        <h2>List Subsidiary </h2>
+                        <h2>Lista de Subsidiaries</h2>
                     </>
                 }
                 buttons={
                     <>
                         <Button icon="pi pi-plus" onClick={openNewModal}>
-                            New
+                            Novo Subsidiary
                         </Button>
                         <Button icon="pi pi-filter-fill" onClick={() => setShowFilters(!showFilters)}>
-                            {showFilters ? 'Hide Filters' : 'Filters'}
+                            {showFilters ? 'Ocultar filtros' : 'Filtros'}
                         </Button>
                     </>
                 }

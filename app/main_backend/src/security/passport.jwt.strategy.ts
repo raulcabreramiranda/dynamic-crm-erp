@@ -16,9 +16,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: Payload, done: VerifiedCallback): Promise<any> {
     
-    console.trace();
-    console.info("ssssssssssssssssss");
-
     if (payload.userType) {
       return done(null, {
         login: payload.username,

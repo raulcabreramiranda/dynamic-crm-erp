@@ -253,21 +253,11 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['professional'], 'view') ? (
-                                                        <Button color="primary" size="small" onClick={() => openViewModal(professional)} isLink={false} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['professional'], 'edit') ? (
-                                                        <Button color="primary" size="small" onClick={() => openUpdateModal(professional)} isLink={false} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['professional'], 'canDelete') ? (
-                                                        <Button color="primary" size="small" onClick={() => deleteEntityModal(professional)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button color="success" size="small" onClick={() => openViewModal(professional)} isLink={false} icon={'eye'}></Button>
+
+                                                    <Button color="primary" size="small" onClick={() => openUpdateModal(professional)} isLink={false} icon={'pencil'}></Button>
+
+                                                    <Button color="danger" size="small" onClick={() => deleteEntityModal(professional)} isLink={false} icon={'trash'}></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

@@ -51,6 +51,26 @@ const ViewForm = () => {
                             </Grid>
                         </div>
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <div>
+                            <ViewSelectMany
+                                id="admin-profile-adminPermissionProfiles-form"
+                                options={[]}
+                                entityContext={EntityContext}
+                                relationshipType={'one-to-many'}
+                                optionsLink={'admin-permission-profiles'}
+                                optionsSort={{ id: 'asc' }}
+                                optionsShowFields={['id', 'adminPermission.id', 'adminPermission.name']}
+                                name="adminPermissionProfiles"
+                                label={
+                                    <>
+                                        <Translate contentKey="adminProfile.Permisos" />
+                                    </>
+                                }
+                            />
+                        </div>
+                    </Grid>
                 </Grid>
             </form>
         </>

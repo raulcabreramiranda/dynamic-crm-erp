@@ -96,7 +96,7 @@ function ModalView() {
 
     return (
         <Dialog isOpen={true} onClose={handleClose}>
-            <DialogTitle onClose={handleClose}>Subscribe {entityView.id} </DialogTitle>
+            <DialogTitle onClose={handleClose}>Detalhe do Profile</DialogTitle>
             <DialogContent>
                 <FormView />
             </DialogContent>
@@ -137,7 +137,7 @@ function ModalUpdate() {
     const isNew = !entityEdit?.id || entityEdit?.id < 0;
     return (
         <Dialog isOpen={true} onClose={handleClose}>
-            <DialogTitle onClose={handleClose}>Subscribe {entityEdit.id} </DialogTitle>
+            <DialogTitle onClose={handleClose}>{!!entityEdit.id && entityEdit?.id > 0 ? 'Atualizar Profile' : 'Criar Profile'}</DialogTitle>
             <DialogContent>
                 <FormUpdate isNew={isNew} />
             </DialogContent>
@@ -177,6 +177,7 @@ const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
         return (
             '' +
             (entityFilter.name ? 'name=' + entityFilter.name + '&' : '') +
+            (entityFilter.adminPermissionProfiles ? 'adminPermissionProfiles=' + entityFilter.adminPermissionProfiles.map((v: any) => v.id + '<->' + v.label).join(',') + '&' : '') +
             (entityFilter.baseFilters ? 'baseFilters=' + entityFilter.baseFilters + '&' : '') +
             (entityFilter.extraFilters ? 'extraFilters=' + encodeURI(JSON.stringify(entityFilter.extraFilters)) + '&' : '') +
             'page=' +
@@ -244,16 +245,16 @@ const MUITable = ({ baseFilters, baseEntity, startList }: Props) => {
             <CardHeader
                 title={
                     <>
-                        <h2>List AdminProfile </h2>
+                        <h2>Lista de Profiles</h2>
                     </>
                 }
                 buttons={
                     <>
                         <Button icon="pi pi-plus" onClick={openNewModal}>
-                            New
+                            Novo Profile
                         </Button>
                         <Button icon="pi pi-filter-fill" onClick={() => setShowFilters(!showFilters)}>
-                            {showFilters ? 'Hide Filters' : 'Filters'}
+                            {showFilters ? 'Ocultar filtros' : 'Filtros'}
                         </Button>
                     </>
                 }

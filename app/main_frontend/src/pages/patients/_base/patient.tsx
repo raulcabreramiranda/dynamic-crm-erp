@@ -150,16 +150,16 @@ const MUITable = () => {
             <CardHeader
                 title={
                     <>
-                        <h2>List Patient </h2>
+                        <h2>Lista de Pacientes importante </h2>
                     </>
                 }
                 buttons={
                     <>
-                        <Button color="primary" size="sm" isLink={true} href={`/BusinessEntity/new?${getEntityFiltersURL()}`} icon={'plus'}>
-                            New
+                        <Button color="primary" size="sm" isLink={true} href={`/patients/new?${getEntityFiltersURL()}`} icon={'pi pi-plus'} permissionSession="PATIENT" permissionMethod="CREATE">
+                            Criar novo Paciente
                         </Button>
                         <Button icon="pi pi-filter-fill" onClick={() => setShowFilters(!showFilters)}>
-                            {showFilters ? 'Hide Filters' : 'Filters'}
+                            {showFilters ? 'Ocultar filtros' : 'Filtros'}
                         </Button>
                     </>
                 }

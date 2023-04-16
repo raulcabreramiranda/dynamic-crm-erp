@@ -1,9 +1,17 @@
-import { Injectable, HttpException, HttpStatus, Logger, Inject } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { UserLoginDTO } from './dto/user-login.dto';
 import { Payload } from '../security/payload.interface';
-import AdminAuthority, { AdminAuthority as Authority } from '../entities/admin-authority/_base/admin-authority.entity';
+import AdminAuthority, {
+  AdminAuthority as Authority,
+} from '../entities/admin-authority/_base/admin-authority.entity';
 import { AdminUser as User } from '../entities/admin-user/_base/admin-user.entity';
 import { UserService } from './user.service';
 
@@ -26,53 +34,82 @@ export class AuthService {
   logger = new Logger('AuthService');
   constructor(
     private readonly jwtService: JwtService,
-    @Inject('ADMINAUTHORITY_REPOSITORY') protected authorityRepository: Repository<AdminAuthority>,
-    @Inject('ADMINPERMISSIONUSER_REPOSITORY') protected permissionUserRepository: Repository<AdminPermissionUser>,
-    @Inject('ADMINUSER_REPOSITORY') protected adminUserRepository: IAdminUserRepository,
-  
-    private userService: UserService
+    @Inject('ADMINAUTHORITY_REPOSITORY')
+    protected authorityRepository: Repository<AdminAuthority>,
+    @Inject('ADMINPERMISSIONUSER_REPOSITORY')
+    protected permissionUserRepository: Repository<AdminPermissionUser>,
+    @Inject('ADMINUSER_REPOSITORY')
+    protected adminUserRepository: IAdminUserRepository,
+
+    private userService: UserService,
   ) {}
 
   async login(userLogin: UserLoginDTO): Promise<any> {
     console.info({ userLogin });
-    const loginUserName: any = isNaN(+userLogin['username']) ? userLogin.username?.trim() : userLogin.username;
+    const loginUserName: any = isNaN(+userLogin['username'])
+      ? userLogin.username?.trim()
+      : userLogin.username;
     const loginPassword = userLogin.password;
     const md5 = cryptoMd5(loginPassword);
-   
-    const user = await this.adminUserRepository.findOne({where: {login: loginUserName, password: md5}});
 
-    const payload: any = {
-      "id": 2869375,
-      "username": "coordjor@jornada.com",
-      "whiteLabel": "297658",
-      "clientId": 4,
-      "userType": "COORDINATOR",
-      "authorities": [
-        "ROLE_ADMIN"
-      ],
+    const selectColumns = [
+      'id',
+      'activated',
+      'login',
+      'fullname',
+      'email',
+      'adminProfile.name',
+      'adminProfile.adminPermissionProfiles.id',
+      'adminProfile.adminPermissionProfiles.adminPermission.session',
+      'adminProfile.adminPermissionProfiles.adminPermission.method',
+    ];
+    const filters = {
+      login: { value: loginUserName, operation: 'equals' },
+      password: { value: md5, operation: 'equals' },
     };
 
+    const user = await this.adminUserRepository.getOne({
+      filters,
+      selectColumns,
+    });
+
+    console.info({ user });
+
+    const payload: any = {
+      id: 2869375,
+      username: 'coordjor@jornada.com',
+      whiteLabel: '297658',
+      clientId: 4,
+      userType: 'COORDINATOR',
+      authorities: ['ROLE_ADMIN'],
+    };
 
     if (!user) {
-      console.error('Erro 2 de autenticação!. Por favor verifique suas credenciais e tente novamente.');
+      console.error(
+        'Erro 2 de autenticação!. Por favor verifique suas credenciais e tente novamente.',
+      );
       console.info({ userLogin, payload });
-      throw new HttpException('<strong>Erro de autenticação!</strong><br>Por favor verifique suas credenciais e tente novamente.', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        '<strong>Erro de autenticação!</strong><br>Por favor verifique suas credenciais e tente novamente.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     if (!user.activated) {
       console.error('Erro 3 de autenticação!. O Usuario não esta ativado.');
       console.info({ userLogin, user });
-      throw new HttpException('<strong>Erro de autenticação!</strong><br>O Usuario não esta ativado.', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        '<strong>Erro de autenticação!</strong><br>O Usuario não esta ativado.',
+        HttpStatus.FORBIDDEN,
+      );
     }
-
-    console.info({ userLogin, payload,     id_token: this.jwtService.sign(payload), });
 
     return {
       id_token: this.jwtService.sign(payload),
       user: user,
     };
 
-/*
+    /*
     const permissions = [];
     const hasAnyPermission = true;
     const authorities = ['ROLE_ADMIN'];
@@ -184,13 +221,10 @@ export class AuthService {
     };
 
     /* eslint-disable */
-    
-
   }
 
   /* eslint-enable */
   async validateUser(payload: Payload): Promise<User | undefined> {
-    console.info("aaaaaaaaaaaaaaaaaa");
     return await this.findUserWithAuthById(payload.id, payload.whiteLabel);
   }
 
@@ -198,7 +232,10 @@ export class AuthService {
     return await this.authorityRepository.find();
   }
 
-  async findUserWithAuthById(userId: number, whiteLabelId?: number): Promise<User | undefined> {
+  async findUserWithAuthById(
+    userId: number,
+    whiteLabelId?: number,
+  ): Promise<User | undefined> {
     const filters = { id: userId };
     if (whiteLabelId) {
       filters['whiteLabel'] = whiteLabelId;
@@ -208,7 +245,7 @@ export class AuthService {
       where: filters,
     });
     await this.permissionUserRepository.find({
-      where: { adminUser: {id: userId} },
+      where: { adminUser: { id: userId } },
       relations: ['adminPermission'],
     });
 
@@ -219,5 +256,4 @@ export class AuthService {
       authorities: ['ROLE_ADMIN'],
     };
   }
-
 }

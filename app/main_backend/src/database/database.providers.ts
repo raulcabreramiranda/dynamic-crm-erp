@@ -8,6 +8,7 @@ const BD_PASS = process.env.NODE_SERVER_BD_PASS;
 const BD_NAME = process.env.NODE_SERVER_BD_NAME;
 // const BD_SCHEMA = process.env.NODE_SERVER_BD_SCHEMA;
 const BD_LOGGING = process.env.NODE_SERVER_BD_LOGGING === '1' || false;
+const BD_SYNC = process.env.NODE_SERVER_BD_SYNC === '1' || false;
 
 export const databaseProviders = [
   {
@@ -22,7 +23,7 @@ export const databaseProviders = [
         password: BD_PASS,
         database: BD_NAME,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: BD_SYNC,
         schema: '',
         requestTimeout: 60000,
         migrations: ['./migrations/**/*{.ts,.js}'],

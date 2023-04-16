@@ -43,38 +43,6 @@ export class UserController {
     return await this.userService.delete(userToDelete);
   }
 
-  @Post('/profile-select-all')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async profileSelectAll(@Req() req: Request): Promise<any> {
-    const profileSelectAll = await this.userService.profileSelectAll(req.body.profile, req.body.permission);
-    return profileSelectAll;
-  }
-
-  @Post('/profile-unselect-all')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async profileUnselectAll(@Req() req: Request): Promise<any> {
-    const profileUnselectAll = await this.userService.profileUnselectAll(req.body.profile, req.body.permission);
-    return profileUnselectAll;
-  }
-
-  @Post('/user-select-all')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async userSelectAll(@Req() req: Request): Promise<any> {
-    const userSelectAll = await this.userService.userSelectAll(req.body.user, req.body.permission);
-    return userSelectAll;
-  }
-
-  @Post('/user-unselect-all')
-  @Roles(RoleType.USER)
-  @ApiExcludeEndpoint()
-  async userUnselectAll(@Req() req: Request): Promise<any> {
-    const userUnselectAll = await this.userService.userUnselectAll(req.body.user, req.body.permission);
-    return userUnselectAll;
-  }
-
   @Post('/save-profile-permission')
   @Roles(RoleType.USER)
   @ApiExcludeEndpoint()

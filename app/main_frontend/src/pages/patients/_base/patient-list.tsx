@@ -226,21 +226,35 @@ const ListTable = ({}: any) => {
 
                                             <TableBodyCell align={'right'}>
                                                 <div className="btn-group flex-btn-group-container">
-                                                    {hasAnyAuthority(null, ['patient'], 'view') ? (
-                                                        <Button color="success" size="sm" isLink={true} href={`/patients/${patient.id}?${getEntityFiltersURL()}`} icon={'eye'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['patient'], 'edit') ? (
-                                                        <Button color="primary" size="sm" isLink={true} href={`/patients/${patient.id}/edit?${getEntityFiltersURL()}`} icon={'pencil'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {hasAnyAuthority(null, ['patient'], 'canDelete') ? (
-                                                        <Button color="dancem" size="sm" onClick={() => deleteEntityModal(patient)} isLink={false} icon={'trash'}></Button>
-                                                    ) : (
-                                                        <></>
-                                                    )}{' '}
+                                                    <Button
+                                                        color="success"
+                                                        size="sm"
+                                                        isLink={true}
+                                                        href={`/patients/${patient.id}?${getEntityFiltersURL()}`}
+                                                        icon={'eye'}
+                                                        permissionSession="PATIENT"
+                                                        permissionMethod="SEE"
+                                                    ></Button>
+
+                                                    <Button
+                                                        color="primary"
+                                                        size="sm"
+                                                        isLink={true}
+                                                        href={`/patients/${patient.id}/edit?${getEntityFiltersURL()}`}
+                                                        icon={'pencil'}
+                                                        permissionSession="PATIENT"
+                                                        permissionMethod="EDIT"
+                                                    ></Button>
+
+                                                    <Button
+                                                        color="danger"
+                                                        size="sm"
+                                                        onClick={() => deleteEntityModal(patient)}
+                                                        isLink={false}
+                                                        icon={'trash'}
+                                                        permissionSession="PATIENT"
+                                                        permissionMethod="REMOVE"
+                                                    ></Button>
                                                 </div>
                                             </TableBodyCell>
                                         </TableBodyRow>

@@ -131,13 +131,13 @@ const MUITable = () => {
             <CardHeader
                 title={
                     <>
-                        <h2>Detail Patient </h2>
+                        <h2>Ver detalhes do paciente</h2>
                     </>
                 }
                 buttons={
                     <>
                         <Button onClick={handleClose} icon={'arrow-left'}>
-                            Go to list
+                            Atras
                         </Button>
                     </>
                 }

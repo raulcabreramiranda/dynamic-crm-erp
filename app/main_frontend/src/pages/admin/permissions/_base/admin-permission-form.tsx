@@ -69,6 +69,7 @@ const FormUpdate = ({ isNew }: any) => {
                                 <InputSelect
                                     id="admin-permission-method"
                                     options={[
+                                        { value: 'LIST', label: translate('adminPermission.AdminPermissionMethod.LIST') },
                                         { value: 'SEE', label: translate('adminPermission.AdminPermissionMethod.SEE') },
                                         { value: 'EDIT', label: translate('adminPermission.AdminPermissionMethod.EDIT') },
                                         { value: 'REMOVE', label: translate('adminPermission.AdminPermissionMethod.REMOVE') },
