@@ -95,6 +95,8 @@ const FormUpdate = ({ isNew }: any) => {
                                         <Translate contentKey="adminUser.Profile" />
                                     </>
                                 }
+                                formLayoutIsEmbebed={true}
+                                formLayoutEmbebedView={{}}
                             />
                         </div>
                     </Grid>
@@ -131,6 +133,8 @@ const FormUpdate = ({ isNew }: any) => {
                                         <Translate contentKey="adminUser.PermissionUsers" />
                                     </>
                                 }
+                                formLayoutIsEmbebed={true}
+                                formLayoutEmbebedView={{}}
                             />
                         </div>
                     </Grid>
@@ -151,6 +155,8 @@ const FormUpdate = ({ isNew }: any) => {
                                         <Translate contentKey="adminUser.WhiteLabel" />
                                     </>
                                 }
+                                formLayoutIsEmbebed={true}
+                                formLayoutEmbebedView={{}}
                             />
                         </div>
                     </Grid>

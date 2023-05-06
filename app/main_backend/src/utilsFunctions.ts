@@ -97,6 +97,44 @@ export const getMany: any = async (options, filters, Entity, userRequest, select
   return result;
 };
 
+export const saveEmbedded: any = async (entityManager, Entity, fieldName, object) => {
+
+  const columns = Entity.columnsMetaData();
+  const objectId = object['id'];
+  const objectEmbedded = object[fieldName];
+
+  const EmbeddedEntity = columns[fieldName]
+  const columnsEmbedded = EmbeddedEntity.columnsMetaData();
+  const repository = entityManager.getRepository(EmbeddedEntity);
+  
+  if (Array.isArray(objectEmbedded)) {
+    const resultId = []
+    
+    for (const key in objectEmbedded) {
+      let _objectEmbedded = objectEmbedded[key];
+      
+      for (const _fieldName in _objectEmbedded) {
+        if (Array.isArray(_objectEmbedded[_fieldName])) {
+        
+        } else if (typeof _objectEmbedded[_fieldName] === 'object' ){
+          _objectEmbedded = await saveEmbedded(entityManager, EmbeddedEntity, _fieldName, _objectEmbedded[_fieldName]) 
+        }
+      }
+
+      const _objectEmbeddedSave = await repository.save(_objectEmbedded);
+      console.info("_objectEmbeddedSave", _objectEmbeddedSave)
+      resultId.push({id: _objectEmbeddedSave.id})
+    
+    }
+    object[fieldName] = resultId;
+    return object;
+  }
+  const objectEmbeddedSave = await repository.save(object);
+
+  object[fieldName] = {id: objectEmbeddedSave.id};
+  return object;
+};
+
 const executeSQL: any = (options, filters, Entity, userRequest, selectColumns, repository) => {
   // const instance = new Entity()
   // console.log(instance)

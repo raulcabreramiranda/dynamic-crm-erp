@@ -6,7 +6,6 @@ import { Request } from 'express';
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    console.info("asdasdasdasd");
     const now = Date.now();
     const req: Request | any = context.switchToHttp().getRequest();
     const ipInfo = req.ip;

@@ -7,7 +7,7 @@ export const apiGetList = ({ sort, filters, page, size }: any, onSuccess?: (resp
         sort,
         page,
         size,
-        selectColumns: ['name', 'adminPermissionProfiles.id', 'adminPermissionProfiles.adminPermission.id', 'adminPermissionProfiles.adminPermission.name'],
+        selectColumns: ['id', 'name', 'adminPermissionProfiles.id', 'adminPermissionProfiles.adminPermission.id', 'adminPermissionProfiles.adminPermission.name'],
         onSuccess,
     });
 };

@@ -3,6 +3,7 @@ import { apiGet, showFieldsSelectAsync } from 'src/util/entity-utils';
 import { MultiSelect } from 'primereact/multiselect';
 import Label from 'src/layouts/components/Label';
 import { Dropdown } from 'primereact/dropdown';
+import InputSelectEmbedded from './InputSelectEmbedded';
 
 export interface IEntityListSort {
     [key: string]: 'asc' | 'desc';
@@ -18,6 +19,8 @@ interface Props {
     label: string | ReactElement;
     optionsSort: IEntityListSort;
     optionsShowFields: string[];
+    formLayoutIsEmbebed: boolean;
+    formLayoutEmbebedView: any;
 }
 
 const ITEM_HEIGHT = 48;
@@ -36,6 +39,7 @@ type IOption = {
 };
 const InputSelectRelationship = (props: Props) => {
     const manyTypesRelationships = ['one-to-many', 'many-to-many'];
+    if (manyTypesRelationships.includes(props.relationshipType)) return <InputSelectEmbedded {...props} />;
     if (manyTypesRelationships.includes(props.relationshipType)) return <InputSelectMany {...props} />;
     return <InputSelectOne {...props} />;
 };
@@ -54,7 +58,7 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
     };
     const handleClose = (value: IOption) => {
         const _entityEdit = { ...entityEdit };
-        _entityEdit[fieldName] = _entityEdit[fieldName].filter((v: any)=> v.id !== value.id);
+        _entityEdit[fieldName] = _entityEdit[fieldName].filter((v: any) => v.id !== value.id);
         setEntityEdit(_entityEdit);
     };
 
@@ -77,14 +81,14 @@ const InputSelectMany = ({ name, label, labelPos, entityContext: EntityContext, 
         return (
             <div className="p-multiselect-token">
                 <span className="p-multiselect-token-label">
-                {optionsShowFields.map((v, i) => (
-                    <>
-                        {i > 0 && <>&nbsp;|&nbsp;</>}
-                        <span>{showFieldsSelectAsync(option, v)}</span>
-                    </>
-                ))}
+                    {optionsShowFields.map((v, i) => (
+                        <>
+                            {i > 0 && <>&nbsp;|&nbsp;</>}
+                            <span>{showFieldsSelectAsync(option, v)}</span>
+                        </>
+                    ))}
                 </span>
-                <span className="p-multiselect-token-icon pi pi-times-circle" onClick={()=>handleClose(option)}></span>
+                <span className="p-multiselect-token-icon pi pi-times-circle" onClick={() => handleClose(option)}></span>
             </div>
         );
     };

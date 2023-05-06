@@ -2,6 +2,7 @@ import { Context, ReactElement, useContext } from 'react';
 import Label from '../Label';
 import { InputText as InputTextPrime } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { saveFieldsSelectAsync, showFieldsSelectAsync } from 'src/util/entity-utils';
 
 interface Props {
     entityContext: Context<any>;
@@ -26,19 +27,14 @@ const InputText = ({ entityContext: EntityContext, label, placeholder, name, typ
     const fieldType = Object.keys(handleChangeByType).includes(type) ? type : 'text';
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const _entityEdit = { ...entityEdit };
-        _entityEdit[fieldName] = handleChangeByType[fieldType](event.target.value);
+        // const _entityEdit = { ...entityEdit };
+        // _entityEdit[fieldName] = handleChangeByType[fieldType](event.target.value);
+        const _entityEdit = saveFieldsSelectAsync({ ...entityEdit }, fieldName, handleChangeByType[fieldType](event.target.value));
         setEntityEdit(_entityEdit);
     };
 
-    const props = {
-        InputLabelProps: { shrink: true },
-        onChange: handleChange,
-        fullWidth: true,
-        label: label,
-        placeholder: placeholder,
-        value: entityEdit[fieldName] || ''
-    };
+    const value = showFieldsSelectAsync(entityEdit, fieldName);
+    const disabled = (fieldName.split(".").pop()) === 'id';
     if (type === 'textarea') {
         return (
             <div className={labelPos === 'top' ? `p-fluid` : ``}>
@@ -53,7 +49,7 @@ const InputText = ({ entityContext: EntityContext, label, placeholder, name, typ
         <div className={labelPos === 'top' ? `p-fluid` : ``}>
             <div className="field">
                 <Label htmlFor={`input-text-${fieldName}`}>{label}</Label>
-                <InputTextPrime id={`input-text-${fieldName}`} onChange={handleChange} name={fieldName} placeholder={placeholder} value={entityEdit[fieldName] || ''} />
+                <InputTextPrime id={`input-text-${fieldName}`} disabled={disabled} onChange={handleChange} name={fieldName} placeholder={placeholder} value={value || ''} />
             </div>
         </div>
     );

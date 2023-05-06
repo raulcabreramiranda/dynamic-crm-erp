@@ -219,6 +219,24 @@ export const getListAxios: any = async (
   return res ? res.json() : [];
 };
 
+export const saveFieldsSelectAsync = (
+  entity: any,
+  fields: any,
+  value: any
+) => {
+  const arrayFields = fields.split('.')
+  const field = arrayFields.slice(0,1).pop()
+  const otherFields = arrayFields.slice(1)
+
+  const entityReault = {...entity};
+  if(otherFields.length > 0){
+    entityReault[field] = saveFieldsSelectAsync(entityReault[field] , otherFields.join(".") , value)
+  } else {
+    entityReault[field] = value
+  }
+  return entityReault
+};
+
 export const showFieldsSelectAsync = (
   entity: any,
   fields: any,
@@ -449,7 +467,6 @@ export const containerErrorClear = () => {
 
 export type ICookieUser = {
   id: number;
-  adminProfile?: {adminPermissionProfiles: any[]};
   whiteLabelData?: any[];
   clientId?: number;
   clientData?: any[];
@@ -509,6 +526,7 @@ export interface IApiRequestProps {
   body?: {};
   id?: any;
   selectColumns?: Object;
+  embeddedColumns?: Object;
   userLogged?: any;
   onSuccess?(response: IApiResponseProps): void;
   onError?(response: IApiResponseProps): void;
@@ -577,6 +595,9 @@ export async function apiPost(endpint: string, options: IApiRequestProps = {}) {
   let onSuccess = (response: IApiResponseProps) => {};
   let onError = (response: IApiResponseProps) => {};
   let getUserLogged = '0';
+  const embeddedColumns = options['embeddedColumns']
+    ? options['embeddedColumns']
+    : {};
 
   if (options['body']) body = options['body'];
 
@@ -592,6 +613,7 @@ export async function apiPost(endpint: string, options: IApiRequestProps = {}) {
     headers: {
       Authorization: 'Bearer ' + (cookie.get(AUTH_TOKEN_KEY) || testBearer),
       'Content-Type': 'application/json;charset=utf-8',
+      'Embedded-Columns': JSON.stringify(embeddedColumns),
       'Get-User-Account': getUserLogged,
     },
   });
@@ -614,6 +636,9 @@ export async function apiPut(endpint: string, options: IApiRequestProps = {}) {
   let onSuccess = (response: IApiResponseProps) => {};
   let onError = (response: IApiResponseProps) => {};
   let getUserLogged = '0';
+  const embeddedColumns = options['embeddedColumns']
+    ? options['embeddedColumns']
+    : {};
 
   if (options['body']) body = options['body'];
 
@@ -629,6 +654,7 @@ export async function apiPut(endpint: string, options: IApiRequestProps = {}) {
     headers: {
       Authorization: 'Bearer ' + (cookie.get(AUTH_TOKEN_KEY) || testBearer),
       'Content-Type': 'application/json;charset=utf-8',
+      'Embedded-Columns': JSON.stringify(embeddedColumns),
       'Get-User-Account': getUserLogged,
     },
   });
@@ -655,12 +681,17 @@ export async function apiDelete(endpint: string, options: IApiRequestProps = {})
   if (options['onError']) onError = options['onError'];
 
   if (options['userLogged']) getUserLogged = options['userLogged'];
+  
+  const embeddedColumns = options['embeddedColumns']
+    ? options['embeddedColumns']
+    : {};
 
   const resUser = await fetch(apiGetPath() + `api/${endpint}/${id}`, {
     method: 'delete',
     headers: {
       Authorization: 'Bearer ' + (cookie.get(AUTH_TOKEN_KEY) || testBearer),
       'Content-Type': 'application/json;charset=utf-8',
+      'Embedded-Columns': JSON.stringify(embeddedColumns),
       'Get-User-Account': getUserLogged,
     },
   });

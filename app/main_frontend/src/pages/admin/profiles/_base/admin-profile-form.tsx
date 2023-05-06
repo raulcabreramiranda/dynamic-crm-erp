@@ -14,6 +14,8 @@ import InputImage from 'src/layouts/components/inputs/InputImage';
 import InputSuperSelect from 'src/layouts/components/modal-super-select/InputSuperSelect';
 import { EntityContext } from './admin-profile';
 
+import AdminPermissionProfileAux from 'src/pages/admin/profiles/_base/admin-profile---admin-permission-profile-list';
+
 const FormUpdate = ({ isNew }: any) => {
     const { entityEdit, formTabActive, setFormTabActive } = useContext(EntityContext);
 
@@ -53,13 +55,19 @@ const FormUpdate = ({ isNew }: any) => {
                                 relationshipType={'one-to-many'}
                                 optionsLink={'admin-permission-profiles'}
                                 optionsSort={{ id: 'asc' }}
-                                optionsShowFields={['id', 'adminPermission.id', 'adminPermission.name']}
+                                optionsShowFields={['id']}
                                 name="adminPermissionProfiles"
                                 label={
                                     <>
                                         <Translate contentKey="adminProfile.Permisos" />
                                     </>
                                 }
+                                formLayoutIsEmbebed={true}
+                                formLayoutEmbebedView={{
+                                    tableLayout: { 'adminPermission.id': { label: 'Id' }, 'adminPermission.name': { label: 'Nome' } },
+                                    viewLayout: { 'adminPermission.id': { label: 'Id' }, 'adminPermission.name': { label: 'Nome' } },
+                                    formLayout: { adminPermission: { label: 'Selecione os Permisos', showFields: ['name'] } },
+                                }}
                             />
                         </div>
                     </Grid>

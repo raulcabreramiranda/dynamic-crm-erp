@@ -162,6 +162,11 @@ const ListTable = ({}: any) => {
                         <Table>
                             <TableHead>
                                 <TableHeadRow>
+                                    <TableHeadCell align={'left'} onClick={sortFunction('id')}>
+                                        <Translate label={{ pt: 'id' }} contentKey="adminProfile.id" />
+                                        <i className={sort === 'id' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
+                                    </TableHeadCell>
+
                                     <TableHeadCell align={'left'} onClick={sortFunction('name')}>
                                         <Translate label={{ pt: 'name' }} contentKey="adminProfile.name" />
                                         <i className={sort === 'name' ? (order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down') : 'fa fa-sort'} />
@@ -179,6 +184,10 @@ const ListTable = ({}: any) => {
                                     .filter((v: any) => typeof v.deletedAt === 'undefined' || v.deletedAt === null)
                                     .map((adminProfile: any, i: number) => (
                                         <TableBodyRow tableRowIndex={i} key={`entity-${i}`}>
+                                            <TableBodyCell id="id-cell" align={'left'}>
+                                                <TableText type="number" name={'id'} entityView={adminProfile} />
+                                            </TableBodyCell>
+
                                             <TableBodyCell id="name-cell" align={'left'}>
                                                 <TableText name={'name'} entityView={adminProfile} />
                                             </TableBodyCell>

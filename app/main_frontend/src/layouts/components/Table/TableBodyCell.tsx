@@ -8,7 +8,7 @@ interface Props {
 
 const TableBodyCell = (props: Props) => {
     return (
-        <td className="" role="cell">
+        <td id={props.id} className={props.className} role="cell">
             {props.children}
         </td>
     );
