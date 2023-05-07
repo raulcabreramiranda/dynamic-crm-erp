@@ -1,4 +1,4 @@
-import AdminPermissionBase from 'src/pages/admin/permissions/_base/admin-permission';
+import AdminPermissionBase from 'src/components/views/AdminPermission/admin-permission';
 
 export default function AdminPermission(props: any) {
     return <AdminPermissionBase />;

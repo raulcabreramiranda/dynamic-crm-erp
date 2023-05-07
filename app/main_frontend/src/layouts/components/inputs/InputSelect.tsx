@@ -6,6 +6,7 @@ interface Props {
     entityContext: Context<any>;
     options: any[];
     labelPos?: 'top' | 'left';
+    id?: string;
     name: string;
     label: string | ReactElement;
 }

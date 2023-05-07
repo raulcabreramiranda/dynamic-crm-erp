@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 
-const JSONEditor = (props) => {
-  let JSONEditor = null;
+const JSONEditor = (props: any) => {
+  let JSONEditor: any = null;
   const auxWindows: any = window;
   useEffect(() => {
     let json = ['Erro ao carregar o JSON'];

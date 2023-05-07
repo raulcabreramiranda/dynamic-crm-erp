@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "builder:start": "node ./app/visual_generator/app.js",
+    "builder:generate1": "node ./generator/ejs.js entitiesDir=./app/visual_generator/entities/dist",
+    "builder:generate": "cd app/visual_generator/entities && rimraf dist && tsc &&  cd ../../../ && node ./generator/ejs.js entitiesDir=./app/visual_generator/entities/dist",
+    "builder:backup": "zip -r ./app/backups/$(date '+%Y%m%d%H%M%S').zip ./app/main_frontend/src ./app/main_backend/src ./app/visual_generator/entities",
+    "builder:backup-name-bkp": "zip -r ./app/backups/$NAME_BKP.zip ./app/main_frontend/src ./app/main_backend/src ./app/visual_generator/entities",
+    
+    "main:build": "cd app/main_frontend && npm run build && cd ../main_backend && npm run build",
     "main:start": "cd app/main_frontend && npm run dev & cd app/main_backend && npm run start:dev",
     "main:generate": "cd entities && rimraf dist && tsc &&  cd ../ && node ./generator/ejs.js entitiesDir=./entities/dist",
     "main:generate1": "node ./generator/ejs.js entitiesDir=./entities/dist",
-    "builder:start": "cd app/builder_frontend && npm run dev & cd app/builder_backend && npm run start:dev",
-    "builder:generate": "cd entities-builder && rimraf dist && tsc && cd ../ && node ./generator/ejs.js entitiesDir=./entities-builder/dist",
-    "builder:generate1": "node ./generator/ejs.js entitiesDir=./entities-builder/dist"
+    "old-builder:start": "cd app/builder_frontend && npm run dev & cd app/builder_backend && npm run start:dev",
+    "old-builder:generate": "cd entities-builder && rimraf dist && tsc && cd ../ && node ./generator/ejs.js entitiesDir=./entities-builder/dist",
+    "old-builder:generate1": "node ./generator/ejs.js entitiesDir=./entities-builder/dist"
   },
   "repository": {
     "type": "git",
@@ -25,6 +32,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",
+    "busboy": "^1.6.0",
     "dayjs": "^1.11.7",
     "mdi-material-ui": "^7.7.0",
     "rimraf": "^3.0.2"

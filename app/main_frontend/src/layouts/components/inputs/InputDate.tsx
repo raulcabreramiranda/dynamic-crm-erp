@@ -8,6 +8,7 @@ interface Props {
     precision?: number;
     label?: string | ReactElement;
     placeholder?: string;
+    id?: string;
     name: string;
     labelPos?: 'top' | 'left';
     dateType: 'Date' | 'Time' | 'DateTime';

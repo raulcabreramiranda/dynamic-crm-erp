@@ -39,8 +39,8 @@ interface Props {
     label: string | ReactElement;
     optionsSort: IEntityListSort;
     optionsShowFields: string[];
-    formLayoutIsEmbebed: boolean;
-    formLayoutEmbebedView: any;
+    formLayoutIsEmbebed?: boolean;
+    formLayoutEmbebedView?: any;
 }
 
 const ITEM_HEIGHT = 48;

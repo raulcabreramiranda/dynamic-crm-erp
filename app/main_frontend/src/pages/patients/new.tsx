@@ -1,4 +1,4 @@
-import PatientUpdateBase from 'src/pages/patients/_base/patient-update';
+import PatientUpdateBase from 'src/components/views/Patient/patient-update';
 
 export default function Patient(props: any) {
     return <PatientUpdateBase />;

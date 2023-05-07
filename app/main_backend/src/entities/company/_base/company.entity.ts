@@ -9,6 +9,7 @@ import tablesName from '../../tablesName';
 export class Company extends BaseEntity {
     static columnsMetaData() {
         return {
+            commercialNameTeste1: String,
             commercialName: String,
             corporateName: String,
             cnpj: String,
@@ -21,6 +22,10 @@ export class Company extends BaseEntity {
             technicalManagerBoardNumber: String,
         };
     }
+
+    @Column({ name: 'commercialNameTeste1', nullable: true })
+    @ApiProperty({ required: false })
+    commercialNameTeste1: string;
 
     @Column({ name: 'commercialName', nullable: true })
     @ApiProperty({ required: false })

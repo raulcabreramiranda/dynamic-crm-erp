@@ -1,4 +1,4 @@
-import PhotoBase from 'src/pages/photos/_base/photo';
+import PhotoBase from 'src/components/views/Photo/photo';
 
 export default function Photo(props: any) {
     return <PhotoBase />;

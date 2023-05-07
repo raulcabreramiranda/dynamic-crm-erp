@@ -8,6 +8,9 @@ import FilterSpecified from './FilterSpecified'
 interface Props  {
   entityContext: Context<any>
   precision?: number
+  id?: string
+  type?: string
+  name?: string
   filterKey: string
   labelPos?: 'top' | 'left';
   label: string | ReactElement
@@ -29,7 +32,6 @@ const DateTimeComponent = ({ label, value, handleChange }: any) => {
 
 const FilterDate = (props: Props) => {
   const { entityFilter, setEntityFilter } = useContext(props.entityContext)
-  console.info(entityFilter)
 
   if (props.filterMethod === 'between') return <FilterDateBetween {...props} />
 

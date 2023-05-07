@@ -1,4 +1,4 @@
-import PatientBase from 'src/pages/patients/_base/patient';
+import PatientBase from 'src/components/views/Patient/patient';
 
 export default function Patient(props: any) {
     return <PatientBase />;

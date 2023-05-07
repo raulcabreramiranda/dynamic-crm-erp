@@ -1,8 +1,6 @@
 import LinkAux from 'next/link';
-import { useTranslation as useTranslationAux } from 'next-i18next';
 
 export const Link = LinkAux;
-export const useTranslation = useTranslationAux;
 
 export const baseTrans = (
   contentKey: string,
