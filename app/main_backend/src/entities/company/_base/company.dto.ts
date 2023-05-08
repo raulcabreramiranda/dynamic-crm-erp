@@ -7,8 +7,8 @@ import { BaseDTO } from '../../../service/dto/base.dto';
  * A Company DTO object.
  */
 export class CompanyDTO extends BaseDTO {
-    @ApiProperty({ description: 'commercialNameTeste1 field', required: false })
-    commercialNameTeste1: string;
+    @ApiProperty({ description: 'commercialNameTeste833 field', required: false })
+    commercialNameTeste833: string;
 
     @ApiProperty({ description: 'commercialName field', required: false })
     commercialName: string;

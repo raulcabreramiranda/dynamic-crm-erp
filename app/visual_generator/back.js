@@ -20,13 +20,30 @@ async function view(req, res) {
 }
 
 async function generate() {
-  const nameBkp = "TesteBkp";
+  const nameBkp = (new Date()).toISOString().replace(/(\.\d{3})|[^\d]/g,'');
   const resultBkp = await execShellCommand(`NAME_BKP=${nameBkp} npm run builder:backup-name-bkp`);
-  console.info({resultBkp});
-  const resultGenerate = await execShellCommand(`npm run builder:generate`);
-  console.info({resultGenerate});
-  const resultBuild = await execShellCommand(`npm run builder:build`);
-  console.info({resultBuild});
+  if(resultBkp){
+    console.info({resultBkp});
+    const resultGenerate = await execShellCommand(`npm run builder:generate`);
+    if(resultGenerate){
+      console.info({resultGenerate});
+      const resultBuild = await execShellCommand(`npm run main:build`);
+      if(resultBuild){
+        console.info({resultBuild});
+        return true; 
+      }
+    }
+  }
+  await rollback(nameBkp);
+
+  return false; 
+
+}
+
+
+async function rollback(nameBkp) {
+  await execShellCommand(`rm -rdf  ./app/main_frontend/src ./app/main_backend/src ./app/visual_generator/entities`);
+  await execShellCommand(`unzip -o ./app/backups/${nameBkp}.zip  -d ./ `);
 }
 
 

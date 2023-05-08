@@ -6,7 +6,7 @@ const entity: DataBaseEntityType = {
   entityNameHumanizedPlural: "Companies",
   frontPath: "companies",
   fields: [
-    { fieldName: "commercialNameTeste1", fieldType: "String" },
+    { fieldName: "commercialNameTeste833", fieldType: "String" },
     { fieldName: "commercialName", fieldType: "String" },
     { fieldName: "corporateName", fieldType: "String" },
     { fieldName: "cnpj", fieldType: "String" },

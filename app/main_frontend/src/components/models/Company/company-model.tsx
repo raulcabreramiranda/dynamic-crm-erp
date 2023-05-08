@@ -4,7 +4,7 @@ import { IFilter } from 'src/util/entity-utils';
 export const ApiPathCompany = 'companies';
 export interface ICompany {
     id?: number;
-    commercialNameTeste1?: string;
+    commercialNameTeste833?: string;
     commercialName?: string;
     corporateName?: string;
     cnpj?: string;
@@ -25,7 +25,7 @@ export interface ICompany {
 
 export interface ICompanyFilter {
     id?: IFilter<number>;
-    commercialNameTeste1?: IFilter<string>;
+    commercialNameTeste833?: IFilter<string>;
     commercialName?: IFilter<string>;
     corporateName?: IFilter<string>;
     cnpj?: IFilter<string>;

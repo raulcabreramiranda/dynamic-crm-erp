@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "report:start": "cd ./app/nextjs-reportbuilder && npm run dev",
+
     "builder:start": "node ./app/visual_generator/app.js",
     "builder:generate1": "node ./generator/ejs.js entitiesDir=./app/visual_generator/entities/dist",
     "builder:generate": "cd app/visual_generator/entities && rimraf dist && tsc &&  cd ../../../ && node ./generator/ejs.js entitiesDir=./app/visual_generator/entities/dist",
