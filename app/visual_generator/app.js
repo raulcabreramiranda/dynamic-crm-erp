@@ -3,9 +3,9 @@ const url = require("url");
 const back = require("./back");
 const home = require("./home");
 
-http.createServer(onRequest).listen(8888);
+http.createServer(onRequest).listen(3003);
 console.log("Server has started");
-console.log("http://localhost:8888");
+console.log("http://3.139.61.67:3003");
 
 const contentMap = {
   "/": home.view,
