@@ -1,6 +1,6 @@
 export const BASE_IMG_PATH = process.env.NEXT_PUBLIC_BASE_IMG_PATH || 'http://local.node.server:8081/'
 //export const BASE_API_VERSION_PATH = process.env.NEXT_PUBLIC_SERVER_API_URL || process.env.NODE_SERVER_API_URL || 'http://local.node.server:8081/'
-export const BASE_API_VERSION_PATH = 'http://local.node.server:8081/'
+export const BASE_API_VERSION_PATH = process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://local.node.server:8081/'
 
 export const SERVER_LOGIN_URL = '/login'
 export const SERVER_LOGOUT_URL = '/login'
