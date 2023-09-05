@@ -85,7 +85,7 @@ const AppConfig = (props: { simple?: any; }) => {
     }, [layoutConfig.scale]);
 
     //HIDE VIEW COFNGI
-    return <></>
+    // return <></>
     return (
         <>
             <button className="layout-config-button p-link" type="button" onClick={onConfigButtonClick}>
@@ -134,6 +134,15 @@ const AppConfig = (props: { simple?: any; }) => {
 
                 <h5>Ripple Effect</h5>
                 <InputSwitch checked={layoutConfig.ripple} onChange={(e) => changeRipple(e)}></InputSwitch>
+
+                <h5>IMOBPASS</h5>
+                <div className="grid">
+                    <div className="col-3">
+                        <button className="p-link w-2rem h-2rem" onClick={() => changeTheme('imobpass-light', 'light')}>
+                            <img src={`${contextPath}/layout/images/themes/tailwind-light.png`} className="w-2rem h-2rem" alt="IMOBPASS Light" />
+                        </button>
+                    </div>
+                </div>
 
                 <h5>Bootstrap</h5>
                 <div className="grid">

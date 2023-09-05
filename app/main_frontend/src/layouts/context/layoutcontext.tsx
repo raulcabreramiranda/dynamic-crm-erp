@@ -44,7 +44,7 @@ export const LayoutProvider = (props: ILayoutProvider) => {
         inputStyle: 'outlined',
         menuMode: 'static',
         colorScheme: 'light',
-        theme: 'lara-light-indigo',
+        theme: 'imobpass-light',
         scale: 14
     });
 
